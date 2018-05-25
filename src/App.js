@@ -1,46 +1,16 @@
 import React from 'react';
-import {Button, ButtonGroup} from 'uiex';
+import TabsDemo from './components/Tabs';
+import ButtonsDemo from './components/Buttons';
 
-export default class App extends React.PureComponent {
+import './style.scss';
+
+export default class App extends React.Component {
 	render() {
 		return (
-			<ButtonGroup
-				onClick={this.handleButtonClick}
-				align="right"
-				buttonWidth="130"
-				float="right"
-			>
-				<Button
-					color="green"
-					value="save"
-					onClick={this.aaa}
-				>
-					Сохранить
-				</Button>
-
-				<Button
-					color="red"
-					value="remove"
-				>
-					Удалить
-				</Button>
-
-				<Button
-					color="white"
-					value="cancel"
-				>
-					Отмена
-				</Button>
-
-			</ButtonGroup>
+			<div>
+				<ButtonsDemo/>
+				<TabsDemo/>
+			</div>
 		)
-	}
-
-	handleButtonClick = (value) => {
-		alert(value)
-	}
-
-	aaa = (value) => {
-		alert('Saving')
 	}
 }

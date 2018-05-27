@@ -4,7 +4,6 @@ html {
 body {
 	height: 100%;
 	margin: 0;
-	padding: 100px;
 	font-family: Segoe UI;
 }
 textarea,
@@ -12,4 +11,38 @@ select,
 input,
 button {
 	font-family: Segoe UI;	
+}
+.main-menu {
+	position: fixed;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	width: 250px;
+	z-index: 10;
+	box-sizing: border-box;
+	padding: 20px;
+	user-select: none;
+
+	& > div {
+		width: 200px;
+		border: 1px solid #ddd;
+		background-color: #eee;
+		margin-bottom: 6px;
+		cursor: pointer;
+		border-radius: 5px;
+		padding: 6px 10px;
+
+		&.active {
+			background-color: #555 !important;
+			color: #fff;
+			border-color: #555;
+		}
+		&:hover {
+			background-color: #ddd;
+		}
+	}
+}
+.main-content {
+	padding: 30px 30px 30px 320px;
+	max-width: 1200px;
 }

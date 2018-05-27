@@ -1,6 +1,7 @@
 import React from 'react';
 import {Tabs, Tab} from 'uiex';
 
+
 export default class TabsDemo extends React.Component {
 	constructor(props) {
 		super(props);
@@ -14,25 +15,24 @@ export default class TabsDemo extends React.Component {
 		return (
 			<div>
 				<Tabs 
+					classes="fuck"
 					activeTab={tab}
 					activeColor="yellow"
 					onSelect={this.handleSelectTab}
 					buttonColor="black"
-					buttonWidth={100}
-					buttonHeight="50"
-					iconSize="22"
-					multiple
+					buttonWidth={120}
+					iconType="awesome"
 				>
-					<Tab caption="Details" icon="zoom_in">
+					<Tab caption="Details" icon="car">
 						1111
 					</Tab>
-					<Tab caption="Products">
+					<Tab caption="Products" icon="user-circle">
 						222
 					</Tab>
 					<Tab caption="Items">
 						333
 					</Tab>
-					<Tab caption="Contacts" float="right" single>
+					<Tab caption="Contacts">
 						444
 					</Tab>
 				</Tabs>

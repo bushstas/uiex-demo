@@ -1,48 +1,74 @@
 import React from 'react';
 import {Button, ButtonGroup} from 'uiex';
 
+import './style.scss';
+
+const DATA = {
+	classes: 'demo'
+}
+
+const BUTTONS_DATA = {
+	save: {
+		value: 'save',
+		icon: 'save',
+		children: 'Save'
+	},
+	remove: {
+		value: 'remove',
+		icon: 'delete_forever',
+		children: 'Remove'
+	},
+	cancel: {
+		value: 'cancel',
+		icon: 'cancel',
+		children: 'Cancel'
+	}
+}
+
 export default class ButtonsDemo extends React.Component {
+	constructor() {
+		super();
+		this.state = {
+			open: true
+		}
+	}
 
 	render() {
 		return (
-			<div>
+			<div onClick={this.toggleBox} style={{height: '1000px'}}>
 				<ButtonGroup
+					{...DATA}
 					onClick={this.handleButtonClick}
-					align="right"
-					width="700"
-					iconSize="22"
-					iconAtRight
-					buttonColor="blue"
-					float="right"
+					onDisabledClick={this.handleDisabledButtonClick}
 				>
-					<Button
-						value="save"
-						width="auto"
-						icon="favorite"
-					>
-						Сохранить
-					</Button>
-
-					<Button
-						value="remove"
-						icon="perm_identity"
-					>
-						Удалить
-					</Button>
-
-					<Button
-						value="cancel"
-						icon="face"
-					>
-						Отмена
-					</Button>
-
+					{this.renderButtons()}
 				</ButtonGroup>
 			</div>
 		)
 	}
 
-	handleButtonClick = (value) => {
-		alert(value)
+	renderButtons() {
+		return Object.keys(BUTTONS_DATA).map(key => {
+			return (
+				<Button
+					key={key}
+					onClick={this.handleButtonClick}
+					onDisabledClick={this.handleDisabledButtonClick}
+					{...BUTTONS_DATA[key]}
+				/>
+			)
+		})
+	}
+
+	toggleBox = () => {
+		this.setState({open: !this.state.open});
+	}
+
+	handleButtonClick = (selectedItem) => {
+		this.setState({selectedItem});
+	}
+
+	handleDisabledButtonClick = (value) => {
+		alert(value + ' is disabled')
 	}
 }

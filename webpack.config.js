@@ -73,19 +73,9 @@ const config = {
                     }
                 ]
             },
-            {
-                test: /\.(xls(x)?|pdf|doc(x)?)(\S+)?$/,
-                loader: 'file-loader',
-                options: {
-                    name: 'docs/[name].[ext]'
-                }
-            },
             { 
                 test: /\.(ttf|eot|svg|woff(2)?)(\S+)?$/,
-                loader: 'file-loader',
-                options: {
-                    name: 'fonts/[name].[ext]'
-                }
+                loader: 'file-loader?name=[name].[ext]&outputPath=fonts&publicPath=../fonts'
             },
             { 
                 test: /\.(jpg|gif|svg|png?)(\S+)?$/,

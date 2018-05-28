@@ -1,16 +1,58 @@
 import React from 'react';
 import {Box, Button} from 'uiex';
+import Mapper from '../../Mapper';
 
 import './style.scss';
 
 const DATA = {
 	classes: 'demo',
 	isOpen: true,
+	buttonUnder: false,
 	speed: 4,
 	inverted: true,
 	fading: true,
 	effect: 'ease-in-out',
-	button: true
+	button: 'Open the box/Close the box'
+}
+
+const MAP = {
+	isOpen: {
+		type: 'boolean',
+		description: 'Open/Close status flag',
+		default: true
+	},
+	buttonUnder: {
+		type: 'boolean',
+		description: 'Open/Close button is under the box',
+		default: false
+	},
+	fading: {
+		type: 'boolean',
+		description: 'Using fading effect',
+		default: false
+	},
+	inverted: {
+		type: 'boolean',
+		description: 'Box opening is inverted',
+		default: false
+	},
+	button: {
+		description: 'Text of button',
+		example: 'Open/Close',
+		default: ''
+	},
+	speed: {
+		description: 'Animation speed from 1 to 10',
+		example: '5',
+		numeric: true,
+		default: '2'
+	},
+	effect: {
+		type: 'select',
+		description: 'Animation effect',
+		options: ['linear', 'ease', 'ease-in', 'ease-out', 'ease-in-out'],
+		default: 'ease-in-out'
+	}
 }
 
 export default class ButtonsDemo extends React.Component {
@@ -25,7 +67,13 @@ export default class ButtonsDemo extends React.Component {
 		const {isOpen} = this.state.data;
 		return (
 			<div>
-				<Box {...this.state.data} onToggle={this.toggleBox} buttonUnder>
+				<Mapper 
+					name="Box"
+					map={MAP} 
+					data={this.state.data} 
+					onChange={this.handleChangeData}
+				/>
+				<Box {...this.state.data} onToggle={this.toggleBox}>
 					<h3>The standard Lorem Ipsum passage, used since the 1500s</h3>
 					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
@@ -50,5 +98,9 @@ export default class ButtonsDemo extends React.Component {
 				isOpen: !data.isOpen
 			}
 		});
+	}
+
+	handleChangeData = (data) => {
+		this.setState({data});
 	}
 }

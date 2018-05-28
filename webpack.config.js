@@ -78,7 +78,7 @@ const config = {
                 loader: 'file-loader?name=[name].[ext]&outputPath=fonts&publicPath=../fonts'
             },
             { 
-                test: /\.(jpg|gif|svg|png?)(\S+)?$/,
+                test: /\.(jpg|gif|png?)(\S+)?$/,
                 loader: 'file-loader',
                 options: {
                     name: 'images/[name].[ext]'

@@ -46,3 +46,19 @@ button {
 	padding: 30px 30px 30px 320px;
 	max-width: 1200px;
 }
+.mapper {
+	margin-bottom: 20px;
+	padding-bottom: 20px;
+	border-bottom: 1px solid #eee;
+	.mapper-name {
+		font-size: 20px;
+		font-weight: bold;
+		margin-bottom: 15px;
+		padding: 6px 15px;
+		background-color: #f1f1f1;
+	}
+
+	.uiex-checkbox {
+		margin-right: 20px;
+	}
+}

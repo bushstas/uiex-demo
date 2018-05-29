@@ -1,12 +1,34 @@
 import React from 'react';
 import {Tabs, Tab} from 'uiex';
 
+const TABS = [
+	{
+		caption: 'Details',
+		icon: 'car',
+		value: 1,
+		style: {fontWeight: 'bold'}
+	},
+	{
+		caption: 'Products',
+		icon: 'user-circle',
+		value: 2
+	},
+	{
+		caption: 'Items',
+		value: 3
+	},
+	{
+		caption: 'Contacts',
+		value: 4
+	}
+]
 
 export default class TabsDemo extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			tab: null
+			tab: null,
+			tabs: TABS
 		}
 	}
 
@@ -15,32 +37,60 @@ export default class TabsDemo extends React.Component {
 		return (
 			<div>
 				<Tabs 
-					classes="fuck"
 					activeTab={tab}
-					activeColor="yellow"
-					onSelect={this.handleSelectTab}
+					activeStyle={{color: 'black'}}
 					buttonColor="black"
+					activeColor="green"
 					buttonWidth={120}
 					iconType="awesome"
+					united
+					onSelect={this.handleSelectTab}
+					onAddTab={this.handleAddTab}
+					onRemoveTab={this.handleRemoveTab}
+					emptyTabName="New fucking tab"
+					buttonStyle={{fontStyle: 'italic', height: '44px'}}
 				>
-					<Tab caption="Details" icon="car">
-						1111
-					</Tab>
-					<Tab caption="Products" icon="user-circle">
-						222
-					</Tab>
-					<Tab caption="Items">
-						333
-					</Tab>
-					<Tab caption="Contacts">
-						444
-					</Tab>
+					{this.renderTabs()}
 				</Tabs>
 			</div>
 		)
 	}
 
+	renderTabs() {
+		return this.state.tabs.map(item => {
+			return (
+				<Tab 
+					key={item.value}
+					caption={item.caption}
+					icon={item.icon}
+					style={item.style}
+				>
+					{item.value}
+				</Tab>
+			)
+		});
+	}
+
 	handleSelectTab = (tab) => {
 		this.setState({tab});
+	}
+
+	handleAddTab = (caption) => {
+		const {tabs} = this.state;
+		this.setState({tabs: [...tabs, this.getEmptyTab(caption)]});
+	}
+
+	getEmptyTab(caption) {
+		const {tabs} = this.state;
+		return {
+			value: tabs.length + 1,
+			caption
+		}
+	}
+
+	handleRemoveTab = (index) => {
+		const {tabs} = this.state;
+		tabs.splice(index, 1);
+		this.setState({tabs: [...tabs]});
 	}
 }

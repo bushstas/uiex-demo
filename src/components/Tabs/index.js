@@ -1,5 +1,24 @@
 import React from 'react';
 import {Tabs, Tab} from 'uiex';
+import Mapper from '../../Mapper';
+
+const DATA = {
+	dynamic: false,
+	emptyTabName: 'New tab'
+}
+
+const MAP = {
+	dynamic: {
+		type: 'boolean',
+		description: 'Dynamic tabs',
+		default: false
+	},
+	emptyTabName: {
+		description: 'Text of a new added tab',
+		example: 'New tab',
+		default: 'New tab'
+	}
+}
 
 const TABS = [
 	{
@@ -27,14 +46,21 @@ export default class TabsDemo extends React.Component {
 		super(props);
 		this.state = {
 			tab: null,
-			tabs: TABS
+			tabs: TABS,
+			data: DATA
 		}
 	}
 
 	render() {
-		const {tab} = this.state;
+		const {tab, data} = this.state;
 		return (
 			<div>
+				<Mapper 
+					name="Tabs"
+					map={MAP} 
+					data={data} 
+					onChange={this.handleChangeData}
+				/>
 				<Tabs 
 					activeTab={tab}
 					activeStyle={{color: 'black'}}
@@ -43,11 +69,11 @@ export default class TabsDemo extends React.Component {
 					buttonWidth={120}
 					iconType="awesome"
 					view="united"
-					dynamic
+					dynamic={data.dynamic}
 					onSelect={this.handleSelectTab}
 					onAddTab={this.handleAddTab}
 					onRemoveTab={this.handleRemoveTab}
-					emptyTabName="New fucking tab"
+					emptyTabName={data.emptyTabName}
 				>
 					{this.renderTabs()}
 				</Tabs>
@@ -68,6 +94,10 @@ export default class TabsDemo extends React.Component {
 				</Tab>
 			)
 		});
+	}
+
+	handleChangeData = (data) => {
+		this.setState({data});
 	}
 
 	handleSelectTab = (tab) => {

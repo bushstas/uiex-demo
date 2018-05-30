@@ -1,6 +1,5 @@
 import React from 'react';
-import {Checkbox} from 'uiex';
-import {Input} from 'uiex';
+import {Checkbox, Input, Form, FormControl} from 'uiex';
 
 export default class Mapper extends React.Component {
 
@@ -11,19 +10,23 @@ export default class Mapper extends React.Component {
 				<div className="mapper-name">
 					{name}
 				</div>
-				{Object.keys(map).map(key => {
-					const item = map[key];
-					const value = data[key];
-					
-					switch (item.type) {
-						case 'boolean':
-							return this.renderCheckboxControl(key, item, value);
+				<Form 
+					onChange={this.handleChangeInput}
+				>
+					{Object.keys(map).map(key => {
+						const item = map[key];
+						const value = data[key];
+						
+						switch (item.type) {
+							case 'boolean':
+								return this.renderCheckboxControl(key, item, value);
 
-						default:
-							return this.renderInputControl(key, item, value);
-					}
-					
-				})}
+							default:
+								return this.renderInputControl(key, item, value);
+						}
+						
+					})}
+				</Form>
 			</div>
 		)
 	}
@@ -34,17 +37,17 @@ export default class Mapper extends React.Component {
 			width = 120;
 		}
 		return (
-			<Input
-				clearable
-				defaultValue="1"
+			<FormControl 
 				key={name}
-				name={name}
-				value={value}
-				placeholder={'Example: ' + item.example}
-				onChange={this.handleChangeInput}
-				width={width}
-				style={{marginRight: '10px'}}
-			/>
+				caption={name}
+			>
+				<Input
+					name={name}
+					value={value}
+					placeholder={item.example ? 'Example: ' + item.example : ''}
+					width={width}
+				/>
+			</FormControl>
 		)
 	}
 

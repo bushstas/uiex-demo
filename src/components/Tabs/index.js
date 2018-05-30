@@ -5,8 +5,7 @@ const TABS = [
 	{
 		caption: 'Details',
 		icon: 'car',
-		value: 1,
-		style: {fontWeight: 'bold'}
+		value: 1
 	},
 	{
 		caption: 'Products',
@@ -43,12 +42,12 @@ export default class TabsDemo extends React.Component {
 					activeColor="green"
 					buttonWidth={120}
 					iconType="awesome"
-					united
+					view="united"
+					dynamic
 					onSelect={this.handleSelectTab}
 					onAddTab={this.handleAddTab}
 					onRemoveTab={this.handleRemoveTab}
 					emptyTabName="New fucking tab"
-					buttonStyle={{fontStyle: 'italic', height: '44px'}}
 				>
 					{this.renderTabs()}
 				</Tabs>

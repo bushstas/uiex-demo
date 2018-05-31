@@ -1,10 +1,10 @@
 import React from 'react';
-import {Checkbox, Input, Form, FormControl} from 'uiex';
+import {Checkbox, Input, Select, Form, FormControl, FormControlsGroup} from 'uiex';
 
 export default class Mapper extends React.Component {
 
 	render() {
-		const {map, data, name} = this.props;
+		const {map: {checkboxes, inputs}, data, name} = this.props;
 		return (
 			<div className="mapper">
 				<div className="mapper-name">
@@ -13,39 +13,65 @@ export default class Mapper extends React.Component {
 				<Form 
 					onChange={this.handleChangeInput}
 				>
-					{Object.keys(map).map(key => {
-						const item = map[key];
-						const value = data[key];
-						
-						switch (item.type) {
-							case 'boolean':
-								return this.renderCheckboxControl(key, item, value);
-
-							default:
+					<div className="mapper-checkboxes">
+						{Object.keys(checkboxes).map(key => {
+							const item = checkboxes[key];
+							const value = data[key];
+							return this.renderCheckboxControl(key, item, value);
+						})}
+					</div>
+					<div className="mapper-inputs">
+						<FormControlsGroup 
+							columns="10"
+							sideMargin="12"
+						>
+							{Object.keys(inputs).map(key => {
+								const item = inputs[key];
+								const value = data[key];
+								const {options} = item;
+								if (options) {
+									return this.renderSelectControl(key, item, value);	
+								}
 								return this.renderInputControl(key, item, value);
-						}
-						
-					})}
+							})}
+						</FormControlsGroup>
+					</div>
 				</Form>
 			</div>
 		)
 	}
 
 	renderInputControl(name, item, value) {
-		let width = 300;
-		if (item.numeric) {
-			width = 120;
-		}
 		return (
 			<FormControl 
 				key={name}
 				caption={name}
+				size={item.size}
 			>
 				<Input
 					name={name}
 					value={value}
 					placeholder={item.example ? 'Example: ' + item.example : ''}
-					width={width}
+					measure={item.measure}
+					clearable
+				/>
+			</FormControl>
+		)
+	}
+
+	renderSelectControl(name, item, value) {
+		return (
+			<FormControl 
+				key={name}
+				caption={name}
+				size={item.size}
+			>
+				<Select
+					name={name}
+					value={value}
+					options={item.options}
+					placeholder={item.empty}
+					animated
 				/>
 			</FormControl>
 		)
@@ -69,7 +95,7 @@ export default class Mapper extends React.Component {
 		this.handleChange(name, checked);
 	}
 
-	handleChangeInput = (value, name) => {
+	handleChangeInput = (name, value) => {
 		this.handleChange(name, value);
 	}
 

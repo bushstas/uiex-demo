@@ -4,19 +4,54 @@ import Mapper from '../../Mapper';
 
 const DATA = {
 	dynamic: false,
-	emptyTabName: 'New tab'
+	optional: false,
+	multiple: false,
+	simple: false,
+	emptyTabName: 'New tab',
+	buttonWidth: 120,
+	view: 'united'
 }
 
 const MAP = {
-	dynamic: {
-		type: 'boolean',
-		description: 'Dynamic tabs',
-		default: false
+	checkboxes: {
+		simple: {
+			type: 'boolean',
+			description: 'Simple tabs without content',
+			default: false
+		},
+		multiple: {
+			type: 'boolean',
+			description: 'Tabs support multiple select',
+			default: false
+		},
+		dynamic: {
+			type: 'boolean',
+			description: 'Dynamic tabs',
+			default: false
+		},
+		optional: {
+			type: 'boolean',
+			description: 'None of tabs can be selected if true (multiple is always optional)',
+			default: false
+		}
 	},
-	emptyTabName: {
-		description: 'Text of a new added tab',
-		example: 'New tab',
-		default: 'New tab'
+	inputs: {
+		emptyTabName: {
+			description: 'Text of a new added tab',
+			example: 'New tab',
+			default: 'New tab'
+		},
+		buttonWidth: {
+			description: 'Width of tab buttons',
+			example: '120',
+			default: '',
+			measure: 'px'
+		},
+		view: {
+			description: 'Width of tab buttons',
+			options: ['united', 'underlined', 'bordered'],
+			empty: 'Chose an option'
+		}
 	}
 }
 
@@ -66,10 +101,15 @@ export default class TabsDemo extends React.Component {
 					activeStyle={{color: 'black'}}
 					buttonColor="black"
 					activeColor="green"
-					buttonWidth={120}
+					buttonWidth={data.buttonWidth}
 					iconType="awesome"
-					view="united"
+					view={data.view}
+					
+					simple={data.simple}
+					multiple={data.multiple}
 					dynamic={data.dynamic}
+					optional={data.optional}
+
 					onSelect={this.handleSelectTab}
 					onAddTab={this.handleAddTab}
 					onRemoveTab={this.handleRemoveTab}

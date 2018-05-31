@@ -16,42 +16,49 @@ const DATA = {
 }
 
 const MAP = {
-	isOpen: {
-		type: 'boolean',
-		description: 'Open/Close status flag',
-		default: true
+	checkboxes: {
+		isOpen: {
+			type: 'boolean',
+			description: 'Open/Close status flag',
+			default: true
+		},
+		buttonUnder: {
+			type: 'boolean',
+			description: 'Open/Close button is under the box',
+			default: false
+		},
+		fading: {
+			type: 'boolean',
+			description: 'Using fading effect',
+			default: false
+		},
+		inverted: {
+			type: 'boolean',
+			description: 'Box opening is inverted',
+			default: false
+		}
 	},
-	buttonUnder: {
-		type: 'boolean',
-		description: 'Open/Close button is under the box',
-		default: false
-	},
-	fading: {
-		type: 'boolean',
-		description: 'Using fading effect',
-		default: false
-	},
-	inverted: {
-		type: 'boolean',
-		description: 'Box opening is inverted',
-		default: false
-	},
-	button: {
-		description: 'Text of button',
-		example: 'Open/Close',
-		default: ''
-	},
-	speed: {
-		description: 'Animation speed from 1 to 10',
-		example: '5',
-		numeric: true,
-		default: '2'
-	},
-	effect: {
-		type: 'select',
-		description: 'Animation effect',
-		options: ['linear', 'ease', 'ease-in', 'ease-out', 'ease-in-out'],
-		default: 'ease-in-out'
+	inputs: {
+		button: {
+			description: 'Text of button',
+			example: 'Open/Close',
+			default: '',
+			size: 4
+		},
+		speed: {
+			description: 'Animation speed from 1 to 10',
+			example: '5',
+			numeric: true,
+			default: '2',
+			size: 2
+		},
+		effect: {
+			type: 'select',
+			description: 'Animation effect',
+			options: ['linear', 'ease', 'ease-in', 'ease-out', 'ease-in-out'],
+			default: 'ease-in-out',
+			size: 4
+		}
 	}
 }
 

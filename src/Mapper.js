@@ -1,5 +1,13 @@
 import React from 'react';
-import {Checkbox, Input, Select, Form, FormControl, FormControlsGroup} from 'uiex';
+import {
+	Checkbox,
+	Input,
+	InputNumber,
+	Select,
+	Form,
+	FormControl,
+	FormControlsGroup
+} from 'uiex';
 
 export default class Mapper extends React.Component {
 
@@ -42,19 +50,45 @@ export default class Mapper extends React.Component {
 	}
 
 	renderInputControl(name, item, value) {
+		const {
+			maxLength,
+			example,
+			defaultValue,
+			measure,
+			measures,
+			minValue,
+			maxValue
+		} = item;
+
+		let input;
+		const props = {
+			name,
+			value,
+			placeholder: example ? 'Example: ' + example : '',
+			maxLength,
+			defaultValue
+		};
+		switch (item.type) {
+			case 'number':
+				const numberProps = {
+					measure,
+					measures,
+					minValue,
+					maxValue
+				};
+				input = <InputNumber {...props} {...numberProps} onChangeMeasure={this.props.onChangeMeasure}/>
+			break;
+
+			default:
+				input = <Input {...props}/>
+		}
 		return (
 			<FormControl 
 				key={name}
 				caption={name}
 				size={item.size}
 			>
-				<Input
-					name={name}
-					value={value}
-					placeholder={item.example ? 'Example: ' + item.example : ''}
-					measure={item.measure}
-					clearable
-				/>
+				{input}
 			</FormControl>
 		)
 	}

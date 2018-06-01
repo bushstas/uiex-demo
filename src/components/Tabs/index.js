@@ -4,7 +4,7 @@ import Mapper from '../../Mapper';
 
 const DATA = {
 	dynamic: false,
-	optional: false,
+	optional: true,
 	multiple: false,
 	simple: false,
 	emptyTabName: 'New tab',
@@ -12,39 +12,50 @@ const DATA = {
 	view: 'united'
 }
 
+const MEASURES = [
+	{id: 'px', name: 'px'},
+	{id: '%', name: '%'}
+]
+
 const MAP = {
 	checkboxes: {
 		simple: {
-			type: 'boolean',
 			description: 'Simple tabs without content',
-			default: false
+			defaultValue: false
 		},
 		multiple: {
-			type: 'boolean',
 			description: 'Tabs support multiple select',
-			default: false
+			defaultValue: false
 		},
 		dynamic: {
-			type: 'boolean',
 			description: 'Dynamic tabs',
-			default: false
+			defaultValue: false
 		},
 		optional: {
-			type: 'boolean',
 			description: 'None of tabs can be selected if true (multiple is always optional)',
-			default: false
+			defaultValue: false
 		}
 	},
 	inputs: {
 		emptyTabName: {
 			description: 'Text of a new added tab',
 			example: 'New tab',
-			default: 'New tab'
+			defaultValue: 'New tab',
+			maxLength: 20
 		},
 		buttonWidth: {
+			type: 'number',
 			description: 'Width of tab buttons',
 			example: '120',
-			default: '',
+			maxValue: 1000,
+			measure: 'px',
+			measures: MEASURES
+		},
+		buttonHeight: {
+			type: 'number',
+			description: 'Height of tab buttons',
+			example: '50',
+			maxValue: 200,
 			measure: 'px'
 		},
 		view: {
@@ -81,27 +92,34 @@ export default class TabsDemo extends React.Component {
 		super(props);
 		this.state = {
 			tab: null,
+			map: MAP,
 			tabs: TABS,
-			data: DATA
+			data: DATA,
+			buttonWidthMeasure: 'px'
 		}
 	}
 
 	render() {
-		const {tab, data} = this.state;
+		const {tab, data, map, buttonWidthMeasure} = this.state;
+		let buttonWidth = data.buttonWidth;
+		if (buttonWidth) {
+			buttonWidth += buttonWidthMeasure;
+		}
 		return (
 			<div>
 				<Mapper 
 					name="Tabs"
-					map={MAP} 
+					map={map} 
 					data={data} 
 					onChange={this.handleChangeData}
+					onChangeMeasure={this.handleChangeMeasure}
 				/>
 				<Tabs 
 					activeTab={tab}
-					activeStyle={{color: 'black'}}
-					buttonColor="black"
+					buttonColor="none"
 					activeColor="green"
-					buttonWidth={data.buttonWidth}
+					buttonWidth={buttonWidth}
+					buttonHeight={data.buttonHeight}
 					iconType="awesome"
 					view={data.view}
 					
@@ -161,5 +179,17 @@ export default class TabsDemo extends React.Component {
 		const {tabs} = this.state;
 		tabs.splice(index, 1);
 		this.setState({tabs: [...tabs]});
+	}
+
+	handleChangeMeasure = (id, idx, name) => {
+		const {map} = this.state;
+		const {inputs} = map;
+		inputs[name].measure = id;
+		if (id == 'px') {
+			inputs[name].maxValue = 1000;
+		} else {
+			inputs[name].maxValue = 100;
+		}
+		this.setState({map, buttonWidthMeasure: id});
 	}
 }

@@ -1,15 +1,16 @@
 import React from 'react';
 import {Tabs, Tab} from 'uiex';
 import Mapper from '../../Mapper';
+import ButtonGroupMapper from '../ButtonGroupMapper';
 
 const DATA = {
 	dynamic: false,
-	optional: true,
+	optional: false,
 	multiple: false,
 	simple: false,
 	emptyTabName: 'New tab',
 	buttonWidth: 120,
-	view: 'united'
+	view: null
 }
 
 const MEASURES = [
@@ -42,26 +43,6 @@ const MAP = {
 			example: 'New tab',
 			defaultValue: 'New tab',
 			maxLength: 20
-		},
-		buttonWidth: {
-			type: 'number',
-			description: 'Width of tab buttons',
-			example: '120',
-			maxValue: 1000,
-			measure: 'px',
-			measures: MEASURES
-		},
-		buttonHeight: {
-			type: 'number',
-			description: 'Height of tab buttons',
-			example: '50',
-			maxValue: 200,
-			measure: 'px'
-		},
-		view: {
-			description: 'Width of tab buttons',
-			options: ['united', 'underlined', 'bordered'],
-			empty: 'Chose an option'
 		}
 	}
 }
@@ -95,18 +76,24 @@ export default class TabsDemo extends React.Component {
 			map: MAP,
 			tabs: TABS,
 			data: DATA,
-			buttonWidthMeasure: 'px'
+			buttonWidthMeasure: 'px',
+			noRemoving: false
 		}
 	}
 
 	render() {
-		const {tab, data, map, buttonWidthMeasure} = this.state;
+		const {tab, data, map, buttonWidthMeasure, noRemoving} = this.state;
 		let buttonWidth = data.buttonWidth;
 		if (buttonWidth) {
 			buttonWidth += buttonWidthMeasure;
 		}
 		return (
 			<div>
+				<ButtonGroupMapper
+					data={data}
+					onChange={this.handleChangeData}
+					onChangeMeasure={this.handleChangeMeasure}
+				/>
 				<Mapper 
 					name="Tabs"
 					map={map} 
@@ -116,8 +103,8 @@ export default class TabsDemo extends React.Component {
 				/>
 				<Tabs 
 					activeTab={tab}
-					buttonColor="none"
-					activeColor="green"
+					buttonColor={data.buttonColor}
+					activeColor={data.activeColor}
 					buttonWidth={buttonWidth}
 					buttonHeight={data.buttonHeight}
 					iconType="awesome"
@@ -132,6 +119,7 @@ export default class TabsDemo extends React.Component {
 					onAddTab={this.handleAddTab}
 					onRemoveTab={this.handleRemoveTab}
 					emptyTabName={data.emptyTabName}
+					noRemoving={noRemoving}
 				>
 					{this.renderTabs()}
 				</Tabs>
@@ -178,7 +166,8 @@ export default class TabsDemo extends React.Component {
 	handleRemoveTab = (index) => {
 		const {tabs} = this.state;
 		tabs.splice(index, 1);
-		this.setState({tabs: [...tabs]});
+		const noRemoving = tabs.length < 2;
+		this.setState({tabs: [...tabs], noRemoving});
 	}
 
 	handleChangeMeasure = (id, idx, name) => {

@@ -1,6 +1,6 @@
 import React from 'react';
+import {UIEXCONSTS} from 'uiex';
 import Mapper from '../Mapper';
-
 
 const MEASURES = [
 	{id: 'px', name: 'px'},
@@ -29,17 +29,17 @@ const MAP = {
 		},
 		view: {
 			description: 'Width of tab buttons',
-			options: ['simple', 'united', 'underlined', 'bordered'],
+			options: UIEXCONSTS.BUTTONS_VIEW,
 			empty: 'Chose an option'
 		},
 		buttonColor: {
 			description: 'Color of tab buttons',
-			options: ['black', 'gray', 'white', 'red', 'blue', 'green', 'yellow', 'orange'],
+			options: UIEXCONSTS.COLORS,
 			empty: 'Chose an option'
 		},
 		activeColor: {
 			description: 'Color of an active tab buttons',
-			options: ['black', 'gray', 'white', 'red', 'blue', 'green', 'yellow', 'orange'],
+			options: UIEXCONSTS.COLORS,
 			empty: 'Chose an option'
 		}
 	}

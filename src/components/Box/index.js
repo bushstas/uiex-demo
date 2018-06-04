@@ -1,5 +1,5 @@
 import React from 'react';
-import {Box, Button} from 'uiex';
+import {Box, Button, UIEXCONSTS} from 'uiex';
 import Mapper from '../../Mapper';
 
 import './style.scss';
@@ -55,7 +55,7 @@ const MAP = {
 		effect: {
 			type: 'select',
 			description: 'Animation effect',
-			options: ['linear', 'ease', 'ease-in', 'ease-out', 'ease-in-out'],
+			options: UIEXCONSTS.ANIM_EFFECTS,
 			default: 'ease-in-out',
 			size: 4
 		}

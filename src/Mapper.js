@@ -6,7 +6,7 @@ import {
 	Select,
 	Form,
 	FormControl,
-	FormControlsGroup
+	FormControlGroup
 } from 'uiex';
 
 export default class Mapper extends React.Component {
@@ -29,7 +29,7 @@ export default class Mapper extends React.Component {
 						})}
 					</div>
 					<div className="mapper-inputs">
-						<FormControlsGroup 
+						<FormControlGroup 
 							columns="10"
 							sideMargin="12"
 						>
@@ -42,7 +42,7 @@ export default class Mapper extends React.Component {
 								}
 								return this.renderInputControl(key, item, value);
 							})}
-						</FormControlsGroup>
+						</FormControlGroup>
 					</div>
 				</Form>
 			</div>

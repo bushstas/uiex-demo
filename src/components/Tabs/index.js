@@ -10,7 +10,8 @@ const DATA = {
 	simple: false,
 	emptyTabName: 'New tab',
 	buttonWidth: 120,
-	view: null
+	view: null,
+	iconType: 'awesome'
 }
 
 const MEASURES = [
@@ -37,14 +38,16 @@ const MAP = {
 			defaultValue: false
 		}
 	},
-	inputs: {
-		emptyTabName: {
-			description: 'Text of a new added tab',
-			example: 'New tab',
-			defaultValue: 'New tab',
-			maxLength: 20
+	inputs: [
+		{
+			emptyTabName: {
+				description: 'Text of a new added tab',
+				example: 'New tab',
+				defaultValue: 'New tab',
+				maxLength: 20
+			}
 		}
-	}
+	]
 }
 
 const TABS = [
@@ -92,33 +95,20 @@ export default class TabsDemo extends React.Component {
 				<ButtonGroupMapper
 					data={data}
 					onChange={this.handleChangeData}
-					onChangeMeasure={this.handleChangeMeasure}
 				/>
 				<Mapper 
 					name="Tabs"
 					map={map} 
 					data={data} 
 					onChange={this.handleChangeData}
-					onChangeMeasure={this.handleChangeMeasure}
 				/>
 				<Tabs 
+					{...data}
 					activeTab={tab}
-					buttonColor={data.buttonColor}
-					activeColor={data.activeColor}
 					buttonWidth={buttonWidth}
-					buttonHeight={data.buttonHeight}
-					iconType="awesome"
-					view={data.view}
-					
-					simple={data.simple}
-					multiple={data.multiple}
-					dynamic={data.dynamic}
-					optional={data.optional}
-
 					onSelect={this.handleSelectTab}
 					onAddTab={this.handleAddTab}
-					onRemoveTab={this.handleRemoveTab}
-					emptyTabName={data.emptyTabName}
+					onRemoveTab={this.handleRemoveTab}					
 					noRemoving={noRemoving}
 				>
 					{this.renderTabs()}
@@ -168,17 +158,5 @@ export default class TabsDemo extends React.Component {
 		tabs.splice(index, 1);
 		const noRemoving = tabs.length < 2;
 		this.setState({tabs: [...tabs], noRemoving});
-	}
-
-	handleChangeMeasure = (id, idx, name) => {
-		const {map} = this.state;
-		const {inputs} = map;
-		inputs[name].measure = id;
-		if (id == 'px') {
-			inputs[name].maxValue = 1000;
-		} else {
-			inputs[name].maxValue = 100;
-		}
-		this.setState({map, buttonWidthMeasure: id});
 	}
 }

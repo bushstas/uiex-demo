@@ -20,6 +20,10 @@ export default class Mapper extends React.Component {
 				</div>
 				<Form 
 					onChange={this.handleChangeInput}
+					submit="Применить"
+					clear="Очистить"
+					columns="9"
+					controlSize="3"
 				>
 					<div className="mapper-checkboxes">
 						{Object.keys(checkboxes).map(key => {
@@ -28,21 +32,22 @@ export default class Mapper extends React.Component {
 							return this.renderCheckboxControl(key, item, value);
 						})}
 					</div>
-					<div className="mapper-inputs">
-						<FormControlGroup 
-							columns="10"
-							sideMargin="12"
-						>
-							{Object.keys(inputs).map(key => {
-								const item = inputs[key];
-								const value = data[key];
-								const {options} = item;
-								if (options) {
-									return this.renderSelectControl(key, item, value);	
-								}
-								return this.renderInputControl(key, item, value);
-							})}
-						</FormControlGroup>
+					<div className="mapper-inputs">						
+						{inputs.map((inps, idx) => {
+							return (
+								<FormControlGroup key={idx}>
+									{Object.keys(inps).map(key => {
+										const item = inps[key];
+										const value = data[key];
+										const {options} = item;
+										if (options) {
+											return this.renderSelectControl(key, item, value);	
+										}
+										return this.renderInputControl(key, item, value);
+									})}
+								</FormControlGroup>
+							)
+						})}						
 					</div>
 				</Form>
 			</div>
@@ -87,6 +92,7 @@ export default class Mapper extends React.Component {
 				key={name}
 				caption={name}
 				size={item.size}
+				shift={item.shift}
 			>
 				{input}
 			</FormControl>

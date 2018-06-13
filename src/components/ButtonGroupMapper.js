@@ -1,5 +1,5 @@
 import React from 'react';
-import {UIEXCONSTS} from 'uiex';
+import {UIEXCONSTS, InputPhone} from 'uiex';
 import Mapper from '../Mapper';
 
 const MEASURES = [
@@ -66,12 +66,14 @@ export default class ButtonGroupMapper extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			map: MAP
+			map: MAP,
+			vvv: ''
 		}
 	}
 
 	render() {
 		return (
+			<div>
 			<Mapper 
 				name="ButtonGroup"
 				map={this.state.map} 
@@ -79,13 +81,14 @@ export default class ButtonGroupMapper extends React.Component {
 				onChange={this.props.onChange}
 				onChangeMeasure={this.handleChangeMeasure}
 			/>
+			<InputPhone withCode code="+76" mask="(XXX) XXX-XX-XX" value={this.state.vvv} onChange={this.handleChange}/>
+			</div>
 		)
 	}
 
 	handleChangeMeasure = (id, idx, name) => {
 		const {map} = this.state;
 		const {inputs} = map;
-		console.log(inputs)
 		let inp;
 		for (let item of inputs) {
 			if (item[name]) {
@@ -102,5 +105,10 @@ export default class ButtonGroupMapper extends React.Component {
 			}
 			this.setState({map, buttonWidthMeasure: id});
 		}
+	}
+
+	handleChange = (v) => {
+		console.log(v)
+		this.setState({vvv: v})
 	}
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Tabs, Tab} from 'uiex';
+import {Tabs, Tab, UIEXCONSTS} from 'uiex';
 import Mapper from '../../Mapper';
 import ButtonGroupMapper from '../ButtonGroupMapper';
 
@@ -9,9 +9,9 @@ const DATA = {
 	multiple: false,
 	simple: false,
 	emptyTabName: 'New tab',
-	buttonWidth: 120,
 	view: null,
-	iconType: 'awesome'
+	iconType: 'IcoMoon',
+	iconSize: 18
 }
 
 const MEASURES = [
@@ -45,6 +45,11 @@ const MAP = {
 				example: 'New tab',
 				defaultValue: 'New tab',
 				maxLength: 20
+			},
+			activeColor: {
+				description: 'Color of an active tab buttons',
+				options: UIEXCONSTS.COLORS,
+				empty: 'Chose an option'
 			}
 		}
 	]
@@ -53,20 +58,22 @@ const MAP = {
 const TABS = [
 	{
 		caption: 'Details',
-		icon: 'car',
+		icon: 'blogger',
 		value: 1
 	},
 	{
 		caption: 'Products',
-		icon: 'user-circle',
+		icon: 'cloud',
 		value: 2
 	},
 	{
 		caption: 'Items',
+		icon: 'confused2',
 		value: 3
 	},
 	{
 		caption: 'Contacts',
+		icon: 'evil',
 		value: 4
 	}
 ]

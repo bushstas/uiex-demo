@@ -20,10 +20,8 @@ export default class Mapper extends React.Component {
 				</div>
 				<Form 
 					onChange={this.handleChangeInput}
-					submit="Применить"
-					clear="Очистить"
-					columns="9"
-					controlSize="3"
+					columns="12"
+					controlSize="2"
 				>
 					<div className="mapper-checkboxes">
 						{Object.keys(checkboxes).map(key => {
@@ -38,7 +36,10 @@ export default class Mapper extends React.Component {
 								<FormControlGroup key={idx}>
 									{Object.keys(inps).map(key => {
 										const item = inps[key];
-										const value = data[key];
+										let value = data[key];
+										if (typeof value == 'undefined') {
+											value = item.value;
+										}
 										const {options} = item;
 										if (options) {
 											return this.renderSelectControl(key, item, value);	

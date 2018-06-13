@@ -12,6 +12,10 @@ const MAP = {
 		gradient: {
 			description: 'Using gradient',
 			defaultValue: false
+		},
+		iconAtRight: {
+			description: 'Icon is located at right',
+			defaultValue: false
 		}
 	},
 	inputs: [
@@ -29,8 +33,13 @@ const MAP = {
 				description: 'Height of tab buttons',
 				example: '50',
 				maxValue: 200,
-				measure: 'px',
-				shift: 3
+				measure: 'px'
+			},
+			iconSize: {
+				type: 'number',
+				description: 'Height of tab buttons',
+				example: '20',
+				maxValue: 80
 			}
 		},
 		{
@@ -44,10 +53,10 @@ const MAP = {
 				options: UIEXCONSTS.COLORS,
 				empty: 'Chose an option'
 			},
-			activeColor: {
-				description: 'Color of an active tab buttons',
-				options: UIEXCONSTS.COLORS,
-				empty: 'Chose an option'
+			iconType: {
+				description: 'Icon type',
+				options: UIEXCONSTS.ICON_TYPE,
+				empty: 'Chose an option'	
 			}
 		}
 	]

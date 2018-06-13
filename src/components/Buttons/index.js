@@ -1,10 +1,11 @@
 import React from 'react';
 import {Button, ButtonGroup} from 'uiex';
+import ButtonGroupMapper from '../ButtonGroupMapper';
 
 import './style.scss';
 
 const DATA = {
-	classes: 'demo'
+	iconSize: 18
 }
 
 const BUTTONS_DATA = {
@@ -29,15 +30,20 @@ export default class ButtonsDemo extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			open: true
+			data: DATA
 		}
 	}
 
 	render() {
+		const {data} = this.state;
 		return (
-			<div onClick={this.toggleBox} style={{height: '1000px'}}>
+			<div>
+				<ButtonGroupMapper
+					data={data}
+					onChange={this.handleChangeData}
+				/>
 				<ButtonGroup
-					{...DATA}
+					{...data}
 					onClick={this.handleButtonClick}
 					onDisabledClick={this.handleDisabledButtonClick}
 				>
@@ -60,15 +66,15 @@ export default class ButtonsDemo extends React.Component {
 		})
 	}
 
-	toggleBox = () => {
-		this.setState({open: !this.state.open});
-	}
-
 	handleButtonClick = (selectedItem) => {
 		this.setState({selectedItem});
 	}
 
 	handleDisabledButtonClick = (value) => {
 		alert(value + ' is disabled')
+	}
+
+	handleChangeData = (data) => {
+		this.setState({data});
 	}
 }

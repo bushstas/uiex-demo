@@ -38,28 +38,30 @@ const MAP = {
 			default: false
 		}
 	},
-	inputs: {
-		button: {
-			description: 'Text of button',
-			example: 'Open/Close',
-			default: '',
-			size: 4
-		},
-		speed: {
-			description: 'Animation speed from 1 to 10',
-			example: '5',
-			numeric: true,
-			default: '2',
-			size: 2
-		},
-		effect: {
-			type: 'select',
-			description: 'Animation effect',
-			options: UIEXCONSTS.ANIM_EFFECTS,
-			default: 'ease-in-out',
-			size: 4
+	inputs: [
+		{
+			button: {
+				description: 'Text of button',
+				example: 'Open/Close',
+				default: '',
+				size: 4
+			},
+			speed: {
+				description: 'Animation speed from 1 to 10',
+				example: '5',
+				numeric: true,
+				default: '2',
+				size: 2
+			},
+			effect: {
+				type: 'select',
+				description: 'Animation effect',
+				options: UIEXCONSTS.ANIM_EFFECTS,
+				default: 'ease-in-out',
+				size: 4
+			}
 		}
-	}
+	]
 }
 
 export default class ButtonsDemo extends React.Component {

@@ -139,7 +139,7 @@ export default class TabsDemo extends React.Component {
 		});
 	}
 
-	handleChangeData = (data) => {
+	handleChangeData = (data) => {console.log(data)
 		this.setState({data});
 	}
 

@@ -1,6 +1,10 @@
 import React from 'react';
 
 const PAGES = [
+	'Input',
+	'InputDate',
+	'InputNumber',
+	'InputPhone',
 	'Box',
 	'ButtonGroup',
 	'Tabs'

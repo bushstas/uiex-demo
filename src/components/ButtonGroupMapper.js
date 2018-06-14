@@ -1,6 +1,7 @@
 import React from 'react';
-import {UIEXCONSTS, InputPhone, Checkbox} from 'uiex';
+import {UIEXCONSTS} from 'uiex';
 import Mapper from '../Mapper';
+import ComponentMapper from './ComponentMapper';
 
 const MEASURES = [
 	{id: 'px', name: 'px'},
@@ -42,9 +43,7 @@ const MAP = {
 				description: 'Height of tab buttons',
 				example: '20',
 				maxValue: 80,
-				positive: true,
-				decimal: true,
-				toFixed: '2'
+				positive: true
 			}
 		},
 		{
@@ -72,24 +71,25 @@ export default class ButtonGroupMapper extends React.Component {
 		super(props);
 		this.state = {
 			map: MAP,
-			vvv: ''
+			vvv: '',
+			ddd: ''
 		}
 	}
 
 	render() {
 		return (
 			<div>
-			<Mapper 
-				name="ButtonGroup"
-				map={this.state.map} 
-				data={this.props.data} 
-				onChange={this.props.onChange}
-				onChangeMeasure={this.handleChangeMeasure}
-			/>
-			<InputPhone withCode numericCode="8" code="+7 " mask="(XXX) XXX-XX-XX" value={this.state.vvv} onChange={this.handleChange}/>
-			<Checkbox checked={true} block>
-				Выбери меня
-			</Checkbox>
+				<ComponentMapper 
+					data={this.props.data} 
+					onChange={this.props.onChange}
+				/>
+				<Mapper 
+					name="ButtonGroup"
+					map={this.state.map} 
+					data={this.props.data} 
+					onChange={this.props.onChange}
+					onChangeMeasure={this.handleChangeMeasure}
+				/>
 			</div>
 		)
 	}
@@ -116,7 +116,10 @@ export default class ButtonGroupMapper extends React.Component {
 	}
 
 	handleChange = (v) => {
-		console.log(v)
 		this.setState({vvv: v})
+	}
+
+	handleChange2 = (v) => {
+		this.setState({ddd: v})
 	}
 }

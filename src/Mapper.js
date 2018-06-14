@@ -63,7 +63,11 @@ export default class Mapper extends React.Component {
 			measure,
 			measures,
 			minValue,
-			maxValue
+			maxValue,
+			positive,
+			negative,
+			decimal,
+			toFixed
 		} = item;
 
 		let input;
@@ -80,7 +84,11 @@ export default class Mapper extends React.Component {
 					measure,
 					measures,
 					minValue,
-					maxValue
+					maxValue,
+					positive,
+					negative,
+					decimal,
+					toFixed
 				};
 				input = <InputNumber {...props} {...numberProps} onChangeMeasure={this.props.onChangeMeasure}/>
 			break;

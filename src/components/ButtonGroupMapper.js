@@ -1,5 +1,5 @@
 import React from 'react';
-import {UIEXCONSTS, InputPhone} from 'uiex';
+import {UIEXCONSTS, InputPhone, Checkbox} from 'uiex';
 import Mapper from '../Mapper';
 
 const MEASURES = [
@@ -26,20 +26,25 @@ const MAP = {
 				example: '120',
 				maxValue: 1000,
 				measure: 'px',
-				measures: MEASURES
+				measures: MEASURES,
+				positive: true
 			},
 			buttonHeight: {
 				type: 'number',
 				description: 'Height of tab buttons',
 				example: '50',
 				maxValue: 200,
-				measure: 'px'
+				measure: 'px',
+				positive: true
 			},
 			iconSize: {
 				type: 'number',
 				description: 'Height of tab buttons',
 				example: '20',
-				maxValue: 80
+				maxValue: 80,
+				positive: true,
+				decimal: true,
+				toFixed: '2'
 			}
 		},
 		{
@@ -81,7 +86,10 @@ export default class ButtonGroupMapper extends React.Component {
 				onChange={this.props.onChange}
 				onChangeMeasure={this.handleChangeMeasure}
 			/>
-			<InputPhone withCode code="+76" mask="(XXX) XXX-XX-XX" value={this.state.vvv} onChange={this.handleChange}/>
+			<InputPhone withCode numericCode="8" code="+7 " mask="(XXX) XXX-XX-XX" value={this.state.vvv} onChange={this.handleChange}/>
+			<Checkbox checked={true} block>
+				Выбери меня
+			</Checkbox>
 			</div>
 		)
 	}

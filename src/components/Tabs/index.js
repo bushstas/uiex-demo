@@ -100,6 +100,7 @@ export default class TabsDemo extends React.Component {
 		return (
 			<div>
 				<ButtonGroupMapper
+					isOpen={false}
 					data={data}
 					onChange={this.handleChangeData}
 				/>
@@ -139,7 +140,7 @@ export default class TabsDemo extends React.Component {
 		});
 	}
 
-	handleChangeData = (data) => {console.log(data)
+	handleChangeData = (data) => {
 		this.setState({data});
 	}
 

@@ -1,15 +1,37 @@
 import React from 'react';
 import Mapper from '../Mapper';
+import {UIEXCONSTS} from 'uiex';
 
 const MEASURES = [
 	{id: 'px', name: 'px'},
 	{id: '%', name: '%'}
 ]
 
+// children: PROPTYPE.REACT_NODES,
+//     title: PropTypes.string,
+//     classes: PROPTYPE.STRINGS,
+//     className: PropTypes.string,
+//     style: PropTypes.object,
+
+
+
+
 const MAP = {
 	checkboxes: {
 		block: {
 			description: 'Display block',
+			defaultValue: false
+		},
+		disabled: {
+			description: 'Disabled',
+			defaultValue: false
+		},
+		hidden: {
+			description: 'hidden',
+			defaultValue: false
+		},
+		vertical: {
+			description: 'vertical',
 			defaultValue: false
 		}
 	},
@@ -31,6 +53,24 @@ const MAP = {
 				maxValue: 200,
 				measure: 'px',
 				positive: true
+			},
+			float: {
+				description: 'float',
+				options: UIEXCONSTS.FLOAT,
+				empty: 'Chose an option'
+			},
+			align: {
+				description: 'align',
+				options: UIEXCONSTS.ALIGN,
+				empty: 'Chose an option'
+			},
+			valign: {
+				description: 'valign',
+				options: UIEXCONSTS.VALIGN,
+				empty: 'Chose an option'
+			},
+			className: {
+				description: 'className'
 			}
 		}
 	]
@@ -47,6 +87,7 @@ export default class ComponentMapper extends React.Component {
 	render() {
 		return (
 			<Mapper 
+				isOpen={this.props.isOpen}
 				name="UIEXComponent"
 				map={this.state.map} 
 				data={this.props.data} 

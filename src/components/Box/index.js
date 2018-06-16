@@ -8,9 +8,8 @@ const DATA = {
 	classes: 'demo',
 	isOpen: true,
 	buttonUnder: false,
-	speed: 4,
-	inverted: true,
-	fading: true,
+	speed: 'fast',
+	animation: 'fade-fall',
 	effect: 'ease-in-out',
 	button: 'Open the box/Close the box'
 }
@@ -26,16 +25,6 @@ const MAP = {
 			type: 'boolean',
 			description: 'Open/Close button is under the box',
 			default: false
-		},
-		fading: {
-			type: 'boolean',
-			description: 'Using fading effect',
-			default: false
-		},
-		inverted: {
-			type: 'boolean',
-			description: 'Box opening is inverted',
-			default: false
 		}
 	},
 	inputs: [
@@ -43,22 +32,25 @@ const MAP = {
 			button: {
 				description: 'Text of button',
 				example: 'Open/Close',
-				default: '',
-				size: 4
+				default: ''
+			},
+			animation: {
+				type: 'select',
+				description: 'Animation type',
+				options: UIEXCONSTS.ANIM_TYPE,
+				default: 'fade-fall'
 			},
 			speed: {
+				type: 'select',
 				description: 'Animation speed from 1 to 10',
-				example: '5',
-				numeric: true,
-				default: '2',
-				size: 2
+				options: UIEXCONSTS.ANIM_SPEED,
+				default: 'fast'
 			},
 			effect: {
 				type: 'select',
 				description: 'Animation effect',
 				options: UIEXCONSTS.ANIM_EFFECTS,
-				default: 'ease-in-out',
-				size: 4
+				default: 'ease-in-out'
 			}
 		}
 	]
@@ -82,7 +74,7 @@ export default class ButtonsDemo extends React.Component {
 					data={this.state.data} 
 					onChange={this.handleChangeData}
 				/>
-				<Box {...this.state.data} onToggle={this.toggleBox}>
+				<Box {...this.state.data} onToggle={this.handleToggleBox}>
 					<h3>The standard Lorem Ipsum passage, used since the 1500s</h3>
 					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
@@ -99,12 +91,12 @@ export default class ButtonsDemo extends React.Component {
 		)
 	}
 
-	toggleBox = () => {
+	handleToggleBox = (isOpen) => {
 		const data = this.state.data;
 		this.setState({
 			data: {
 				...this.state.data,
-				isOpen: !data.isOpen
+				isOpen
 			}
 		});
 	}

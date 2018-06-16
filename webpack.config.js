@@ -108,8 +108,10 @@ if (env !== 'production') {
         contentBase: pr(__dirname, 'public'),
         historyApiFallback: true,
         hot: true,
-        inline: true
-    };
+        inline: true,
+        compress: true,
+        port: 9000    
+    }
 }
 
 module.exports = config;

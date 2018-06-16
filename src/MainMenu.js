@@ -1,12 +1,14 @@
 import React from 'react';
 
 const PAGES = [
+	'Box',
+	'BoxSection',
+	'ButtonGroup',
 	'Input',
 	'InputDate',
 	'InputNumber',
 	'InputPhone',
-	'Box',
-	'ButtonGroup',
+	
 	'Tabs'
 ]
 

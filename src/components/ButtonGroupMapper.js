@@ -3,6 +3,18 @@ import {UIEXCONSTS} from 'uiex';
 import Mapper from '../Mapper';
 import ComponentMapper from './ComponentMapper';
 
+const viewOptions = [];
+var icons = ['dashboard', 'delete', 'room', 'verified_user'];
+let i = 0;
+for (let item of UIEXCONSTS.BUTTONS_VIEW) {
+	viewOptions.push({
+		title: item,
+		value: item,
+		icon: icons[i]
+	});
+	i++;
+}
+
 const MEASURES = [
 	{id: 'px', name: 'px'},
 	{id: '%', name: '%'}
@@ -49,7 +61,7 @@ const MAP = {
 		{
 			view: {
 				description: 'Width of tab buttons',
-				options: UIEXCONSTS.BUTTONS_VIEW,
+				options: viewOptions,
 				empty: 'Chose an option'
 			},
 			buttonColor: {
@@ -77,17 +89,20 @@ export default class ButtonGroupMapper extends React.Component {
 	}
 
 	render() {
+		const {isOpen = true, data, onChange} = this.props;
 		return (
 			<div>
 				<ComponentMapper 
-					data={this.props.data} 
-					onChange={this.props.onChange}
+					isOpen={false}
+					data={data} 
+					onChange={onChange}
 				/>
 				<Mapper 
+					isOpen={isOpen}
 					name="ButtonGroup"
 					map={this.state.map} 
-					data={this.props.data} 
-					onChange={this.props.onChange}
+					data={data} 
+					onChange={onChange}
 					onChangeMeasure={this.handleChangeMeasure}
 				/>
 			</div>

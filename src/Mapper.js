@@ -4,13 +4,20 @@ import {
 	Input,
 	InputNumber,
 	Select,
+	SelectOption,
 	Form,
 	FormControl,
 	FormControlGroup,
-	BoxSection
+	BoxSection,
+	AutoComplete
 } from 'uiex';
 
 export default class Mapper extends React.Component {
+
+	constructor(props) {
+		super(props);
+		this.state = {}
+	}
 
 	render() {
 		const {map: {checkboxes, inputs}, data, name, isOpen = true} = this.props;
@@ -54,11 +61,30 @@ export default class Mapper extends React.Component {
 									</FormControlGroup>
 								)
 							})}
+							<AutoComplete 
+								name="aaa" 
+								value={this.state.ac} 
+								onChange={this.handleChangeAC}
+							>
+								<SelectOption value="bad">
+									Bad
+								</SelectOption>
+								<SelectOption value="normal">
+									Normal
+								</SelectOption>
+								<SelectOption value="good">
+									Good
+								</SelectOption>
+							</AutoComplete>
 						</div>
 					</Form>
 				</BoxSection>
 			</div>
 		)
+	}
+
+	handleChangeAC = (ac) => {
+		this.setState({ac})
 	}
 
 	renderInputControl(name, item, value) {

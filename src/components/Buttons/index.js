@@ -75,6 +75,6 @@ export default class ButtonsDemo extends React.Component {
 	}
 
 	handleChangeData = (data) => {
-		this.setState({data});
+		this.setState({...data});
 	}
 }

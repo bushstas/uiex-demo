@@ -12,11 +12,15 @@ import {
 	AutoComplete
 } from 'uiex';
 
+const OPTIONS =['Awesome', 'Fake', 'Goofie', 'Bad', 'Fucked', 'Fantastic', 'Bold', 'Lovely', 'Green', 'Good', 'Normal', 'Scary', 'Well', 'Safe', 'Lonely', 'Silent', 'Stormy', 'Wet'];
+
 export default class Mapper extends React.Component {
 
 	constructor(props) {
 		super(props);
-		this.state = {}
+		this.state = {
+			options: OPTIONS
+		}
 	}
 
 	render() {
@@ -61,21 +65,14 @@ export default class Mapper extends React.Component {
 									</FormControlGroup>
 								)
 							})}
-							<AutoComplete 
+							<Select 
 								name="aaa" 
 								value={this.state.ac} 
-								onChange={this.handleChangeAC}
+								onChange={this.handleChangeAC}								
+								options={this.state.options}
+								multiple
 							>
-								<SelectOption value="bad">
-									Bad
-								</SelectOption>
-								<SelectOption value="normal">
-									Normal
-								</SelectOption>
-								<SelectOption value="good">
-									Good
-								</SelectOption>
-							</AutoComplete>
+							</Select>
 						</div>
 					</Form>
 				</BoxSection>
@@ -84,8 +81,20 @@ export default class Mapper extends React.Component {
 	}
 
 	handleChangeAC = (ac) => {
+		console.log(ac)
 		this.setState({ac})
 	}
+
+	// handleInputAC = (value) => {
+	// 	const regex = new RegExp('^' + value.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'i');
+	// 	const options = [];
+	// 	for (let option of OPTIONS) {
+	// 		if (regex.test(option)) {
+	// 			options.push(option);
+	// 		}
+	// 	}
+	// 	this.setState({options});
+	// }
 
 	renderInputControl(name, item, value) {
 		const {
@@ -108,7 +117,8 @@ export default class Mapper extends React.Component {
 			value,
 			placeholder: example ? 'Example: ' + example : '',
 			maxLength,
-			defaultValue
+			defaultValue,
+			clearable: true
 		};
 		switch (item.type) {
 			case 'number':

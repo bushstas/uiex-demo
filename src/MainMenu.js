@@ -1,6 +1,7 @@
 import React from 'react';
 
 const PAGES = [
+	'AutoComplete',
 	'Box',
 	'BoxSection',
 	'ButtonGroup',
@@ -8,7 +9,7 @@ const PAGES = [
 	'InputDate',
 	'InputNumber',
 	'InputPhone',
-	
+	'Tab',
 	'Tabs'
 ]
 

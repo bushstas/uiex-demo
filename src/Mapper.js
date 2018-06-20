@@ -9,17 +9,20 @@ import {
 	FormControl,
 	FormControlGroup,
 	BoxSection,
-	AutoComplete
+	AutoComplete,
+	MultiSelect,
+	InputBoolean,
+	CheckboxGroup
 } from 'uiex';
 
-const OPTIONS =['Awesome', 'Fake', 'Goofie', 'Bad', 'Fucked', 'Fantastic', 'Bold', 'Lovely', 'Green', 'Good', 'Normal', 'Scary', 'Well', 'Safe', 'Lonely', 'Silent', 'Stormy', 'Wet'];
+const OPTIONS =['Awesome', 'Fake', 'Goofie', 'Bad', 'Fucked', 'Fantastic', 'Bold', 'Lovely', 'Green', 'Good', 'Normal', 'Scary', 'Well', 'Safe', 'Lonely', 'Silent', 'Stormy', 'Wet', 'SuperPuperMegaCool'];
 
 export default class Mapper extends React.Component {
 
 	constructor(props) {
 		super(props);
 		this.state = {
-			options: OPTIONS
+	
 		}
 	}
 
@@ -56,23 +59,18 @@ export default class Mapper extends React.Component {
 											if (typeof value == 'undefined') {
 												value = item.value;
 											}
-											const {options} = item;
+											const {options, checkboxes} = item;
 											if (options) {
 												return this.renderSelectControl(key, item, value);	
+											}
+											if (checkboxes) {
+												return this.renderCheckboxesGroupControl(key, item, value);	
 											}
 											return this.renderInputControl(key, item, value);
 										})}
 									</FormControlGroup>
 								)
 							})}
-							<Select 
-								name="aaa" 
-								value={this.state.ac} 
-								onChange={this.handleChangeAC}								
-								options={this.state.options}
-								multiple
-							>
-							</Select>
 						</div>
 					</Form>
 				</BoxSection>
@@ -80,21 +78,28 @@ export default class Mapper extends React.Component {
 		)
 	}
 
-	handleChangeAC = (ac) => {
-		console.log(ac)
-		this.setState({ac})
+	renderCheckboxesGroupControl(name, item, value) {
+		return (
+			
+			<FormControl 
+				key={name}
+				caption={name}
+				size={item.size}
+			>
+				<CheckboxGroup 
+					name={name}
+					value={value}
+					options={item.checkboxes}
+					icon
+					multiline
+				>
+					<Checkbox value="Lalala">
+						Lalala
+					</Checkbox>
+				</CheckboxGroup>
+			</FormControl>
+		)
 	}
-
-	// handleInputAC = (value) => {
-	// 	const regex = new RegExp('^' + value.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'i');
-	// 	const options = [];
-	// 	for (let option of OPTIONS) {
-	// 		if (regex.test(option)) {
-	// 			options.push(option);
-	// 		}
-	// 	}
-	// 	this.setState({options});
-	// }
 
 	renderInputControl(name, item, value) {
 		const {
@@ -135,6 +140,10 @@ export default class Mapper extends React.Component {
 				input = <InputNumber {...props} {...numberProps} onChangeMeasure={this.props.onChangeMeasure}/>
 			break;
 
+			case 'boolean':
+				input = <InputBoolean {...props}/>
+			break;
+
 			default:
 				input = <Input {...props}/>
 		}
@@ -151,13 +160,20 @@ export default class Mapper extends React.Component {
 	}
 
 	renderSelectControl(name, item, value) {
+		let SelectComponent = Select;
+		if (item.multiple) {
+			SelectComponent = MultiSelect;
+		}
+		if (item.autoComplete) {
+			SelectComponent = AutoComplete;
+		}
 		return (
 			<FormControl 
 				key={name}
 				caption={name}
 				size={item.size}
 			>
-				<Select
+				<SelectComponent
 					empty
 					name={name}
 					value={value}

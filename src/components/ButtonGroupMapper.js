@@ -20,6 +20,8 @@ const MEASURES = [
 	{id: '%', name: '%'}
 ]
 
+const OPTIONS =['Awesome', 'Fake', 'Goofie', 'Bad', 'Fucked', 'Fantastic', 'Bold', 'Lovely', 'Green', 'Good', 'Normal', 'Scary', 'Well', 'Safe', 'Lonely', 'Silent', 'Stormy', 'Wet', 'SuperPuperMegaCool'];
+
 const MAP = {
 	checkboxes: {
 		gradient: {
@@ -56,6 +58,10 @@ const MAP = {
 				example: '20',
 				maxValue: 80,
 				positive: true
+			},
+			gradient: {
+				type: 'boolean',
+				description: 'Gradient'
 			}
 		},
 		{
@@ -72,7 +78,18 @@ const MAP = {
 			iconType: {
 				description: 'Icon type',
 				options: UIEXCONSTS.ICON_TYPE,
-				empty: 'Chose an option'	
+				empty: 'Chose an option'
+			},
+			someJunk: {
+				description: 'Some junk',
+				options: OPTIONS,
+				autoComplete: true
+			}
+		},
+		{
+			options: {
+				description: 'options',
+				checkboxes: OPTIONS
 			}
 		}
 	]

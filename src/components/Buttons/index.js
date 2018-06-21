@@ -5,7 +5,8 @@ import ButtonGroupMapper from '../ButtonGroupMapper';
 import './style.scss';
 
 const DATA = {
-	iconSize: 18
+	iconSize: 18,
+	options: {'Others': {checked: null, value: {Vivid: true, Crazy: {checked: null, value: {Placed: true}}}}}
 }
 
 const BUTTONS_DATA = {

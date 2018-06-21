@@ -20,7 +20,7 @@ const MEASURES = [
 	{id: '%', name: '%'}
 ]
 
-const OPTIONS =['Awesome', 'Fake', 'Goofie', 'Bad', 'Fucked', 'Fantastic', 'Bold', 'Lovely', 'Green', 'Good', 'Normal', 'Scary', 'Well', 'Safe', 'Lonely', 'Silent', 'Stormy', 'Wet', 'SuperPuperMegaCool'];
+const OPTIONS =[{value: 'Poor', title: 'Poor'}, 'Awesome', 'Fake', 'Goofie', 'Bad', 'Fucked', 'Fantastic', 'Bold', 'Lovely', 'Green', 'Good', 'Normal', 'Scary', 'Well', 'Safe', 'Lonely', 'Silent', 'Stormy', 'Wet', 'SuperPuperMegaCool', 'Shocked'];
 
 const MAP = {
 	checkboxes: {
@@ -89,7 +89,8 @@ const MAP = {
 		{
 			options: {
 				description: 'options',
-				checkboxes: OPTIONS
+				checkboxes: OPTIONS,
+				size: 'all'
 			}
 		}
 	]

@@ -15,7 +15,7 @@ import {
 	CheckboxGroup
 } from 'uiex';
 
-const OPTIONS =['Awesome', 'Fake', 'Goofie', 'Bad', 'Fucked', 'Fantastic', 'Bold', 'Lovely', 'Green', 'Good', 'Normal', 'Scary', 'Well', 'Safe', 'Lonely', 'Silent', 'Stormy', 'Wet', 'SuperPuperMegaCool'];
+const OPTIONS =['Awesome', 'Fake', 'Goofie', 'Bad', 'Fucked', 'Fantastic', 'Bold', 'Lovely', 'Green', 'Good', 'Normal', 'Scary', 'Well', 'Safe', 'Lonely', 'Silent', 'Stormy', 'Wet', 'SuperPuperMegaCool', 'Shocked'];
 
 export default class Mapper extends React.Component {
 
@@ -79,8 +79,7 @@ export default class Mapper extends React.Component {
 	}
 
 	renderCheckboxesGroupControl(name, item, value) {
-		return (
-			
+		return (			
 			<FormControl 
 				key={name}
 				caption={name}
@@ -92,9 +91,41 @@ export default class Mapper extends React.Component {
 					options={item.checkboxes}
 					icon
 					multiline
+					checkAll
 				>
-					<Checkbox value="Lalala">
-						Lalala
+					<Checkbox value="Others">
+						Others
+						<CheckboxGroup>
+							<Checkbox value="Vivid">
+								Vivid
+							</Checkbox>
+							<Checkbox value="Crazy">
+								Crazy
+								<CheckboxGroup>
+									<Checkbox value="Red">
+										Red
+									</Checkbox>
+									<Checkbox value="Same">
+										Same
+									</Checkbox>
+									<Checkbox value="Placed">
+										Placed
+									</Checkbox>
+									<Checkbox value="Great">
+										Great
+									</Checkbox>
+									<Checkbox value="Huge">
+										Huge
+									</Checkbox>
+									<Checkbox value="Wide">
+										Wide
+									</Checkbox>
+								</CheckboxGroup>
+							</Checkbox>
+							<Checkbox value="Lazy">
+								Lazy
+							</Checkbox>
+						</CheckboxGroup>
 					</Checkbox>
 				</CheckboxGroup>
 			</FormControl>
@@ -179,7 +210,11 @@ export default class Mapper extends React.Component {
 					value={value}
 					options={item.options}
 					placeholder={item.empty}
-				/>
+				>
+					<SelectOption value="Shiny">
+						Shiny
+					</SelectOption>
+				</SelectComponent>
 			</FormControl>
 		)
 	}

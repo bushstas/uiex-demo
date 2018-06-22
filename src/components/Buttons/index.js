@@ -6,7 +6,7 @@ import './style.scss';
 
 const DATA = {
 	iconSize: 18,
-	options: {'Others': {checked: null, value: {Vivid: true, Crazy: {checked: null, value: {Placed: true}}}}}
+	options: []
 }
 
 const BUTTONS_DATA = {

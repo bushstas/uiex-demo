@@ -79,7 +79,7 @@ export default class Mapper extends React.Component {
 	}
 
 	renderCheckboxesGroupControl(name, item, value) {
-		return (			
+		return (
 			<FormControl 
 				key={name}
 				caption={name}
@@ -90,43 +90,9 @@ export default class Mapper extends React.Component {
 					value={value}
 					options={item.checkboxes}
 					icon
-					multiline
 					checkAll
+					columns="5"
 				>
-					<Checkbox value="Others">
-						Others
-						<CheckboxGroup>
-							<Checkbox value="Vivid">
-								Vivid
-							</Checkbox>
-							<Checkbox value="Crazy">
-								Crazy
-								<CheckboxGroup>
-									<Checkbox value="Red">
-										Red
-									</Checkbox>
-									<Checkbox value="Same">
-										Same
-									</Checkbox>
-									<Checkbox value="Placed">
-										Placed
-									</Checkbox>
-									<Checkbox value="Great">
-										Great
-									</Checkbox>
-									<Checkbox value="Huge">
-										Huge
-									</Checkbox>
-									<Checkbox value="Wide">
-										Wide
-									</Checkbox>
-								</CheckboxGroup>
-							</Checkbox>
-							<Checkbox value="Lazy">
-								Lazy
-							</Checkbox>
-						</CheckboxGroup>
-					</Checkbox>
 				</CheckboxGroup>
 			</FormControl>
 		)

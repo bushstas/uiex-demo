@@ -5,8 +5,7 @@ import ButtonGroupMapper from '../ButtonGroupMapper';
 import './style.scss';
 
 const DATA = {
-	iconSize: 18,
-	options: []
+	iconSize: 18
 }
 
 const BUTTONS_DATA = {

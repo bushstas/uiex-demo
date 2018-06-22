@@ -12,7 +12,8 @@ import {
 	AutoComplete,
 	MultiSelect,
 	InputBoolean,
-	CheckboxGroup
+	CheckboxGroup,
+	SearchForm
 } from 'uiex';
 
 const OPTIONS =['Awesome', 'Fake', 'Goofie', 'Bad', 'Fucked', 'Fantastic', 'Bold', 'Lovely', 'Green', 'Good', 'Normal', 'Scary', 'Well', 'Safe', 'Lonely', 'Silent', 'Stormy', 'Wet', 'SuperPuperMegaCool', 'Shocked'];
@@ -22,7 +23,7 @@ export default class Mapper extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-	
+			val: 'Fuck'
 		}
 	}
 
@@ -71,6 +72,13 @@ export default class Mapper extends React.Component {
 									</FormControlGroup>
 								)
 							})}
+							<SearchForm 
+								caption="Форма поиска"
+								value={this.state.val}
+								contentBefore="32423423423"
+							>
+								23542534534543
+							</SearchForm>
 						</div>
 					</Form>
 				</BoxSection>
@@ -90,12 +98,17 @@ export default class Mapper extends React.Component {
 					value={value}
 					options={item.checkboxes}
 					icon
-					checkAll
+					checkAll={false}
 					columns="5"
-				>
+					noBorder
+				>	
 				</CheckboxGroup>
 			</FormControl>
 		)
+	}
+
+	handleChangeRadio = (radio, name) => {
+		this.setState({radio});
 	}
 
 	renderInputControl(name, item, value) {
@@ -176,11 +189,7 @@ export default class Mapper extends React.Component {
 					value={value}
 					options={item.options}
 					placeholder={item.empty}
-				>
-					<SelectOption value="Shiny">
-						Shiny
-					</SelectOption>
-				</SelectComponent>
+				/>
 			</FormControl>
 		)
 	}

@@ -12,8 +12,7 @@ import {
 	AutoComplete,
 	MultiSelect,
 	InputBoolean,
-	CheckboxGroup,
-	SearchForm
+	CheckboxGroup
 } from 'uiex';
 
 const OPTIONS =['Awesome', 'Fake', 'Goofie', 'Bad', 'Fucked', 'Fantastic', 'Bold', 'Lovely', 'Green', 'Good', 'Normal', 'Scary', 'Well', 'Safe', 'Lonely', 'Silent', 'Stormy', 'Wet', 'SuperPuperMegaCool', 'Shocked'];
@@ -23,12 +22,13 @@ export default class Mapper extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			val: 'Fuck'
+			val: ''
 		}
+		this.timeouts = {}
 	}
 
 	render() {
-		const {map: {checkboxes, inputs}, data, name, isOpen = true} = this.props;
+		const {map: {checkboxes, inputs}, data, name, isOpen = true, excluded, handlers} = this.props;
 		return (
 			<div className="mapper">
 				<BoxSection 
@@ -44,17 +44,23 @@ export default class Mapper extends React.Component {
 						controlSize="2"
 					>
 						<div className="mapper-checkboxes">
-							{Object.keys(checkboxes).map(key => {
+							{checkboxes instanceof Object && Object.keys(checkboxes).map(key => {
+								if (excluded instanceof Array && excluded.indexOf(key) > -1) {
+									return null;
+								}
 								const item = checkboxes[key];
 								const value = data[key];
 								return this.renderCheckboxControl(key, item, value);
 							})}
 						</div>
-						<div className="mapper-inputs">						
+						<div className="mapper-inputs">
 							{inputs.map((inps, idx) => {
 								return (
 									<FormControlGroup key={idx}>
 										{Object.keys(inps).map(key => {
+											if (excluded instanceof Array && excluded.indexOf(key) > -1) {
+												return null;
+											}
 											const item = inps[key];
 											let value = data[key];
 											if (typeof value == 'undefined') {
@@ -72,14 +78,23 @@ export default class Mapper extends React.Component {
 									</FormControlGroup>
 								)
 							})}
-							<SearchForm 
-								caption="Форма поиска"
-								value={this.state.val}
-								contentBefore="32423423423"
-							>
-								23542534534543
-							</SearchForm>
 						</div>
+						{handlers instanceof Array && 
+							<div className="mapper-handlers">
+								{handlers.map((h) => {
+									return (
+										<div ref={h} className={this.getHandlerClassName()} key={h}>
+											<div className="inner">
+												{h}
+											</div>
+											<div className="mask">
+												{h}
+											</div>
+										</div>
+									)
+								})}
+							</div>
+						}
 					</Form>
 				</BoxSection>
 			</div>
@@ -222,5 +237,19 @@ export default class Mapper extends React.Component {
 			data[name] = value;
 			onChange({...data});
 		}
+	}
+
+	fire(event) {
+		if (this.refs[event]) {
+			this.refs[event].className = this.getHandlerClassName('fired');
+			clearTimeout(this.timeouts[event]);
+			this.timeouts[event] = setTimeout(() => {
+				this.refs[event].className = this.getHandlerClassName();
+			}, 1500);
+		}
+	}
+
+	getHandlerClassName(className = '') {
+		return 'mapper-handler' + (className ? ' ' + className : '');
 	}
 }

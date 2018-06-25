@@ -72,6 +72,12 @@ const MAP = {
 			className: {
 				description: 'className'
 			}
+		},
+		{
+			children: {
+				description: 'Content',
+				size: 'all'
+			}
 		}
 	]
 }
@@ -89,6 +95,7 @@ export default class ComponentMapper extends React.Component {
 			<Mapper 
 				isOpen={this.props.isOpen}
 				name="UIEXComponent"
+				excluded={this.props.excluded}
 				map={this.state.map} 
 				data={this.props.data} 
 				onChange={this.props.onChange}

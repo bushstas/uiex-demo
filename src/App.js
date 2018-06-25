@@ -3,6 +3,7 @@ import MainMenu from './MainMenu';
 import TabsDemo from './components/Tabs';
 import ButtonsDemo from './components/Buttons';
 import BoxDemo from './components/Box';
+import SearchFormDemo from './components/SearchForm';
 import {Checkbox} from 'uiex';
 
 import './style.scss';
@@ -11,7 +12,7 @@ export default class App extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			page: 'ButtonGroup'
+			page: 'SearchForm'
 		}
 	}
 
@@ -32,14 +33,19 @@ export default class App extends React.Component {
 	renderContent() {
 		const {page} = this.state;
 		switch (page) {
-			case 'Tabs':
-				return <TabsDemo/>
-
 			case 'Box':
 				return <BoxDemo/>
 
-			default:
+			case 'ButtonGroup':
 				return <ButtonsDemo/>
+
+			case 'SearchForm':
+				return <SearchFormDemo/>
+
+			case 'Tabs':
+				return <TabsDemo/>			
+
+			
 		}
 	}
 

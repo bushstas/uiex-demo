@@ -7,15 +7,6 @@ const MEASURES = [
 	{id: '%', name: '%'}
 ]
 
-// children: PROPTYPE.REACT_NODES,
-//     title: PropTypes.string,
-//     classes: PROPTYPE.STRINGS,
-//     className: PropTypes.string,
-//     style: PropTypes.object,
-
-
-
-
 const MAP = {
 	checkboxes: {
 		block: {

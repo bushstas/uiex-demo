@@ -24,12 +24,6 @@ export default class App extends React.Component {
 					active={this.state.page}
 				/>
 				<div className="main-content">
-					<Section 
-						caption="This is the caption" 
-						styleClass="colored"
-					>
-						This is the content
-					</Section>
 					{this.renderContent()}
 				</div>	
 			</div>

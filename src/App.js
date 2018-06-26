@@ -26,7 +26,7 @@ export default class App extends React.Component {
 				<div className="main-content">
 					<Section 
 						caption="This is the caption" 
-						styleClass="colored"
+						styleClass="transparent"
 					>
 						This is the content
 					</Section>

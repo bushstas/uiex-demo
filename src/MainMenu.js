@@ -9,6 +9,7 @@ const PAGES = [
 	'InputDate',
 	'InputNumber',
 	'InputPhone',
+	'RateForm',
 	'SearchForm',
 	'Tab',
 	'Tabs'

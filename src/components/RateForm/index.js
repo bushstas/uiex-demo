@@ -1,5 +1,5 @@
 import React from 'react';
-import {SearchForm, UIEXCONSTS} from 'uiex';
+import {RateForm, UIEXCONSTS} from 'uiex';
 import ComponentMapper from '../ComponentMapper';
 import Mapper from '../../Mapper';
 import Preview from '../../Preview';
@@ -8,27 +8,20 @@ import './style.scss';
 
 const DATA = {
 	width: 400,
-	caption: 'Search form',
-	buttonTitle: '',
-	placeholder: 'Search word',
-	icon: 'search',
-	captionInside: false
+	caption: 'Rate form',
+	captionInside: false,
+	value: 2
 }
-
-const MEASURES = [
-	{id: 'px', name: 'px'},
-	{id: '%', name: '%'}
-]
 
 const EXCLUDED = ['vertical']
 
 const MAP = {
 	checkboxes: {
-		hiddenButton: {
+		captionInside: {
 			description: 'Button is only shown on focus',
 			defaultValue: false
 		},
-		captionInside: {
+		resettable: {
 			description: 'Button is only shown on focus',
 			defaultValue: false
 		},
@@ -43,58 +36,23 @@ const MAP = {
 				description: 'Caption of form',
 				example: 'Search form',
 				default: ''
-			},
-			buttonTitle: {
-				description: 'Caption of submit button',
-				example: 'Find',
-				default: ''
-			},
-			buttonWidth: {
-				type: 'number',
-				description: 'Width of submit button',
-				example: '120',
-				maxValue: 1000,
-				measure: 'px',
-				measures: MEASURES,
-				positive: true
-			},
-			buttonHeight: {
-				type: 'number',
-				description: 'Height of submit button',
-				example: '50',
-				maxValue: 200,
-				measure: 'px',
-				positive: true
-			},
-			buttonColor: {
-				description: 'Color of submit button',
-				options: UIEXCONSTS.COLORS,
-				empty: 'Chose an option'
-			},
-			buttonDisplay: {
-				description: 'Display of submit button',
-				options: UIEXCONSTS.FORM_BUTTON_DISPLAY,
-				empty: 'Chose an option'
-			},
+			}
 		},
 		{
-			focusedWidth: {
+			scale: {
+				description: 'Value of input',
 				type: 'number',
-				description: 'Width of form on focus',
-				example: '120',
-				maxValue: 1000,
-				measure: 'px',
-				measures: MEASURES,
-				positive: true
-			},
-			placeholder: {
-				description: 'Placeholder of input',
-				example: 'Search word',
+				positive: true,
+				example: 'word',
+				minValue: 3,
+				maxValue: 10,
 				default: ''
 			},
 			value: {
 				description: 'Value of input',
+				type: 'number',
 				example: 'word',
+				maxValue: 10,
 				default: ''
 			},
 			icon: {
@@ -116,9 +74,9 @@ const MAP = {
 	]
 }
 
-const HANDLERS = ['onChange', 'onSubmit', 'onFocus', 'onBlur', 'onDisabledClick']
+const HANDLERS = ['onChange', 'onSubmit', 'onReset']
 
-export default class SearchFormDemo extends React.Component {
+export default class RateFormDemo extends React.Component {
 	constructor() {
 		super();
 		this.state = {
@@ -137,23 +95,22 @@ export default class SearchFormDemo extends React.Component {
 				/>
 				<Mapper 
 					ref="mapper"
-					name="SearchForm"
+					name="RateForm"
 					map={MAP} 
 					data={this.state.data} 
 					onChange={this.handleChangeData}
 					handlers={HANDLERS}
 				/>
 				<Preview>
-					<SearchForm 
+					<RateForm 
 						{...this.state.data} 
 						onSubmit={this.handleSubmit}
-						onFocus={this.handleFocus}
-						onBlur={this.handleBlur}
+						onReset={this.handleReset}
 						onChange={this.handleChange}
 						onDisabledClick={this.handleDisabledClick}
 					>
 							
-					</SearchForm>
+					</RateForm>
 				</Preview>
 			</div>
 		)
@@ -162,14 +119,11 @@ export default class SearchFormDemo extends React.Component {
 	handleSubmit = (value) => {
 		this.fire('onSubmit');
 	}
-	handleFocus = (value) => {
-		this.fire('onFocus');
-	}
-	handleBlur = (value) => {
-		this.fire('onBlur');
-	}
 	handleChange = (value) => {
 		this.fire('onChange');
+	}
+	handleReset = (value) => {
+		this.fire('onReset');
 	}
 	handleDisabledClick = (value) => {
 		this.fire('onDisabledClick');

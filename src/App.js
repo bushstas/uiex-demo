@@ -4,7 +4,7 @@ import TabsDemo from './components/Tabs';
 import ButtonsDemo from './components/Buttons';
 import BoxDemo from './components/Box';
 import SearchFormDemo from './components/SearchForm';
-import {Section, SidePanel} from 'uiex';
+import {Section, SidePanel, RateForm} from 'uiex';
 
 import './style.scss';
 
@@ -29,6 +29,7 @@ export default class App extends React.Component {
 					animation="fade-roll"
 					side="bottom"
 				/>
+				<RateForm scale="1"/>
 				<div className="main-content">
 					{this.renderContent()}
 				</div>	

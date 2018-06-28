@@ -79,10 +79,7 @@ const config = {
             },
             { 
                 test: /\.(jpg|gif|png?)(\S+)?$/,
-                loader: 'file-loader',
-                options: {
-                    name: 'images/[name].[ext]'
-                }
+                loader: 'file-loader?name=[name].[ext]&outputPath=images&publicPath=../images'
             },
             {
                 test: /less|sass|\.s?css$/,

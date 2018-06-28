@@ -36,6 +36,21 @@ const MAP = {
 				description: 'Caption of form',
 				example: 'Search form',
 				default: ''
+			},
+			normalColor:{
+				type: 'color',
+				description: 'Normal color of icons',
+				default: ''
+			},
+			activeColor:{
+				type: 'color',
+				description: 'Color of active icons',
+				default: ''
+			},
+			hoverColor:{
+				type: 'color',
+				description: 'Color of hover icons',
+				default: ''
 			}
 		},
 		{

@@ -5,7 +5,7 @@ import ButtonsDemo from './components/Buttons';
 import BoxDemo from './components/Box';
 import SearchFormDemo from './components/SearchForm';
 import RateFormDemo from './components/RateForm';
-import {Section, SidePanel, RateForm} from 'uiex';
+import {Section, SidePanel, RateForm, InputColor} from 'uiex';
 
 import './style.scss';
 
@@ -32,9 +32,6 @@ export default class App extends React.Component {
 				/>
 				<div className="main-content">
 					{this.renderContent()}
-
-
-					<br/><br/><br/>
 					<button onClick={this.handle}>
 						Click me
 					</button>
@@ -43,8 +40,8 @@ export default class App extends React.Component {
 		)
 	}
 
-	handleRate = (value) => {
-		alert(value)
+	handleColorChange = (color) => {
+		this.setState({color});
 	}
 
 	handleSubmit = (value) => {

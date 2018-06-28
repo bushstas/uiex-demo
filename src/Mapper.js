@@ -3,6 +3,7 @@ import {
 	Checkbox,
 	Input,
 	InputNumber,
+	InputColor,
 	Select,
 	SelectOption,
 	Form,
@@ -164,6 +165,10 @@ export default class Mapper extends React.Component {
 				};
 				input = <InputNumber {...props} {...numberProps} onChangeMeasure={this.props.onChangeMeasure}/>
 			break;
+
+			case 'color':
+				input = <InputColor {...props}/>
+			break;			
 
 			case 'boolean':
 				input = <InputBoolean {...props}/>

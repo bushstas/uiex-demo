@@ -1,6 +1,7 @@
 import React from 'react';
 import {RateForm, UIEXCONSTS} from 'uiex';
 import ComponentMapper from '../ComponentMapper';
+import FormMapper from '../FormMapper';
 import Mapper from '../../Mapper';
 import Preview from '../../Preview';
 
@@ -13,44 +14,44 @@ const DATA = {
 	value: 2
 }
 
-const EXCLUDED = ['vertical']
+const EXCLUDED = ['vertical'];
+const EXCLUDED_FORM = ['value'];
 
 const MAP = {
 	checkboxes: {
-		captionInside: {
-			description: 'Button is only shown on focus',
-			defaultValue: false
-		},
 		resettable: {
-			description: 'Button is only shown on focus',
-			defaultValue: false
-		},
-		noBorder: {
 			description: 'Button is only shown on focus',
 			defaultValue: false
 		}
 	},
 	inputs: [
 		{
-			caption: {
-				description: 'Caption of form',
-				example: 'Search form',
-				default: ''
+			value: {
+				description: 'Current rate',
+				type: 'number',
+				example: 'word',
+				maxValue: 10,
+				
 			},
 			normalColor:{
 				type: 'color',
-				description: 'Normal color of icons',
-				default: ''
+				description: 'Normal color of icons'
 			},
 			activeColor:{
 				type: 'color',
-				description: 'Color of active icons',
-				default: ''
+				description: 'Color of active icons'
 			},
 			hoverColor:{
 				type: 'color',
+				description: 'Color of hover icons'
+			},
+			submit:{
 				description: 'Color of hover icons',
-				default: ''
+				example: 'Rate'
+			},
+			reset:{
+				description: 'Color of hover icons',
+				example: 'Reset'
 			}
 		},
 		{
@@ -61,35 +62,28 @@ const MAP = {
 				example: 'word',
 				minValue: 3,
 				maxValue: 10,
-				default: ''
-			},
-			value: {
-				description: 'Value of input',
-				type: 'number',
-				example: 'word',
-				maxValue: 10,
-				default: ''
+				
 			},
 			icon: {
-				description: 'Icon name of submit button',
+				description: 'Icon name',
 				example: 'search',
-				default: ''
+				
+			},
+			activeIcon: {
+				description: 'Active icon name',
+				example: 'search',
+				
 			},
 			iconType: {
 				description: 'Icon type',
 				options: UIEXCONSTS.ICON_TYPE,
 				empty: 'Chose an option'
-			},
-			contentBefore: {
-				description: 'Content displayed before controls',
-				example: 'Some tiny note',
-				default: ''
-			},
+			}
 		}
 	]
 }
 
-const HANDLERS = ['onChange', 'onSubmit', 'onReset']
+const HANDLERS = ['onChange', 'onSubmit', 'onReset', 'onDisabledClick']
 
 export default class RateFormDemo extends React.Component {
 	constructor() {
@@ -106,6 +100,12 @@ export default class RateFormDemo extends React.Component {
 					isOpen={false}
 					data={this.state.data} 
 					excluded={EXCLUDED}
+					onChange={this.handleChangeData}
+				/>
+				<FormMapper 
+					isOpen={true}
+					data={this.state.data} 
+					excluded={EXCLUDED_FORM}
 					onChange={this.handleChangeData}
 				/>
 				<Mapper 

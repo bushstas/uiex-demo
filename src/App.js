@@ -5,7 +5,7 @@ import ButtonsDemo from './components/Buttons';
 import BoxDemo from './components/Box';
 import SearchFormDemo from './components/SearchForm';
 import RateFormDemo from './components/RateForm';
-import {Section, SidePanel, RateForm, InputColor} from 'uiex';
+import {Section, SidePanel, RateForm, InputColor, Modal, ModalHeader, ModalBody, ModalFooter} from 'uiex';
 
 import './style.scss';
 
@@ -14,7 +14,8 @@ export default class App extends React.Component {
 		super();
 		this.state = {
 			page: 'RateForm',
-			sidePanelOpen: false
+			sidePanelOpen: false,
+			windowIsOpen: false
 		}
 	}
 
@@ -33,9 +34,29 @@ export default class App extends React.Component {
 				<div className="main-content">
 					{this.renderContent()}
 					<button onClick={this.handle}>
-						Click me
+						Show SidePanel
 					</button>
-				</div>	
+					<button onClick={this.handle2}>
+						Show Modal
+					</button>
+				</div>
+				<Modal 
+					draggable
+					withoutMask={true}
+					expandable
+					animation="fade-fall"
+					isOpen={this.state.windowIsOpen}
+					onClose={this.handleCloseModal}
+				>
+					<ModalHeader>
+						Modal header
+					</ModalHeader>
+					<ModalBody>
+					</ModalBody>
+					<ModalFooter>
+						234234
+					</ModalFooter>
+				</Modal>
 			</div>
 		)
 	}
@@ -50,6 +71,14 @@ export default class App extends React.Component {
 
 	handle = () => {
 		this.setState({sidePanelOpen: !this.state.sidePanelOpen})
+	}
+
+	handle2 = () => {
+		this.setState({windowIsOpen: true})
+	}
+
+	handleCloseModal = () => {
+		this.setState({windowIsOpen: false})	
 	}
 
 	renderContent() {

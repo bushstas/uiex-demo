@@ -1,6 +1,7 @@
 import React from 'react';
 import {SearchForm, UIEXCONSTS} from 'uiex';
 import ComponentMapper from '../ComponentMapper';
+import FormMapper from '../FormMapper';
 import Mapper from '../../Mapper';
 import Preview from '../../Preview';
 
@@ -27,57 +28,15 @@ const MAP = {
 		hiddenButton: {
 			description: 'Button is only shown on focus',
 			defaultValue: false
-		},
-		captionInside: {
-			description: 'Button is only shown on focus',
-			defaultValue: false
-		},
-		noBorder: {
-			description: 'Button is only shown on focus',
-			defaultValue: false
 		}
 	},
 	inputs: [
 		{
-			caption: {
-				description: 'Caption of form',
-				example: 'Search form',
-				default: ''
-			},
 			buttonTitle: {
 				description: 'Caption of submit button',
 				example: 'Find',
 				default: ''
 			},
-			buttonWidth: {
-				type: 'number',
-				description: 'Width of submit button',
-				example: '120',
-				maxValue: 1000,
-				measure: 'px',
-				measures: MEASURES,
-				positive: true
-			},
-			buttonHeight: {
-				type: 'number',
-				description: 'Height of submit button',
-				example: '50',
-				maxValue: 200,
-				measure: 'px',
-				positive: true
-			},
-			buttonColor: {
-				description: 'Color of submit button',
-				options: UIEXCONSTS.COLORS,
-				empty: 'Chose an option'
-			},
-			buttonDisplay: {
-				description: 'Display of submit button',
-				options: UIEXCONSTS.FORM_BUTTON_DISPLAY,
-				empty: 'Chose an option'
-			},
-		},
-		{
 			focusedWidth: {
 				type: 'number',
 				description: 'Width of form on focus',
@@ -92,11 +51,6 @@ const MAP = {
 				example: 'Search word',
 				default: ''
 			},
-			value: {
-				description: 'Value of input',
-				example: 'word',
-				default: ''
-			},
 			icon: {
 				description: 'Icon name of submit button',
 				example: 'search',
@@ -106,12 +60,7 @@ const MAP = {
 				description: 'Icon type',
 				options: UIEXCONSTS.ICON_TYPE,
 				empty: 'Chose an option'
-			},
-			contentBefore: {
-				description: 'Content displayed before controls',
-				example: 'Some tiny note',
-				default: ''
-			},
+			}
 		}
 	]
 }
@@ -133,6 +82,11 @@ export default class SearchFormDemo extends React.Component {
 					isOpen={false}
 					data={this.state.data} 
 					excluded={EXCLUDED}
+					onChange={this.handleChangeData}
+				/>
+				<FormMapper 
+					isOpen={true}
+					data={this.state.data} 
 					onChange={this.handleChangeData}
 				/>
 				<Mapper 

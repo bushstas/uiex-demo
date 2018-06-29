@@ -16,7 +16,7 @@ import {
 	CheckboxGroup
 } from 'uiex';
 
-const OPTIONS =['Awesome', 'Fake', 'Goofie', 'Bad', 'Fucked', 'Fantastic', 'Bold', 'Lovely', 'Green', 'Good', 'Normal', 'Scary', 'Well', 'Safe', 'Lonely', 'Silent', 'Stormy', 'Wet', 'SuperPuperMegaCool', 'Shocked'];
+const OPTIONS =[{title:'Awesome', value: 'Awesome', withBottomDelimiter: true}, 'Fake', 'Goofie', 'Bad', 'Fucked', 'Fantastic', 'Bold', 'Lovely', 'Green', 'Good', 'Normal', 'Scary', 'Well', 'Safe', 'Lonely', 'Silent', 'Stormy', 'Wet', 'SuperPuperMegaCool', 'Shocked',{title:'Broken', value: 'Broken', withTopDelimiter: true}];
 
 export default class Mapper extends React.Component {
 

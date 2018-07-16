@@ -79,6 +79,10 @@ export default class ComponentMapper extends React.Component {
 		this.state = {
 			map: MAP
 		}
+
+		if (props.maxHeight) {
+			MAP.inputs[0].height.maxValue = props.maxHeight;
+		}
 	}
 
 	render() {

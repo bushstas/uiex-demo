@@ -12,6 +12,10 @@ input,
 button {
 	font-family: Segoe UI;	
 }
+.flex {
+	display: flex;
+	align-items: center;
+}
 .main-menu {
 	position: fixed;
 	left: 0;
@@ -106,4 +110,10 @@ button {
 		}
 	}
 
+}
+.mb20 {
+	margin-bottom: 20px;
+}
+.mr20 {
+	margin-right: 20px;	
 }

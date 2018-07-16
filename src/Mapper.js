@@ -108,6 +108,7 @@ export default class Mapper extends React.Component {
 				key={name}
 				caption={name}
 				size={item.size}
+				title={item.description}
 			>
 				<CheckboxGroup 
 					name={name}
@@ -183,6 +184,7 @@ export default class Mapper extends React.Component {
 				caption={name}
 				size={item.size}
 				shift={item.shift}
+				title={item.description}
 			>
 				{input}
 			</FormControl>
@@ -199,6 +201,7 @@ export default class Mapper extends React.Component {
 		}
 		return (
 			<FormControl 
+				title={item.description}
 				key={name}
 				caption={name}
 				size={item.size}

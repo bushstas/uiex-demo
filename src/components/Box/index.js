@@ -40,18 +40,21 @@ const MAP = {
 			},
 			animation: {
 				type: 'select',
+				empty: 'Chose an option',
 				description: 'Animation type',
 				options: UIEXCONSTS.ANIM_TYPE,
 				default: 'fade-fall'
 			},
 			speed: {
 				type: 'select',
-				description: 'Animation speed from 1 to 10',
+				empty: 'Chose an option',
+				description: 'Animation speed',
 				options: UIEXCONSTS.ANIM_SPEED,
 				default: 'fast'
 			},
 			effect: {
 				type: 'select',
+				empty: 'Chose an option',
 				description: 'Animation effect',
 				options: UIEXCONSTS.ANIM_EFFECTS,
 				default: 'ease-in-out'
@@ -90,7 +93,7 @@ export default class ButtonsDemo extends React.Component {
 				/>
 				<Preview>
 					<Box 
-						{...this.state.data} 
+						{...this.state.data}
 						onToggle={this.handleToggleBox}
 						onDisabledClick={this.handleDisabledClick}
 					>

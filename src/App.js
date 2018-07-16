@@ -5,6 +5,7 @@ import ButtonsDemo from './components/Buttons';
 import BoxDemo from './components/Box';
 import SearchFormDemo from './components/SearchForm';
 import RateFormDemo from './components/RateForm';
+import ModalDemo from './components/Modal';
 import {Section, SidePanel, RateForm, InputColor, Modal} from 'uiex';
 
 import './style.scss';
@@ -36,22 +37,7 @@ export default class App extends React.Component {
 					<button onClick={this.handle}>
 						Show SidePanel
 					</button>
-					<button onClick={this.handle2}>
-						Show Modal
-					</button>
-				</div>
-				<Modal 
-					height="50%"
-					width="50%"
-					draggable={true}
-					header="Modal header"
-					footer="Modal footer"
-					withoutMask={true}
-					expandable
-					animation="fade-fall"
-					isOpen={this.state.windowIsOpen}
-					onClose={this.handleCloseModal}
-				/>
+				</div>				
 			</div>
 		)
 	}
@@ -66,14 +52,6 @@ export default class App extends React.Component {
 
 	handle = () => {
 		this.setState({sidePanelOpen: !this.state.sidePanelOpen})
-	}
-
-	handle2 = () => {
-		this.setState({windowIsOpen: true})
-	}
-
-	handleCloseModal = () => {
-		this.setState({windowIsOpen: false})	
 	}
 
 	renderContent() {
@@ -92,7 +70,10 @@ export default class App extends React.Component {
 				return <SearchFormDemo/>
 
 			case 'Tabs':
-				return <TabsDemo/>			
+				return <TabsDemo/>
+
+			case 'Modal':
+				return <ModalDemo/>
 
 			
 		}

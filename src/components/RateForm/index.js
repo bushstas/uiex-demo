@@ -29,9 +29,9 @@ const MAP = {
 			value: {
 				description: 'Current rate',
 				type: 'number',
-				example: 'word',
+				example: '5',
 				maxValue: 10,
-				
+				positive: true
 			},
 			normalColor:{
 				type: 'color',

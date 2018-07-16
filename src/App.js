@@ -5,7 +5,7 @@ import ButtonsDemo from './components/Buttons';
 import BoxDemo from './components/Box';
 import SearchFormDemo from './components/SearchForm';
 import RateFormDemo from './components/RateForm';
-import {Section, SidePanel, RateForm, InputColor, Modal, ModalHeader, ModalBody, ModalFooter} from 'uiex';
+import {Section, SidePanel, RateForm, InputColor, Modal} from 'uiex';
 
 import './style.scss';
 
@@ -41,22 +41,17 @@ export default class App extends React.Component {
 					</button>
 				</div>
 				<Modal 
-					draggable
+					height="50%"
+					width="50%"
+					draggable={true}
+					header="Modal header"
+					footer="Modal footer"
 					withoutMask={true}
 					expandable
 					animation="fade-fall"
 					isOpen={this.state.windowIsOpen}
 					onClose={this.handleCloseModal}
-				>
-					<ModalHeader>
-						Modal header
-					</ModalHeader>
-					<ModalBody>
-					</ModalBody>
-					<ModalFooter>
-						234234
-					</ModalFooter>
-				</Modal>
+				/>
 			</div>
 		)
 	}

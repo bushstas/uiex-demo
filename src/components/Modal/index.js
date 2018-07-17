@@ -14,7 +14,7 @@ const DATA = {
 	footer: 'Modal Footer',
 }
 
-const EXCLUDED = ['vertical', 'block', 'float', 'align', 'valign']
+const EXCLUDED = ['vertical', 'block', 'float', 'align', 'valign', 'hidden', 'disabled']
 
 const MAP = {
 	checkboxes: {
@@ -69,6 +69,10 @@ const MAP = {
 				description: 'Content of footer',
 				default: ''
 			},
+			outerContent: {
+				description: 'Outer content',
+				default: ''
+			},
 			animation: {
 				type: 'select',
 				empty: 'Chose an option',
@@ -116,7 +120,10 @@ export default class ModalDemo extends React.Component {
 					onChange={this.handleChangeData}
 					handlers={HANDLERS}
 				/>
-				<Preview>
+				<Preview
+					data={this.state.data}
+					name="Modal"
+				>
 					<Button onClick={this.handleShowModal}>
 						Show Modal
 					</Button>

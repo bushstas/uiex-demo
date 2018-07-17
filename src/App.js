@@ -6,6 +6,7 @@ import BoxDemo from './components/Box';
 import SearchFormDemo from './components/SearchForm';
 import RateFormDemo from './components/RateForm';
 import ModalDemo from './components/Modal';
+import SidePanelDemo from './components/SidePanel';
 import {Section, SidePanel, RateForm, InputColor, Modal} from 'uiex';
 
 import './style.scss';
@@ -14,7 +15,7 @@ export default class App extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			page: 'RateForm',
+			page: 'Modal',
 			sidePanelOpen: false,
 			windowIsOpen: false
 		}
@@ -27,31 +28,12 @@ export default class App extends React.Component {
 					onChange={this.handleChangeMenu}
 					active={this.state.page}
 				/>
-				<SidePanel 
-					isOpen={this.state.sidePanelOpen} 
-					animation="fade-roll"
-					side="bottom"
-				/>
+				
 				<div className="main-content">
 					{this.renderContent()}
-					<button onClick={this.handle}>
-						Show SidePanel
-					</button>
 				</div>				
 			</div>
 		)
-	}
-
-	handleColorChange = (color) => {
-		this.setState({color});
-	}
-
-	handleSubmit = (value) => {
-		alert(value)
-	}
-
-	handle = () => {
-		this.setState({sidePanelOpen: !this.state.sidePanelOpen})
 	}
 
 	renderContent() {
@@ -75,6 +57,8 @@ export default class App extends React.Component {
 			case 'Modal':
 				return <ModalDemo/>
 
+			case 'SidePanel':
+				return <SidePanelDemo/>
 			
 		}
 	}

@@ -6,12 +6,14 @@ const PAGES = [
 	'BoxSection',
 	'ButtonGroup',
 	'Input',
+	'InputColor',
 	'InputDate',
 	'InputNumber',
 	'InputPhone',
 	'Modal',
 	'RateForm',
 	'SearchForm',
+	'SidePanel',
 	'Tab',
 	'Tabs'
 ]

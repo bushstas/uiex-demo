@@ -252,7 +252,9 @@ export default class Mapper extends React.Component {
 			this.refs[event].className = this.getHandlerClassName('fired');
 			clearTimeout(this.timeouts[event]);
 			this.timeouts[event] = setTimeout(() => {
-				this.refs[event].className = this.getHandlerClassName();
+				if (this.refs[event]) {
+					this.refs[event].className = this.getHandlerClassName();
+				}
 			}, 1500);
 		}
 	}

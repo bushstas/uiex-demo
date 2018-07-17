@@ -7,7 +7,6 @@ import Preview from '../../Preview';
 import './style.scss';
 
 const DATA = {
-	classes: 'demo',
 	isOpen: true,
 	buttonUnder: false,
 	speed: 'fast',
@@ -91,7 +90,10 @@ export default class ButtonsDemo extends React.Component {
 					onChange={this.handleChangeData}
 					handlers={HANDLERS}
 				/>
-				<Preview>
+				<Preview
+					name="Box"
+					data={this.state.data} 
+				>
 					<Box 
 						{...this.state.data}
 						onToggle={this.handleToggleBox}

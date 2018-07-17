@@ -116,7 +116,10 @@ export default class RateFormDemo extends React.Component {
 					onChange={this.handleChangeData}
 					handlers={HANDLERS}
 				/>
-				<Preview>
+				<Preview
+					name="RateForm"
+					data={this.state.data}
+				>
 					<RateForm 
 						{...this.state.data} 
 						onSubmit={this.handleSubmit}

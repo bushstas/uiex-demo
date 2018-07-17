@@ -97,7 +97,10 @@ export default class SearchFormDemo extends React.Component {
 					onChange={this.handleChangeData}
 					handlers={HANDLERS}
 				/>
-				<Preview>
+				<Preview
+					name="SearchForm"
+					data={this.state.data} 
+				>
 					<SearchForm 
 						{...this.state.data} 
 						onSubmit={this.handleSubmit}

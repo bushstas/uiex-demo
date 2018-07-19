@@ -15,6 +15,7 @@ button {
 pre {
 	margin: 0;
 	font-size: 15px;
+	tab-size: 3;
 }
 .flex {
 	display: flex;
@@ -75,6 +76,13 @@ pre {
 			.uiex-button {
 				margin-top: -7px;
 			}
+		}
+	}
+	.uiex-section-content {
+		&:after {
+			content: '';
+			display: block;
+			clear: both;
 		}
 	}
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import Mapper from '../Mapper';
-import {UIEXCONSTS} from 'uiex';
+import {COLORS, FORM_BUTTON_DISPLAY} from 'uiex/consts';
 
 const MEASURES = [
 	{id: 'px', name: 'px'},
@@ -43,12 +43,12 @@ const MAP = {
 			},
 			buttonColor: {
 				description: 'Color of submit button',
-				options: UIEXCONSTS.COLORS,
+				options: COLORS,
 				empty: 'Chose an option'
 			},
 			buttonDisplay: {
 				description: 'Display of submit button',
-				options: UIEXCONSTS.FORM_BUTTON_DISPLAY,
+				options: FORM_BUTTON_DISPLAY,
 				empty: 'Chose an option'
 			},
 			value: {

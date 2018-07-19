@@ -1,5 +1,7 @@
 import React from 'react';
-import {Modal, Button, UIEXCONSTS} from 'uiex';
+import {Modal} from 'uiex/Modal';
+import {Button} from 'uiex/Button';
+import {MODAL_ANIMATION} from 'uiex/consts';
 import ComponentMapper from '../ComponentMapper';
 import Mapper from '../../Mapper';
 import Preview from '../../Preview';
@@ -77,7 +79,7 @@ const MAP = {
 				type: 'select',
 				empty: 'Chose an option',
 				description: 'Animation type',
-				options: UIEXCONSTS.MODAL_ANIMATION,
+				options: MODAL_ANIMATION,
 				default: 'fade-fall'
 			},
 			maskOpacity: {
@@ -92,6 +94,16 @@ const MAP = {
 }
 
 const HANDLERS = ['onExpand', 'onClose', 'onDragEnd'];
+const STATE_PROPS = ['isOpen'];
+const FUNCS = {
+	onClose: 'this.setState({isOpen: false});',
+	onDragEnd: 'const {x, y} = coords;'
+}
+const ARGS = {
+	onExpand: ['isExpanded'],
+	onDragEnd: ['coords']
+}
+
 
 export default class ModalDemo extends React.Component {
 	constructor() {
@@ -123,6 +135,10 @@ export default class ModalDemo extends React.Component {
 				<Preview
 					data={this.state.data}
 					name="Modal"
+					handlers={HANDLERS}
+					args={ARGS}
+					funcs={FUNCS}
+					stateProps={STATE_PROPS}
 				>
 					<Button onClick={this.handleShowModal}>
 						Show Modal

@@ -10,6 +10,7 @@ const PAGES = [
 	'InputDate',
 	'InputNumber',
 	'InputPhone',
+	'InputRegexp',
 	'Modal',
 	'RateForm',
 	'SearchForm',

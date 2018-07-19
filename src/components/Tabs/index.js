@@ -1,5 +1,7 @@
 import React from 'react';
-import {Tabs, Tab, UIEXCONSTS} from 'uiex';
+import {Tabs} from 'uiex/Tabs';
+import {Tab} from 'uiex/Tab';
+import {COLORS} from 'uiex/consts';
 import Mapper from '../../Mapper';
 import ButtonGroupMapper from '../ButtonGroupMapper';
 
@@ -48,7 +50,7 @@ const MAP = {
 			},
 			activeColor: {
 				description: 'Color of an active tab buttons',
-				options: UIEXCONSTS.COLORS,
+				options: COLORS,
 				empty: 'Chose an option'
 			}
 		}

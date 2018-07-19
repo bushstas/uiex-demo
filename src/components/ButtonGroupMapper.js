@@ -1,12 +1,12 @@
 import React from 'react';
-import {UIEXCONSTS} from 'uiex';
+import {BUTTONS_VIEW, COLORS, ICON_TYPE} from 'uiex/consts';
 import Mapper from '../Mapper';
 import ComponentMapper from './ComponentMapper';
 
 const viewOptions = [];
 var icons = ['dashboard', 'delete', 'room', 'verified_user'];
 let i = 0;
-for (let item of UIEXCONSTS.BUTTONS_VIEW) {
+for (let item of BUTTONS_VIEW) {
 	viewOptions.push({
 		title: item,
 		value: item,
@@ -70,12 +70,12 @@ const MAP = {
 			},
 			buttonColor: {
 				description: 'Color of tab buttons',
-				options: UIEXCONSTS.COLORS,
+				options: COLORS,
 				empty: 'Chose an option'
 			},
 			iconType: {
 				description: 'Icon type',
-				options: UIEXCONSTS.ICON_TYPE,
+				options: ICON_TYPE,
 				empty: 'Chose an option'
 			}
 		}

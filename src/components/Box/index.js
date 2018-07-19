@@ -1,5 +1,7 @@
 import React from 'react';
-import {Box, Button, UIEXCONSTS} from 'uiex';
+import {Box} from 'uiex/Box';
+import {Button} from 'uiex/Button';
+import {ANIM_TYPE, ANIM_SPEED, ANIM_EFFECTS} from 'uiex/consts';
 import ComponentMapper from '../ComponentMapper';
 import Mapper from '../../Mapper';
 import Preview from '../../Preview';
@@ -41,21 +43,21 @@ const MAP = {
 				type: 'select',
 				empty: 'Chose an option',
 				description: 'Animation type',
-				options: UIEXCONSTS.ANIM_TYPE,
+				options: ANIM_TYPE,
 				default: 'fade-fall'
 			},
 			speed: {
 				type: 'select',
 				empty: 'Chose an option',
 				description: 'Animation speed',
-				options: UIEXCONSTS.ANIM_SPEED,
+				options: ANIM_SPEED,
 				default: 'fast'
 			},
 			effect: {
 				type: 'select',
 				empty: 'Chose an option',
 				description: 'Animation effect',
-				options: UIEXCONSTS.ANIM_EFFECTS,
+				options: ANIM_EFFECTS,
 				default: 'ease-in-out'
 			}
 		}
@@ -63,6 +65,15 @@ const MAP = {
 }
 
 const HANDLERS = ['onToggle', 'onDisabledClick'];
+const STATE_PROPS = ['isOpen'];
+const FUNCS = {
+	onToggle: 'this.setState({isOpen});'
+}
+const ARGS = {
+	onToggle: ['isOpen']
+}
+
+
 
 export default class ButtonsDemo extends React.Component {
 	constructor() {
@@ -93,6 +104,10 @@ export default class ButtonsDemo extends React.Component {
 				<Preview
 					name="Box"
 					data={this.state.data} 
+					handlers={HANDLERS}
+					stateProps={STATE_PROPS}
+					funcs={FUNCS}
+					args={ARGS}
 				>
 					<Box 
 						{...this.state.data}

@@ -1,5 +1,6 @@
 import React from 'react';
-import {RateForm, UIEXCONSTS} from 'uiex';
+import {RateForm} from 'uiex/RateForm';
+import {ICON_TYPE} from 'uiex/consts';
 import ComponentMapper from '../ComponentMapper';
 import FormMapper from '../FormMapper';
 import Mapper from '../../Mapper';
@@ -76,14 +77,24 @@ const MAP = {
 			},
 			iconType: {
 				description: 'Icon type',
-				options: UIEXCONSTS.ICON_TYPE,
+				options: ICON_TYPE,
 				empty: 'Chose an option'
 			}
 		}
 	]
 }
 
-const HANDLERS = ['onChange', 'onSubmit', 'onReset', 'onDisabledClick']
+const HANDLERS = ['onChange', 'onSubmit', 'onReset', 'onDisabledClick'];
+const STATE_PROPS = ['value'];
+const FUNCS = {
+	onChange: 'this.setState({value})'
+}
+const ARGS = {
+	onChange: ['value'],
+	onSubmit: ['value']
+}
+
+
 
 export default class RateFormDemo extends React.Component {
 	constructor() {
@@ -119,6 +130,10 @@ export default class RateFormDemo extends React.Component {
 				<Preview
 					name="RateForm"
 					data={this.state.data}
+					handlers={HANDLERS}
+					args={ARGS}
+					funcs={FUNCS}
+					stateProps={STATE_PROPS}
 				>
 					<RateForm 
 						{...this.state.data} 

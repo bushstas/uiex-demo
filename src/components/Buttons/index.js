@@ -1,5 +1,6 @@
 import React from 'react';
-import {Button, ButtonGroup} from 'uiex';
+import {Button} from 'uiex/Button';
+import {ButtonGroup} from 'uiex/ButtonGroup';
 import ButtonGroupMapper from '../ButtonGroupMapper';
 
 import './style.scss';

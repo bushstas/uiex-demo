@@ -1,20 +1,17 @@
 import React from 'react';
-import {
-	Checkbox,
-	Input,
-	InputNumber,
-	InputColor,
-	Select,
-	SelectOption,
-	Form,
-	FormControl,
-	FormControlGroup,
-	BoxSection,
-	AutoComplete,
-	MultiSelect,
-	InputBoolean,
-	CheckboxGroup
-} from 'uiex';
+import {Checkbox} from 'uiex/Checkbox';
+import {CheckboxGroup} from 'uiex/CheckboxGroup';
+import {Input} from 'uiex/Input';
+import {InputNumber} from 'uiex/InputNumber';
+import {InputColor} from 'uiex/InputColor';
+import {InputBoolean} from 'uiex/InputBoolean';
+import {Select, SelectOption} from 'uiex/Select';
+import {Form} from 'uiex/Form';
+import {FormControl} from 'uiex/FormControl';
+import {FormControlGroup} from 'uiex/FormControlGroup';
+import {BoxSection} from 'uiex/BoxSection';
+import {AutoComplete} from 'uiex/AutoComplete';
+import {MultiSelect} from 'uiex/MultiSelect';
 
 const OPTIONS =[{title:'Awesome', value: 'Awesome', withBottomDelimiter: true}, 'Fake', 'Goofie', 'Bad', 'Fucked', 'Fantastic', 'Bold', 'Lovely', 'Green', 'Good', 'Normal', 'Scary', 'Well', 'Safe', 'Lonely', 'Silent', 'Stormy', 'Wet', 'SuperPuperMegaCool', 'Shocked',{title:'Broken', value: 'Broken', withTopDelimiter: true}];
 
@@ -54,32 +51,34 @@ export default class Mapper extends React.Component {
 								return this.renderCheckboxControl(key, item, value);
 							})}
 						</div>
-						<div className="mapper-inputs">
-							{inputs.map((inps, idx) => {
-								return (
-									<FormControlGroup key={idx}>
-										{Object.keys(inps).map(key => {
-											if (excluded instanceof Array && excluded.indexOf(key) > -1) {
-												return null;
-											}
-											const item = inps[key];
-											let value = data[key];
-											if (typeof value == 'undefined') {
-												value = item.value;
-											}
-											const {options, checkboxes} = item;
-											if (options) {
-												return this.renderSelectControl(key, item, value);	
-											}
-											if (checkboxes) {
-												return this.renderCheckboxesGroupControl(key, item, value);	
-											}
-											return this.renderInputControl(key, item, value);
-										})}
-									</FormControlGroup>
-								)
-							})}
-						</div>
+						{inputs instanceof Array && 
+							<div className="mapper-inputs">
+								{inputs.map((inps, idx) => {
+									return (
+										<FormControlGroup key={idx}>
+											{Object.keys(inps).map(key => {
+												if (excluded instanceof Array && excluded.indexOf(key) > -1) {
+													return null;
+												}
+												const item = inps[key];
+												let value = data[key];
+												if (typeof value == 'undefined') {
+													value = item.value;
+												}
+												const {options, checkboxes} = item;
+												if (options) {
+													return this.renderSelectControl(key, item, value);	
+												}
+												if (checkboxes) {
+													return this.renderCheckboxesGroupControl(key, item, value);	
+												}
+												return this.renderInputControl(key, item, value);
+											})}
+										</FormControlGroup>
+									)
+								})}
+							</div>
+						}
 						{handlers instanceof Array && 
 							<div className="mapper-handlers">
 								{handlers.map((h) => {

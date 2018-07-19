@@ -7,7 +7,8 @@ import SearchFormDemo from './components/SearchForm';
 import RateFormDemo from './components/RateForm';
 import ModalDemo from './components/Modal';
 import SidePanelDemo from './components/SidePanel';
-import {Section, SidePanel, RateForm, InputColor, Modal} from 'uiex';
+import InputDemo from './components/Input';
+import InputRegexpDemo from './components/InputRegexp';
 
 import './style.scss';
 
@@ -15,7 +16,7 @@ export default class App extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			page: 'Modal',
+			page: 'InputRegexp',
 			sidePanelOpen: false,
 			windowIsOpen: false
 		}
@@ -59,6 +60,12 @@ export default class App extends React.Component {
 
 			case 'SidePanel':
 				return <SidePanelDemo/>
+
+			case 'Input':
+				return <InputDemo/>
+
+			case 'InputRegexp':
+				return <InputRegexpDemo/>
 			
 		}
 	}

@@ -1,5 +1,6 @@
 import React from 'react';
-import {SearchForm, UIEXCONSTS} from 'uiex';
+import {SearchForm} from 'uiex/SearchForm';
+import {ICON_TYPE} from 'uiex/consts';
 import ComponentMapper from '../ComponentMapper';
 import FormMapper from '../FormMapper';
 import Mapper from '../../Mapper';
@@ -58,7 +59,7 @@ const MAP = {
 			},
 			iconType: {
 				description: 'Icon type',
-				options: UIEXCONSTS.ICON_TYPE,
+				options: ICON_TYPE,
 				empty: 'Chose an option'
 			}
 		}

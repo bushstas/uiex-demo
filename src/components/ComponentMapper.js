@@ -1,6 +1,6 @@
 import React from 'react';
 import Mapper from '../Mapper';
-import {UIEXCONSTS} from 'uiex';
+import {VALIGN, ALIGN, FLOAT} from 'uiex/consts.js';
 
 const MEASURES = [
 	{id: 'px', name: 'px'},
@@ -47,17 +47,17 @@ const MAP = {
 			},
 			float: {
 				description: 'float',
-				options: UIEXCONSTS.FLOAT,
+				options: FLOAT,
 				empty: 'Chose an option'
 			},
 			align: {
 				description: 'align',
-				options: UIEXCONSTS.ALIGN,
+				options: ALIGN,
 				empty: 'Chose an option'
 			},
 			valign: {
 				description: 'valign',
-				options: UIEXCONSTS.VALIGN,
+				options: VALIGN,
 				empty: 'Chose an option'
 			},
 			className: {

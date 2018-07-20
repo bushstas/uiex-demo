@@ -5,6 +5,7 @@ const PAGES = [
 	'Box',
 	'BoxSection',
 	'ButtonGroup',
+	'ColorPicker',
 	'Input',
 	'InputColor',
 	'InputDate',

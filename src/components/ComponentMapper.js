@@ -30,7 +30,7 @@ const MAP = {
 		{
 			width: {
 				type: 'number',
-				description: 'Width',
+				description: 'Width style attribute (Number | String)',
 				example: '120',
 				maxValue: 1000,
 				measure: 'px',
@@ -39,34 +39,32 @@ const MAP = {
 			},
 			height: {
 				type: 'number',
-				description: 'Height',
+				description: 'Height style attribute (Number | String)',
 				example: '50',
 				maxValue: 200,
 				measure: 'px',
 				positive: true
 			},
 			float: {
-				description: 'float',
+				description: 'Float style attribute (String)',
 				options: FLOAT,
 				empty: 'Chose an option'
 			},
 			align: {
-				description: 'align',
+				description: 'Align style attribute (String)',
 				options: ALIGN,
 				empty: 'Chose an option'
 			},
 			valign: {
-				description: 'valign',
+				description: 'Vertical align style attribute (String)',
 				options: VALIGN,
 				empty: 'Chose an option'
 			},
 			className: {
-				description: 'className'
-			}
-		},
-		{
+				description: 'Custom ClassName attribute (String)'
+			},
 			children: {
-				description: 'Content',
+				description: 'Content (ReactElement | Array | String)',
 				size: 'all'
 			}
 		}

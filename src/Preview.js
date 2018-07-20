@@ -48,12 +48,17 @@ export default class Preview extends React.Component {
 
 	renderCode() {
 		const priority = ['className', 'title', 'width', 'height'];
-		const {data, name, unclosable, handlers, args, funcs, stateProps} = this.props;
+		const {data, name, unclosable, handlers, args, funcs, stateProps, consts} = this.props;
 		const bools = [];
 		const T = "\t";
 		const N = "\n";
 		let code = 'import {Component} from "react";' + N;
 		code += 'import {' + name + '} from "uiex/' + name + '";' + N + N;
+		if (consts instanceof Array) {
+			for (let c of consts) {
+				code += 'const ' + c.toUpperCase() + ' = ' + (typeof data[c] == 'string' ? '"' + data[c] + '"' : data[c]) + ';' + N + N;
+			}
+		}
 		code += 'export default class ' + name + 'Demo extends Component {' + N;
 		if (stateProps instanceof Array) {
 			code += T + 'constructor(props) {' + N;
@@ -88,6 +93,10 @@ export default class Preview extends React.Component {
 			}
 		}
 		for (let k in data) {
+			if (consts instanceof Array && consts.indexOf(k) > -1) {
+				code += T + T + T + T + k + '={' + k.toUpperCase() + '}' + N;
+				continue;
+			}
 			if (k != 'children' && priority.indexOf(k) == -1 && (!(stateProps instanceof Array) || stateProps.indexOf(k) == -1)) {
 				if (data[k] === true) {
 					bools.push(k);

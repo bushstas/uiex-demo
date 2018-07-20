@@ -17,7 +17,7 @@ const DATA = {
 	button: 'Open the box/Close the box'
 }
 
-const EXCLUDED = ['vertical']
+const EXCLUDED = ['vertical', 'block']
 
 const MAP = {
 	checkboxes: {
@@ -35,28 +35,28 @@ const MAP = {
 	inputs: [
 		{
 			button: {
-				description: 'Text of button',
+				description: 'Text of button (String)',
 				example: 'Open/Close',
 				default: ''
 			},
 			animation: {
 				type: 'select',
 				empty: 'Chose an option',
-				description: 'Animation type',
+				description: 'Animation type (String)',
 				options: ANIM_TYPE,
 				default: 'fade-fall'
 			},
 			speed: {
 				type: 'select',
 				empty: 'Chose an option',
-				description: 'Animation speed',
+				description: 'Animation speed (String)',
 				options: ANIM_SPEED,
 				default: 'fast'
 			},
 			effect: {
 				type: 'select',
 				empty: 'Chose an option',
-				description: 'Animation effect',
+				description: 'Animation effect (String)',
 				options: ANIM_EFFECTS,
 				default: 'ease-in-out'
 			}

@@ -19,7 +19,7 @@ const MAP = {
 	}
 }
 
-const EXCLUDED = ['type'];
+const EXCLUDED = ['type', 'pattern', 'textarea'];
 
 const HANDLERS = ['onChange', 'onFocus', 'onBlur', 'onEnter', 'onChangeValidity', 'onDisabledClick'];
 const ARGS = {
@@ -52,6 +52,7 @@ export default class InputRegexpDemo extends React.Component {
 					excluded={EXCLUDED}
 					data={this.state.data} 
 					onChange={this.handleChangeData}
+					type="regexp"
 				/>
 				<Mapper 
 					ref="mapper"

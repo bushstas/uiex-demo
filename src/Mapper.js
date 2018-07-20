@@ -5,6 +5,7 @@ import {Input} from 'uiex/Input';
 import {InputNumber} from 'uiex/InputNumber';
 import {InputColor} from 'uiex/InputColor';
 import {InputBoolean} from 'uiex/InputBoolean';
+import {InputRegexp} from 'uiex/InputRegexp';
 import {Select, SelectOption} from 'uiex/Select';
 import {Form} from 'uiex/Form';
 import {FormControl} from 'uiex/FormControl';
@@ -168,7 +169,11 @@ export default class Mapper extends React.Component {
 
 			case 'color':
 				input = <InputColor {...props}/>
-			break;			
+			break;
+
+			case 'regexp':
+				input = <InputRegexp {...props}/>
+			break;
 
 			case 'boolean':
 				input = <InputBoolean {...props}/>
@@ -222,7 +227,7 @@ export default class Mapper extends React.Component {
 				key={name}
 				name={name}
 				checked={value}
-				title={item.description}
+				title={item.description + ' (Boolean)'}
 				onChange={this.handleChangeCheckbox}
 			>
 				{name}
@@ -238,7 +243,7 @@ export default class Mapper extends React.Component {
 		this.handleChange(name, value);
 	}
 
-	handleChange(name, value) {
+	handleChange(name, value) {console.log(name)
 		const {onChange, data} = this.props;
 		if (typeof onChange == 'function') {
 			data[name] = value;

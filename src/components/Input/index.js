@@ -34,6 +34,7 @@ const STATE_PROPS = ['value'];
 const FUNCS = {
 	onChange: 'this.setState({value});'
 }
+const CONSTS = ['pattern'];
 
 export default class InputDemo extends React.Component {
 	constructor() {
@@ -47,6 +48,7 @@ export default class InputDemo extends React.Component {
 		return (
 			<div>
 				<InputMapper 
+					ref="mapper"
 					isOpen={true}
 					data={this.state.data}
 					handlers={HANDLERS}
@@ -59,6 +61,7 @@ export default class InputDemo extends React.Component {
 					args={ARGS}
 					funcs={FUNCS}
 					stateProps={STATE_PROPS}
+					consts={CONSTS}
 					unclosable
 				>
 					<Input 

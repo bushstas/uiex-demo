@@ -9,6 +9,7 @@ import ModalDemo from './components/Modal';
 import SidePanelDemo from './components/SidePanel';
 import InputDemo from './components/Input';
 import InputRegexpDemo from './components/InputRegexp';
+import ColorPickerDemo from './components/ColorPicker';
 
 import './style.scss';
 
@@ -16,7 +17,7 @@ export default class App extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			page: 'InputRegexp',
+			page: 'ColorPicker',
 			sidePanelOpen: false,
 			windowIsOpen: false
 		}
@@ -66,6 +67,9 @@ export default class App extends React.Component {
 
 			case 'InputRegexp':
 				return <InputRegexpDemo/>
+
+			case 'ColorPicker':
+				return <ColorPickerDemo/>
 			
 		}
 	}

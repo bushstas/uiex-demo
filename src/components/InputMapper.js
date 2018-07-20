@@ -28,68 +28,43 @@ const MAP = {
 	inputs: [
 		{
 			type:{
-				description: 'Input type',
+				description: 'Input type (String)',
 				example: 'password'
 			},
 			name: {
-				description: 'Input name',
+				description: 'Input name (String)',
 				example: 'email'
 			},
 			value: {
-				description: 'Input value',
+				description: 'Input value (String | Number)',
 				example: 'Some value'
 			},
 			placeholder: {
-				description: 'Input placeholder',
+				description: 'Input placeholder (String)',
 				example: 'Some placeholder'
 			},
 			minLength: {
-				description: 'Minimal value length for being valid',
+				description: 'Minimal value length for being valid (Number | Numeric String)',
 				type: 'number',
 				example: '5',
 				maxValue: 100,
 				positive: true
 			},
 			maxLength: {
-				description: 'Maximal value length for being valid',
+				description: 'Maximal value length for being valid (Number | Numeric String)',
 				type: 'number',
 				example: '15',
 				maxValue: 100,
 				positive: true
 			},
-			maxLength: {
-				description: 'Maximal value length for being valid',
-				type: 'number',
-				example: '15',
-				maxValue: 100,
-				positive: true
-			},
-			maxLength2: {
-				description: 'Maximal value length for being valid',
-				type: 'number',
-				example: '15',
-				maxValue: 100,
-				positive: true
-			},
-			maxLength3: {
-				description: 'Maximal value length for being valid',
-				type: 'number',
-				example: '15',
-				maxValue: 100,
-				positive: true
-			},
-			maxLength4: {
-				description: 'Maximal value length for being valid',
-				type: 'number',
-				example: '15',
-				maxValue: 100,
-				positive: true
-			}			
-		},
-		{
 			defaultValue: {
-				description: 'Input initial value',
+				description: 'Input initial value (String | Number)',
 				example: 'Initial value'
+			},
+			pattern: {
+				type: 'regexp',
+				description: 'Regexp pattern to validate control (RegExp | Function | String)',
+				example: '^[a-z]'
 			}
 		}
 	]
@@ -98,8 +73,10 @@ const MAP = {
 export default class InputMapper extends React.Component {
 	constructor(props) {
 		super(props);
+		const map = MAP;
+		map.inputs[0].value.type = props.type;
 		this.state = {
-			map: MAP
+			map
 		}
 	}
 
@@ -114,6 +91,7 @@ export default class InputMapper extends React.Component {
 					onChange={onChange}
 				/>
 				<Mapper 
+					ref="mapper"
 					isOpen={isOpen}
 					name="Input"
 					excluded={excluded}
@@ -124,5 +102,11 @@ export default class InputMapper extends React.Component {
 				/>
 			</div>
 		)
+	}
+
+	fire(event) {
+		if (this.refs.mapper) {
+			this.refs.mapper.fire(event);
+		}
 	}
 }

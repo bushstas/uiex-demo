@@ -168,6 +168,7 @@ export default class Mapper extends React.Component {
 			break;
 
 			case 'color':
+				props.withoutPicker = item.withoutPicker;
 				input = <InputColor {...props}/>
 			break;
 
@@ -243,7 +244,7 @@ export default class Mapper extends React.Component {
 		this.handleChange(name, value);
 	}
 
-	handleChange(name, value) {console.log(name)
+	handleChange(name, value) {
 		const {onChange, data} = this.props;
 		if (typeof onChange == 'function') {
 			data[name] = value;

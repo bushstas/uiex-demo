@@ -3,75 +3,42 @@ import ComponentMapper from '../ComponentMapper';
 import {ColorPicker} from 'uiex/ColorPicker';
 import Mapper from '../../Mapper';
 import Preview from '../../Preview';
+import {SketchPicker} from 'react-color';
 
 const DATA = {
-	
+	value: 'FFFFFF'
 }
 
 const EXCLUDED = [];
 
 const MAP = {
 	checkboxes: {
-		isOpen: {
-			type: 'boolean',
-			description: 'Open/Close status flag',
-			default: true
+		withoutInput: {
+			description: 'Without input'			
 		},
-		draggable: {
-			type: 'boolean',
-			description: 'draggable',
-			default: false
-		},
-		dragWithinScreen: {
-			type: 'boolean',
-			description: 'dragWithinScreen',
-			default: false
-		},
-		withoutMask: {
-			type: 'boolean',
-			description: 'withoutMask',
-			default: false
-		},
-		noMaskClose: {
-			type: 'boolean',
-			description: 'noMaskClose',
-			default: false
-		},
-		unclosable: {
-			type: 'boolean',
-			description: 'unclosable',
-			default: true
-		},
-		expandable: {
-			type: 'boolean',
-			description: 'expandable',
-			default: false
-		},
-		expanded: {
-			type: 'boolean',
-			description: 'expanded',
-			default: false
-		},
+		withoutRGB: {
+			description: 'Without RGB inputs'
+		}
 	},
 	inputs: [
 		{
-			header: {
-				description: 'Content of header',
-				default: ''
-			},
-			footer: {
-				description: 'Content of footer',
-				default: ''
-			},
-			outerContent: {
-				description: 'Outer content',
-				default: ''
+			value: {
+				description: 'Value',
+				type: 'color',
+				withoutPicker: true
 			}
 		}
 	]
 }
 
-const HANDLERS = []
+const HANDLERS = ['onChange'];
+const ARGS = {
+	onChange: ['value']
+};
+const STATE_PROPS = ['value'];
+const FUNCS = {
+	onChange: 'this.setState({value});'
+}
 
 export default class ColorPickerDemo extends React.Component {
 	constructor() {
@@ -103,15 +70,25 @@ export default class ColorPickerDemo extends React.Component {
 					data={this.state.data}
 					name="ColorPicker"
 					handlers={HANDLERS}
+					args={ARGS}
+					stateProps={STATE_PROPS}
+					funcs={FUNCS}
 				>
-					<ColorPicker {...this.state.data}/>
+					<ColorPicker 
+						{...this.state.data}
+						onChange={this.handleColorPickerChange}
+					/>
 				</Preview>
+				<SketchPicker/>
 			</div>
 		)
 	}
 
-	handleButtonClick = (selectedItem) => {
-		this.setState({selectedItem});
+	handleColorPickerChange = (color) => {
+		const {data} = this.state;
+		data.value = color;
+		this.setState({data: {...data}});
+		this.fire('onChange');
 	}
 
 	handleDisabledButtonClick = (value) => {
@@ -120,5 +97,9 @@ export default class ColorPickerDemo extends React.Component {
 
 	handleChangeData = (data) => {
 		this.setState({...data});
+	}
+
+	fire(event) {
+		this.refs.mapper.fire(event);
 	}
 }

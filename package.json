@@ -17,6 +17,7 @@
   "license": "ISC",
   "dependencies": {
     "react": "^16.2.0",
+    "react-color": "^2.14.1",
     "react-dom": "^16.2.0",
     "uiex": "0.0.2"
   },

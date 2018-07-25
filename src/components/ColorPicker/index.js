@@ -6,7 +6,7 @@ import Preview from '../../Preview';
 import {SketchPicker} from 'react-color';
 
 const DATA = {
-	value: 'FFFFFF'
+	value: '#FD4DF5'
 }
 
 const EXCLUDED = [];
@@ -31,9 +31,10 @@ const MAP = {
 	]
 }
 
-const HANDLERS = ['onChange'];
+const HANDLERS = ['onChange', 'onChangeHue'];
 const ARGS = {
-	onChange: ['value']
+	onChange: ['value', 'colorData'],
+	onChangeHue: ['hue']
 };
 const STATE_PROPS = ['value'];
 const FUNCS = {
@@ -77,6 +78,7 @@ export default class ColorPickerDemo extends React.Component {
 					<ColorPicker 
 						{...this.state.data}
 						onChange={this.handleColorPickerChange}
+						onChangeHue={this.handleColorPickerHueChange}
 					/>
 				</Preview>
 				<SketchPicker/>
@@ -84,11 +86,15 @@ export default class ColorPickerDemo extends React.Component {
 		)
 	}
 
-	handleColorPickerChange = (color) => {
+	handleColorPickerChange = (color, colorData) => {
 		const {data} = this.state;
 		data.value = color;
 		this.setState({data: {...data}});
 		this.fire('onChange');
+	}
+
+	handleColorPickerHueChange = (hue) => {
+		this.fire('onChangeHue');
 	}
 
 	handleDisabledButtonClick = (value) => {

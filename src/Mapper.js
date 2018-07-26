@@ -40,7 +40,7 @@ export default class Mapper extends React.Component {
 					<Form 
 						onChange={this.handleChangeInput}
 						columns="12"
-						controlSize="2"
+						cellSize="2"
 					>
 						<div className="mapper-checkboxes">
 							{checkboxes instanceof Object && Object.keys(checkboxes).map(key => {

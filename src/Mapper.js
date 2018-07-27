@@ -41,6 +41,7 @@ export default class Mapper extends React.Component {
 						onChange={this.handleChangeInput}
 						columns="12"
 						cellSize="2"
+						rowMargin="10"
 					>
 						<div className="mapper-checkboxes">
 							{checkboxes instanceof Object && Object.keys(checkboxes).map(key => {
@@ -189,6 +190,8 @@ export default class Mapper extends React.Component {
 				caption={name}
 				size={item.size}
 				shift={item.shift}
+				stretched={item.stretched}
+				fullWidth={item.fullWidth}
 				title={item.description}
 			>
 				{input}

@@ -3,14 +3,14 @@ import ComponentMapper from '../ComponentMapper';
 import {ColorPicker} from 'uiex/ColorPicker';
 import Mapper from '../../Mapper';
 import Preview from '../../Preview';
-import {SketchPicker} from 'react-color';
 
 const DATA = {
 	value: '#FD4DF5',
+	cellAlign: 'left',
 	presetColors: ['9932CC', 'FD4DF5', '22194D', 'F31B76', 'BFCA38', '059EC7', 'F57B47', '68C221', '9B76D8', '29D4A6', 'CF3F12', 'B3B613']
 }
 
-const EXCLUDED = [];
+const EXCLUDED = ['width', 'height', 'align', 'valign', 'block', 'vertical', 'children'];
 
 const MAP = {
 	checkboxes: {
@@ -82,7 +82,6 @@ export default class ColorPickerDemo extends React.Component {
 						onChangeHue={this.handleColorPickerHueChange}
 					/>
 				</Preview>
-				<SketchPicker/>
 			</div>
 		)
 	}

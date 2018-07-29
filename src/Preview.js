@@ -56,7 +56,7 @@ export default class Preview extends React.Component {
 		code += 'import {' + name + '} from "uiex/' + name + '";' + N + N;
 		if (consts instanceof Array) {
 			for (let c of consts) {
-				code += 'const ' + c.toUpperCase() + ' = ' + (typeof data[c] == 'string' ? '"' + data[c] + '"' : data[c]) + ';' + N + N;
+				code += 'const ' + this.getConstName(c) + ' = ' + this.stringify(data[c]) + ';' + N + N;
 			}
 		}
 		code += 'export default class ' + name + 'Demo extends Component {' + N;
@@ -94,7 +94,7 @@ export default class Preview extends React.Component {
 		}
 		for (let k in data) {
 			if (consts instanceof Array && consts.indexOf(k) > -1) {
-				code += T + T + T + T + k + '={' + k.toUpperCase() + '}' + N;
+				code += T + T + T + T + k + '={' + this.getConstName(k) + '}' + N;
 				continue;
 			}
 			if (k != 'children' && priority.indexOf(k) == -1 && (!(stateProps instanceof Array) || stateProps.indexOf(k) == -1)) {
@@ -140,5 +140,28 @@ export default class Preview extends React.Component {
 				{code}
 			</pre>
 		)
+	}
+
+	stringify(value) {
+		if (typeof value == 'string') {
+			return '"' + value + '"';
+		}
+		if (typeof value == 'number') {
+			return value;
+		}
+		if (typeof value == 'boolean') {
+			return value.toString();
+		}
+		if (value instanceof Array) {
+			const items = [];
+			for (let item of value) {
+				items.push(this.stringify(item));
+			}
+			return '[' + items.join(', ') + ']';
+		}
+	}
+
+	getConstName(name) {
+		return name.split(/(?=[A-Z])/).join('_').toUpperCase();
 	}
 }

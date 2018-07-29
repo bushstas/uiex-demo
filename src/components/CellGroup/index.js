@@ -1,15 +1,17 @@
 import React from 'react';
 import ComponentMapper from '../ComponentMapper';
-import {ColorPicker} from 'uiex/ColorPicker';
+import {CellGroup, Cell} from 'uiex/CellGroup';
 import Mapper from '../../Mapper';
 import Preview from '../../Preview';
 
 const DATA = {
-	value: '#FD4DF5',
-	presetColors: ['9932CC', 'FD4DF5', '22194D', 'F31B76', 'BFCA38', '059EC7', 'F57B47', '68C221', '9B76D8', '29D4A6', 'CF3F12', 'B3B613']
+	columns: 3,
+	cellMargin: 5,
+	rowMargin: 5,
+	cellHeight: ''
 }
 
-const EXCLUDED = ['width', 'height', 'align', 'valign', 'block', 'vertical', 'children'];
+const EXCLUDED = ['align', 'valign', 'block', 'vertical', 'children'];
 
 const MAP = {
 	checkboxes: {
@@ -22,10 +24,29 @@ const MAP = {
 	},
 	inputs: [
 		{
-			value: {
-				description: 'Value',
-				type: 'color',
-				withoutPicker: true
+			columns: {
+				description: 'Columns count',
+				type: 'number',
+				maxValue: 10,
+				positive: true
+			},
+			cellMargin: {
+				description: 'Space between columns in px',
+				type: 'number',
+				maxValue: 30,
+				positive: true
+			},
+			rowMargin: {
+				description: 'Space between rows in px',
+				type: 'number',
+				maxValue: 30,
+				positive: true
+			},
+			cellHeight: {
+				description: 'Height of cells',
+				type: 'number',
+				maxValue: 500,
+				positive: true
 			}
 		}
 	]
@@ -42,7 +63,14 @@ const FUNCS = {
 }
 const CONSTS = ['presetColors'];
 
-export default class ColorPickerDemo extends React.Component {
+
+const STYLE = {
+	backgroundColor: '#eee',
+	borderRadius: '3px',
+	padding: '15px'
+}
+
+export default class CellGroupDemo extends React.Component {
 	constructor() {
 		super();
 		this.state = {
@@ -51,6 +79,7 @@ export default class ColorPickerDemo extends React.Component {
 	}
 
 	render() {
+
 		const {data} = this.state;
 		return (
 			<div>
@@ -59,10 +88,11 @@ export default class ColorPickerDemo extends React.Component {
 					data={this.state.data} 
 					excluded={EXCLUDED}
 					onChange={this.handleChangeData}
+					maxHeight={2000}
 				/>
 				<Mapper 
 					ref="mapper"
-					name="ColorPicker"
+					name="CellGroup"
 					map={MAP} 
 					data={this.state.data} 
 					onChange={this.handleChangeData}
@@ -77,11 +107,40 @@ export default class ColorPickerDemo extends React.Component {
 					funcs={FUNCS}
 					consts={CONSTS}
 				>
-					<ColorPicker 
-						{...this.state.data}
-						onChange={this.handleColorPickerChange}
-						onChangeHue={this.handleColorPickerHueChange}
-					/>
+					
+							<CellGroup {...this.state.data}>
+								<Cell style={STYLE}>
+									First cell
+								</Cell>
+								<Cell style={STYLE}>
+									Second cell
+								</Cell>
+								<Cell style={STYLE}>
+									Third cell
+								</Cell>
+								<Cell style={STYLE}>
+									Fourth cell
+								</Cell>
+								<Cell style={STYLE}>
+									Fifth cell
+								</Cell>
+								<Cell style={STYLE}>
+									Sixth cell
+								</Cell>
+								<Cell style={STYLE}>
+									Seventh cell
+								</Cell>
+								<Cell style={STYLE}>
+									Eighth cell
+								</Cell>
+								<Cell style={STYLE}>
+									Nineth cell
+								</Cell>
+								<Cell style={STYLE}>
+									Tenth cell
+								</Cell>
+							</CellGroup>
+						
 				</Preview>
 			</div>
 		)

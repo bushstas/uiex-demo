@@ -3,7 +3,6 @@ import ComponentMapper from '../ComponentMapper';
 import {ColorPicker} from 'uiex/ColorPicker';
 import Mapper from '../../Mapper';
 import Preview from '../../Preview';
-import {SketchPicker} from 'react-color';
 
 const DATA = {
 	value: '#FD4DF5',
@@ -82,7 +81,6 @@ export default class ColorPickerDemo extends React.Component {
 						onChangeHue={this.handleColorPickerHueChange}
 					/>
 				</Preview>
-				<SketchPicker/>
 			</div>
 		)
 	}

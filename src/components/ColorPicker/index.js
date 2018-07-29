@@ -6,10 +6,11 @@ import Preview from '../../Preview';
 
 const DATA = {
 	value: '#FD4DF5',
+	cellAlign: 'left',
 	presetColors: ['9932CC', 'FD4DF5', '22194D', 'F31B76', 'BFCA38', '059EC7', 'F57B47', '68C221', '9B76D8', '29D4A6', 'CF3F12', 'B3B613']
 }
 
-const EXCLUDED = [];
+const EXCLUDED = ['width', 'height', 'align', 'valign', 'block', 'vertical', 'children'];
 
 const MAP = {
 	checkboxes: {

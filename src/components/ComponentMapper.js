@@ -61,11 +61,12 @@ const MAP = {
 				empty: 'Chose an option'
 			},
 			className: {
-				description: 'Custom ClassName attribute (String)'
+				description: 'Custom ClassName attribute (String)',
+				stretched: true
 			},
 			children: {
 				description: 'Content (ReactElement | Array | String)',
-				size: 'all'
+				stretched: true
 			}
 		}
 	]

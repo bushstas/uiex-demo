@@ -1,31 +1,49 @@
 import React from 'react';
 import ComponentMapper from '../ComponentMapper';
 import {CellGroup, Cell} from 'uiex/CellGroup';
+import {Select, SelectOption} from 'uiex/Select';
+import {Checkbox} from 'uiex/Checkbox';
 import Mapper from '../../Mapper';
 import Preview from '../../Preview';
+import {CELL_ALIGN} from 'uiex/consts';
 
 const DATA = {
 	columns: 3,
 	cellMargin: 5,
 	rowMargin: 5,
-	cellHeight: ''
+	cellHeight: '',
+	sideShrink: false,
+	cellGroupShowExtraProps: false
 }
 
-const EXCLUDED = ['align', 'valign', 'block', 'vertical', 'children'];
+const CELLS_QUANTITY = 10;
+
+const CELLS_DATA = [];
+
+const EXCLUDED = ['align', 'valign', 'block', 'vertical', 'children', 'disabled'];
 
 const MAP = {
 	checkboxes: {
-		withoutInput: {
-			description: 'Without input'			
-		},
-		withoutRGB: {
-			description: 'Without RGB inputs'
+		sideShrink: {
+			description: 'sideShrink'
 		}
 	},
 	inputs: [
 		{
 			columns: {
 				description: 'Columns count',
+				type: 'number',
+				maxValue: 10,
+				positive: true
+			},
+			cellSize: {
+				description: 'Cell default size',
+				type: 'number',
+				maxValue: 10,
+				positive: true
+			},
+			maxCellSize: {
+				description: 'Cell max default size',
 				type: 'number',
 				maxValue: 10,
 				positive: true
@@ -47,25 +65,209 @@ const MAP = {
 				type: 'number',
 				maxValue: 500,
 				positive: true
+			},
+			cellAlign: {
+				description: 'Align of cells',
+				type: 'select',
+				options: CELL_ALIGN
+			},
+			columnsTiny: {
+				description: 'Columns for window width <= 800px',
+				type: 'number',
+				maxValue: 10,
+				positive: true,
+				extra: true
+			},
+			columnsSmall: {
+				description: 'Columns for window width <= 1000px',
+				type: 'number',
+				maxValue: 10,
+				positive: true,
+				extra: true
+			},
+			columnsMiddle: {
+				description: 'Columns for window width <= 1300px',
+				type: 'number',
+				maxValue: 10,
+				positive: true,
+				extra: true
+			},
+			columnsLarger: {
+				description: 'Columns for window width <= 1500px',
+				type: 'number',
+				maxValue: 10,
+				positive: true,
+				extra: true
+			},
+			columnsLarge: {
+				description: 'Columns for window width <= 2000px',
+				type: 'number',
+				maxValue: 10,
+				positive: true,
+				extra: true
+			},
+			columnsHuge: {
+				description: 'Columns for window width <= 2500px',
+				type: 'number',
+				maxValue: 10,
+				positive: true,
+				extra: true
+			},
+			columnsGigantic: {
+				description: 'Columns for window width > 2500px',
+				type: 'number',
+				maxValue: 10,
+				positive: true,
+				extra: true
+			},
+			cellSizeTiny: {
+				description: 'Cell default size for window width <= 800px',
+				type: 'number',
+				maxValue: 10,
+				positive: true,
+				extra: true
+			},
+			cellSizeSmall: {
+				description: 'Cell default size for window width <= 1000px',
+				type: 'number',
+				maxValue: 10,
+				positive: true,
+				extra: true
+			},
+			cellSizeMiddle: {
+				description: 'Cell default size for window width <= 1300px',
+				type: 'number',
+				maxValue: 10,
+				positive: true,
+				extra: true
+			},
+			cellSizeLarger: {
+				description: 'Cell default size for window width <= 1500px',
+				type: 'number',
+				maxValue: 10,
+				positive: true,
+				extra: true
+			},
+			cellSizeLarge: {
+				description: 'Cell default size for window width <= 2000px',
+				type: 'number',
+				maxValue: 10,
+				positive: true,
+				extra: true
+			},
+			cellSizeHuge: {
+				description: 'Cell default size for window width <= 2500px',
+				type: 'number',
+				maxValue: 10,
+				positive: true,
+				extra: true
+			},
+			cellSizeGigantic: {
+				description: 'Cell default size for window width > 2500px',
+				type: 'number',
+				maxValue: 10,
+				positive: true,
+				extra: true
 			}
 		}
 	]
 }
 
-const HANDLERS = ['onChange', 'onChangeHue'];
-const ARGS = {
-	onChange: ['value', 'colorData'],
-	onChangeHue: ['hue']
-};
-const STATE_PROPS = ['value'];
-const FUNCS = {
-	onChange: 'this.setState({value});'
+const CELL_MAP = {
+	checkboxes: {
+		firstInRow: {
+			description: 'firstInRow'
+		},
+		lastInRow: {
+			description: 'lastInRow'
+		},
+		floatSide: {
+			description: 'floatSide'
+		},
+		stretched: {
+			description: 'stretched'
+		},
+		fullWidth: {
+			description: 'fullWidth'
+		}
+	},
+	inputs: [
+		{
+			size: {
+				description: 'Cell size',
+				type: 'number',
+				maxValue: 10,
+				positive: true
+			},
+			shift: {
+				description: 'Cell shift',
+				type: 'number',
+				maxValue: 10,
+				positive: true
+			},
+			maxSize: {
+				description: 'Max size for stretched cells',
+				type: 'number',
+				maxValue: 10,
+				positive: true,
+				lastInRow: true
+			},
+			sizeTiny: {
+				description: 'Cell size for window width <= 800px',
+				type: 'number',
+				maxValue: 10,
+				positive: true,
+				extra: true
+			},
+			sizeSmall: {
+				description: 'Cell size for window width <= 1000px',
+				type: 'number',
+				maxValue: 10,
+				positive: true,
+				extra: true
+			},
+			sizeMiddle: {
+				description: 'Cell size for window width <= 1300px',
+				type: 'number',
+				maxValue: 10,
+				positive: true,
+				extra: true
+			},
+			sizeLarger: {
+				description: 'Cell size for window width <= 1500px',
+				type: 'number',
+				maxValue: 10,
+				positive: true,
+				extra: true
+			},
+			sizeLarge: {
+				description: 'Cell size for window width <= 2000px',
+				type: 'number',
+				maxValue: 10,
+				positive: true,
+				extra: true
+			},
+			sizeHuge: {
+				description: 'Cell size for window width <= 2500px',
+				type: 'number',
+				maxValue: 10,
+				positive: true,
+				extra: true
+			},
+			sizeGigantic: {
+				description: 'Cell size for window width > 2500px',
+				type: 'number',
+				maxValue: 10,
+				positive: true,
+				extra: true
+			},
+		}
+	]
 }
-const CONSTS = ['presetColors'];
 
 
 const STYLE = {
-	backgroundColor: '#eee',
+	backgroundColor: '#ddd',
 	borderRadius: '3px',
 	padding: '15px'
 }
@@ -74,12 +276,14 @@ export default class CellGroupDemo extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			data: DATA
+			data: DATA,
+			cellData: CELLS_DATA,
+			currentCell: 0,
+			cellQuantity: CELLS_QUANTITY
 		}
 	}
 
 	render() {
-
 		const {data} = this.state;
 		return (
 			<div>
@@ -89,83 +293,183 @@ export default class CellGroupDemo extends React.Component {
 					excluded={EXCLUDED}
 					onChange={this.handleChangeData}
 					maxHeight={2000}
+					maxWidth={2000}
 				/>
 				<Mapper 
 					ref="mapper"
 					name="CellGroup"
 					map={MAP} 
-					data={this.state.data} 
+					columns="14"
+					data={this.state.data}
 					onChange={this.handleChangeData}
-					handlers={HANDLERS}
+					withExtraProps
+				/>
+				<Mapper 
+					ref="mapper"
+					name="Cell"
+					map={CELL_MAP}
+					columns="14"
+					data={this.getCurrentCellData()}
+					value={this.state.currentCell}
+					onChange={this.handleChangeCellData}
+					withExtraProps
 				/>
 				<Preview
+					ref="preview"
 					data={this.state.data}
-					name="ColorPicker"
-					handlers={HANDLERS}
-					args={ARGS}
-					stateProps={STATE_PROPS}
-					funcs={FUNCS}
-					consts={CONSTS}
-				>
-					
-							<CellGroup {...this.state.data}>
-								<Cell style={STYLE}>
-									First cell
-								</Cell>
-								<Cell style={STYLE}>
-									Second cell
-								</Cell>
-								<Cell style={STYLE}>
-									Third cell
-								</Cell>
-								<Cell style={STYLE}>
-									Fourth cell
-								</Cell>
-								<Cell style={STYLE}>
-									Fifth cell
-								</Cell>
-								<Cell style={STYLE}>
-									Sixth cell
-								</Cell>
-								<Cell style={STYLE}>
-									Seventh cell
-								</Cell>
-								<Cell style={STYLE}>
-									Eighth cell
-								</Cell>
-								<Cell style={STYLE}>
-									Nineth cell
-								</Cell>
-								<Cell style={STYLE}>
-									Tenth cell
-								</Cell>
-							</CellGroup>
-						
+					name="CellGroup"
+					content={this.renderPreviewContent()}
+				>					
+					<div className="mb20">
+						Choose cell quantity
+						<Select 
+							value={this.state.cellQuantity} 
+							onChange={this.handleChangeCellQuantity}
+							className="ml20"
+							width="100"
+						>
+							<SelectOption value="2">
+								2
+							</SelectOption>
+							<SelectOption value="3">
+								3
+							</SelectOption>
+							<SelectOption value="4">
+								4
+							</SelectOption>
+							<SelectOption value="5">
+								5
+							</SelectOption>
+							<SelectOption value="6">
+								6
+							</SelectOption>
+							<SelectOption value="7">
+								7
+							</SelectOption>
+							<SelectOption value="8">
+								8
+							</SelectOption>
+							<SelectOption value="9">
+								9
+							</SelectOption>
+							<SelectOption value="10">
+								10
+							</SelectOption>
+							<SelectOption value="11">
+								11
+							</SelectOption>
+							<SelectOption value="12">
+								12
+							</SelectOption>
+							<SelectOption value="13">
+								13
+							</SelectOption>
+							<SelectOption value="14">
+								14
+							</SelectOption>
+							<SelectOption value="15">
+								15
+							</SelectOption>
+							<SelectOption value="16">
+								16
+							</SelectOption>
+							<SelectOption value="17">
+								17
+							</SelectOption>
+							<SelectOption value="18">
+								18
+							</SelectOption>
+							<SelectOption value="19">
+								19
+							</SelectOption>
+							<SelectOption value="20">
+								20
+							</SelectOption>
+						</Select>
+					</div>
+					<CellGroup {...this.state.data}>
+						{this.renderCells()}
+					</CellGroup>						
 				</Preview>
 			</div>
 		)
 	}
 
-	handleColorPickerChange = (color, colorData) => {
-		const {data} = this.state;
-		data.value = color;
-		this.setState({data: {...data}});
-		this.fire('onChange');
+	renderCells() {
+		const cells = [];
+		for (let i = 0; i < this.state.cellQuantity; i++) {
+			cells.push(
+				<Cell 
+					key={i} 
+					onClick={this.handleCellClick} 
+					style={STYLE}
+					className={i == this.state.currentCell ? 'active-cell' : null}
+					{...this.getCellData(i)}
+				>
+					Cell #{i + 1}
+				</Cell>
+			);
+		}
+		return cells;
 	}
 
-	handleColorPickerHueChange = (hue) => {
-		this.fire('onChangeHue');
+	getCurrentCellData() {
+		return this.getCellData(this.state.currentCell);
 	}
 
-	handleDisabledButtonClick = (value) => {
-		alert(value + ' is disabled')
+	getCellData(idx) {
+		return this.state.cellData[idx] || {};
+	}
+
+	handleCellClick = (currentCell) => {
+		this.setState({currentCell});
 	}
 
 	handleChangeData = (data) => {
-		this.setState({...data});
+		this.setState({data});
 	}
 
-	fire(event) {
-		this.refs.mapper.fire(event);
+	handleChangeCellData = (data) => {
+		const {cellData} = this.state;
+		cellData[this.state.currentCell] = data; 
+		this.setState({cellData: {...cellData}});
+	}
+
+	handleChangeCellQuantity = (cellQuantity) => {
+		this.setState({cellQuantity});
+	}
+
+	renderPreviewContent() {
+		const T = "\t";
+		const TAB = T + T + T + T;
+		const TAB2 = TAB + T;
+		const N = "\n";		
+		let content = '';
+		for (let i = 0; i < this.state.cellQuantity; i++) {
+			const props = this.getCellData(i);
+			const keys = Object.keys(props);
+			if (keys.length > 1) {
+				content += TAB + '<Cell' + N;
+				for (let k in props) {
+					if (props[k] === true) {
+						content += TAB2 + k + N;	
+					} else {
+						content += TAB2 + k + '=' + this.refs.preview.stringify(props[k], true) + N;
+					}
+				}
+				content += TAB + '>' + N;
+			} else if (keys.length > 0) {
+				if (props[keys[0]] === true) {
+					content += TAB + '<Cell ' + keys[0] + '>' + N;
+				} else {
+					content += TAB + '<Cell ' + keys[0] + '=' + this.refs.preview.stringify(props[keys[0]], true) + '>' + N;
+				}
+			} else {
+				content += TAB + '<Cell>' + N;
+			}
+			content += TAB2 + 'Cell #' + (i + 1) + N;
+			content += TAB + '</Cell>' + (i < this.state.cellQuantity - 1 ? N : '');
+		}
+		return content;
 	}
 }

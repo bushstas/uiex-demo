@@ -48,7 +48,7 @@ export default class Preview extends React.Component {
 
 	renderCode() {
 		const priority = ['className', 'title', 'width', 'height'];
-		const {data, name, unclosable, handlers, args, funcs, stateProps, consts} = this.props;
+		const {data, name, unclosable, handlers, args, funcs, stateProps, consts, content} = this.props;
 		const bools = [];
 		const T = "\t";
 		const N = "\n";
@@ -129,7 +129,7 @@ export default class Preview extends React.Component {
 			}
 		}
 		if (!unclosable) {
-			code += T + T + T + '>' + N + T + T + T + T + (data.children || '') + N + T + T + T + '</' + name + '>' + N;
+			code += T + T + T + '>' + N + (content || (T + T + T + T + (data.children || ''))) + N + T + T + T + '</' + name + '>' + N;
 		} else {
 			code += T + T + T + '/>' + N;
 		}
@@ -142,23 +142,25 @@ export default class Preview extends React.Component {
 		)
 	}
 
-	stringify(value) {
+	stringify(value, addBraces = false) {
+		const type = typeof value;
 		if (typeof value == 'string') {
-			return '"' + value + '"';
-		}
-		if (typeof value == 'number') {
-			return value;
+			value = '"' + value + '"';
 		}
 		if (typeof value == 'boolean') {
-			return value.toString();
+			value = value.toString();
 		}
 		if (value instanceof Array) {
 			const items = [];
 			for (let item of value) {
 				items.push(this.stringify(item));
 			}
-			return '[' + items.join(', ') + ']';
+			value = '[' + items.join(', ') + ']';
 		}
+		if (addBraces && type != 'string') {
+			return '{' + value + '}';
+		}
+		return value;
 	}
 
 	getConstName(name) {

@@ -13,21 +13,27 @@ import {FormControlGroup} from 'uiex/FormControlGroup';
 import {BoxSection} from 'uiex/BoxSection';
 import {AutoComplete} from 'uiex/AutoComplete';
 import {MultiSelect} from 'uiex/MultiSelect';
+import {getNumber} from 'uiex/utils';
 
-const OPTIONS =[{title:'Awesome', value: 'Awesome', withBottomDelimiter: true}, 'Fake', 'Goofie', 'Bad', 'Fucked', 'Fantastic', 'Bold', 'Lovely', 'Green', 'Good', 'Normal', 'Scary', 'Well', 'Safe', 'Lonely', 'Silent', 'Stormy', 'Wet', 'SuperPuperMegaCool', 'Shocked',{title:'Broken', value: 'Broken', withTopDelimiter: true}];
+const COLUMNS = 12;
 
 export default class Mapper extends React.Component {
 
 	constructor(props) {
 		super(props);
 		this.state = {
-			val: ''
+			val: '',
+			extraPropsShown: false
 		}
 		this.timeouts = {}
 	}
 
 	render() {
-		const {map: {checkboxes, inputs}, data, name, isOpen = true, excluded, handlers} = this.props;
+		const {map: {checkboxes, inputs}, data, name, isOpen = true, excluded, handlers, withExtraProps} = this.props;
+		let {columns} = this.props;
+		if (!getNumber(columns)) {
+			columns = COLUMNS;
+		}
 		return (
 			<div className="mapper">
 				<BoxSection 
@@ -35,11 +41,12 @@ export default class Mapper extends React.Component {
 					isOpen={isOpen}
 					animation="fade-fall"
 					iconAtRight
+					note={withExtraProps ? this.renderExtraPropsCheckbox() : null}
 					effect="ease-in-out"
 				>
 					<Form 
 						onChange={this.handleChangeInput}
-						columns="12"
+						columns={columns}
 						cellSize="2"
 						rowMargin="10"
 					>
@@ -103,6 +110,21 @@ export default class Mapper extends React.Component {
 		)
 	}
 
+	renderExtraPropsCheckbox() {
+		return (
+			<Checkbox 
+				checked={this.state.extraPropsShown}
+				onChange={this.handleExtraPropsCheckboxChange}
+			>
+				Show extra props
+			</Checkbox>
+		)
+	}
+
+	handleExtraPropsCheckboxChange = (extraPropsShown) => {
+		this.setState({extraPropsShown});
+	}
+
 	renderCheckboxesGroupControl(name, item, value) {
 		return (
 			<FormControl 
@@ -141,8 +163,13 @@ export default class Mapper extends React.Component {
 			positive,
 			negative,
 			decimal,
-			toFixed
+			toFixed,
+			extra
 		} = item;
+
+		if (extra && !this.state.extraPropsShown) {
+			return null;
+		}
 
 		let input;
 		const props = {
@@ -193,6 +220,7 @@ export default class Mapper extends React.Component {
 				stretched={item.stretched}
 				fullWidth={item.fullWidth}
 				title={item.description}
+				lastInRow={item.lastInRow}
 			>
 				{input}
 			</FormControl>

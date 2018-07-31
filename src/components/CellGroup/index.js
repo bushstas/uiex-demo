@@ -5,7 +5,7 @@ import {Select, SelectOption} from 'uiex/Select';
 import {Checkbox} from 'uiex/Checkbox';
 import Mapper from '../../Mapper';
 import Preview from '../../Preview';
-import {CELL_ALIGN} from 'uiex/consts';
+import {CELL_ALIGN, ALIGN_SELF} from 'uiex/consts';
 
 const DATA = {
 	columns: 3,
@@ -26,10 +26,14 @@ const MAP = {
 	checkboxes: {
 		sideShrink: {
 			description: 'sideShrink'
+		},
+		cellAutoHeight: {
+			description: "Every cell has own height based on it's content (cells are not stretched)"
 		}
 	},
 	inputs: [
 		{
+			_COLUMNS: 16,
 			columns: {
 				description: 'Columns count',
 				type: 'number',
@@ -66,11 +70,19 @@ const MAP = {
 				maxValue: 500,
 				positive: true
 			},
+			cellMinHeight: {
+				description: 'Minimal height of cells',
+				type: 'number',
+				maxValue: 500,
+				positive: true
+			},
 			cellAlign: {
 				description: 'Align of cells',
 				type: 'select',
 				options: CELL_ALIGN
 			},
+		},
+		{
 			columnsTiny: {
 				description: 'Columns for window width <= 800px',
 				type: 'number',
@@ -193,6 +205,7 @@ const CELL_MAP = {
 	},
 	inputs: [
 		{
+			_COLUMNS: 16,
 			size: {
 				description: 'Cell size',
 				type: 'number',
@@ -209,9 +222,16 @@ const CELL_MAP = {
 				description: 'Max size for stretched cells',
 				type: 'number',
 				maxValue: 10,
-				positive: true,
-				lastInRow: true
+				positive: true
 			},
+			alignSelf: {
+				description: 'Cell vertical align instead of being stretched',
+				type: 'select',
+				options: ALIGN_SELF,
+				lastInRow: true
+			}
+		},
+		{
 			sizeTiny: {
 				description: 'Cell size for window width <= 800px',
 				type: 'number',

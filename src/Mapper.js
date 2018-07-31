@@ -47,6 +47,12 @@ export default class Mapper extends React.Component {
 					<Form 
 						onChange={this.handleChangeInput}
 						columns={columns}
+						columnsTiny="2"
+						columnsSmall="4"
+						columnsMiddle="6"
+						columnsLarger="10"
+						columnsHuge="18"
+						columnsGigantic="24"
 						cellSize="2"
 						rowMargin="10"
 					>
@@ -63,9 +69,16 @@ export default class Mapper extends React.Component {
 						{inputs instanceof Array && 
 							<div className="mapper-inputs">
 								{inputs.map((inps, idx) => {
+									let columns;
+									if (inps._COLUMNS) {
+										columns = inps._COLUMNS;
+									}
 									return (
-										<FormControlGroup key={idx}>
+										<FormControlGroup key={idx} columns={columns}>
 											{Object.keys(inps).map(key => {
+												if (key.charAt(0) == '_') {
+													return;
+												}
 												if (excluded instanceof Array && excluded.indexOf(key) > -1) {
 													return null;
 												}
@@ -241,6 +254,7 @@ export default class Mapper extends React.Component {
 				key={name}
 				caption={name}
 				size={item.size}
+				lastInRow={item.lastInRow}
 			>
 				<SelectComponent
 					empty

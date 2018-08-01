@@ -227,7 +227,19 @@ const CELL_MAP = {
 			alignSelf: {
 				description: 'Cell vertical align instead of being stretched',
 				type: 'select',
-				options: ALIGN_SELF,
+				options: ALIGN_SELF
+			},
+			height: {
+				description: 'Cell height',
+				type: 'number',
+				maxValue: 1000,
+				positive: true
+			},
+			minHeight: {
+				description: 'Cell min height',
+				type: 'number',
+				maxValue: 1000,
+				positive: true,
 				lastInRow: true
 			}
 		},
@@ -285,6 +297,8 @@ const CELL_MAP = {
 	]
 }
 
+const ADDITIONAL_IMPORT = 'Cell';
+
 
 const STYLE = {
 	backgroundColor: '#ddd',
@@ -339,6 +353,7 @@ export default class CellGroupDemo extends React.Component {
 					data={this.state.data}
 					name="CellGroup"
 					content={this.renderPreviewContent()}
+					additionalImport={ADDITIONAL_IMPORT}
 				>					
 					<div className="mb20">
 						Choose cell quantity

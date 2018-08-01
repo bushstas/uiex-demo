@@ -7,6 +7,7 @@ const PAGES = [
 	'ButtonGroup',
 	'CellGroup',
 	'ColorPicker',
+	'Colors',
 	'Input',
 	'InputColor',
 	'InputDate',

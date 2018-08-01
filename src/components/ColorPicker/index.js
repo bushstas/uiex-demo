@@ -3,10 +3,11 @@ import ComponentMapper from '../ComponentMapper';
 import {ColorPicker} from 'uiex/ColorPicker';
 import Mapper from '../../Mapper';
 import Preview from '../../Preview';
+import {COLORS} from '../../consts';
 
 const DATA = {
 	value: '#FD4DF5',
-	presetColors: ['9932CC', 'FD4DF5', '22194D', 'F31B76', 'BFCA38', '059EC7', 'F57B47', '68C221', '9B76D8', '29D4A6', 'CF3F12', 'B3B613']
+	presetColors: COLORS
 }
 
 const EXCLUDED = ['width', 'height', 'align', 'valign', 'block', 'vertical', 'children'];

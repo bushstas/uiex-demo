@@ -48,12 +48,18 @@ export default class Preview extends React.Component {
 
 	renderCode() {
 		const priority = ['className', 'title', 'width', 'height'];
-		const {data, name, unclosable, handlers, args, funcs, stateProps, consts, content} = this.props;
+		const {data, name, unclosable, handlers, args, funcs, stateProps, consts, content, additionalImport} = this.props;
 		const bools = [];
 		const T = "\t";
 		const N = "\n";
+		let addImport = '';
+		if (typeof additionalImport == 'string') {
+			addImport = ', ' + additionalImport;
+		} else if (additionalImport instanceof Array) {
+			addImport = ', ' + additionalImport.join(', ');
+		}
 		let code = 'import {Component} from "react";' + N;
-		code += 'import {' + name + '} from "uiex/' + name + '";' + N + N;
+		code += 'import {' + name + addImport + '} from "uiex/' + name + '";' + N + N;
 		if (consts instanceof Array) {
 			for (let c of consts) {
 				code += 'const ' + this.getConstName(c) + ' = ' + this.stringify(data[c]) + ';' + N + N;

@@ -1,143 +1,74 @@
 import React from 'react';
+import Demo from '../../Demo';
 import {SearchForm} from 'uiex/SearchForm';
 import {ICON_TYPE} from 'uiex/consts';
-import ComponentMapper from '../ComponentMapper';
 import FormMapper from '../FormMapper';
-import Mapper from '../../Mapper';
-import Preview from '../../Preview';
+import {MEASURES} from '../../consts';
 
 import './style.scss';
 
-const DATA = {
-	width: 400,
-	caption: 'Search form',
-	buttonTitle: '',
-	placeholder: 'Search word',
-	icon: 'search',
-	captionInside: false
-}
-
-const MEASURES = [
-	{id: 'px', name: 'px'},
-	{id: '%', name: '%'}
-]
-
-const EXCLUDED = ['vertical']
-
-const MAP = {
-	checkboxes: {
-		hiddenButton: {
-			description: 'Button is only shown on focus',
-			defaultValue: false
-		}
-	},
-	inputs: [
-		{
-			buttonTitle: {
-				description: 'Caption of submit button',
-				example: 'Find',
-				default: ''
-			},
-			focusedWidth: {
-				type: 'number',
-				description: 'Width of form on focus',
-				example: '120',
-				maxValue: 1000,
-				measure: 'px',
-				measures: MEASURES,
-				positive: true
-			},
-			placeholder: {
-				description: 'Placeholder of input',
-				example: 'Search word',
-				default: ''
-			},
-			icon: {
-				description: 'Icon name of submit button',
-				example: 'search',
-				default: ''
-			},
-			iconType: {
-				description: 'Icon type',
-				options: ICON_TYPE,
-				empty: 'Chose an option'
+export default class SearchFormDemo extends Demo {
+	static map = {
+		checkboxes: {
+			hiddenButton: {
+				description: 'Button is only shown on focus',
+				defaultValue: false
 			}
-		}
-	]
-}
+		},
+		inputs: [
+			{
+				buttonTitle: {
+					description: 'Caption of submit button',
+					example: 'Find',
+					default: ''
+				},
+				focusedWidth: {
+					type: 'number',
+					description: 'Width of form on focus',
+					example: '120',
+					maxValue: 1000,
+					measure: 'px',
+					measures: MEASURES,
+					positive: true
+				},
+				placeholder: {
+					description: 'Placeholder of input',
+					example: 'Search word',
+					default: ''
+				},
+				icon: {
+					description: 'Icon name of submit button',
+					example: 'search',
+					default: ''
+				},
+				iconType: {
+					description: 'Icon type',
+					options: ICON_TYPE,
+					empty: 'Chose an option'
+				}
+			}
+		]
+	};
+	static data = {
+		width: 400,
+		caption: 'Search form',
+		buttonTitle: '',
+		placeholder: 'Search word',
+		icon: 'search',
+		captionInside: false
+	};
+	static excluded = ['vertical'];
+	static handlers = ['onChange', 'onSubmit', 'onFocus', 'onBlur', 'onDisabledClick'];
+	static componentName = 'SearchForm';
+	static component = SearchForm;
 
-const HANDLERS = ['onChange', 'onSubmit', 'onFocus', 'onBlur', 'onDisabledClick']
-
-export default class SearchFormDemo extends React.Component {
-	constructor() {
-		super();
-		this.state = {
-			data: DATA
-		};
-	}
-
-	render() {
+	renderMapperBefore() {
 		return (
-			<div>
-				<ComponentMapper 
-					isOpen={false}
-					data={this.state.data} 
-					excluded={EXCLUDED}
-					onChange={this.handleChangeData}
-				/>
-				<FormMapper 
-					isOpen={true}
-					data={this.state.data} 
-					onChange={this.handleChangeData}
-				/>
-				<Mapper 
-					ref="mapper"
-					name="SearchForm"
-					map={MAP} 
-					data={this.state.data} 
-					onChange={this.handleChangeData}
-					handlers={HANDLERS}
-				/>
-				<Preview
-					name="SearchForm"
-					data={this.state.data} 
-				>
-					<SearchForm 
-						{...this.state.data} 
-						onSubmit={this.handleSubmit}
-						onFocus={this.handleFocus}
-						onBlur={this.handleBlur}
-						onChange={this.handleChange}
-						onDisabledClick={this.handleDisabledClick}
-					>
-							
-					</SearchForm>
-				</Preview>
-			</div>
+			<FormMapper 
+				isOpen={true}
+				data={this.state.data} 
+				onChange={this.handleChangeData}			
+			/>
 		)
-	}
-
-	handleSubmit = (value) => {
-		this.fire('onSubmit');
-	}
-	handleFocus = (value) => {
-		this.fire('onFocus');
-	}
-	handleBlur = (value) => {
-		this.fire('onBlur');
-	}
-	handleChange = (value) => {
-		this.fire('onChange');
-	}
-	handleDisabledClick = (value) => {
-		this.fire('onDisabledClick');
-	}
-
-	handleChangeData = (data) => {
-		this.setState({data});
-	}
-
-	fire(event) {
-		this.refs.mapper.fire(event);
 	}
 }

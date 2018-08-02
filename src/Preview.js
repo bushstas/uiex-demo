@@ -2,6 +2,7 @@ import React from 'react';
 import {Section} from 'uiex/Section';
 import {Button} from 'uiex/Button';
 import {Modal} from 'uiex/Modal';
+import {stringify} from './utils';
 
 export default class Preview extends React.Component {
 	constructor(props) {
@@ -48,7 +49,7 @@ export default class Preview extends React.Component {
 
 	renderCode() {
 		const priority = ['className', 'title', 'width', 'height'];
-		const {data, name, unclosable, handlers, args, funcs, stateProps, consts, content, additionalImport} = this.props;
+		const {owner, data, name, unclosable, handlers, args, funcs, stateProps, consts, contentRenderer, additionalImport} = this.props;
 		const bools = [];
 		const T = "\t";
 		const N = "\n";
@@ -62,7 +63,7 @@ export default class Preview extends React.Component {
 		code += 'import {' + name + addImport + '} from "uiex/' + name + '";' + N + N;
 		if (consts instanceof Array) {
 			for (let c of consts) {
-				code += 'const ' + this.getConstName(c) + ' = ' + this.stringify(data[c]) + ';' + N + N;
+				code += 'const ' + this.getConstName(c) + ' = ' + stringify(data[c]) + ';' + N + N;
 			}
 		}
 		code += 'export default class ' + name + 'Demo extends Component {' + N;
@@ -135,6 +136,7 @@ export default class Preview extends React.Component {
 			}
 		}
 		if (!unclosable) {
+			const content = contentRenderer.call(owner);
 			code += T + T + T + '>' + N + (content || (T + T + T + T + (data.children || ''))) + N + T + T + T + '</' + name + '>' + N;
 		} else {
 			code += T + T + T + '/>' + N;
@@ -146,27 +148,6 @@ export default class Preview extends React.Component {
 				{code}
 			</pre>
 		)
-	}
-
-	stringify(value, addBraces = false) {
-		const type = typeof value;
-		if (typeof value == 'string') {
-			value = '"' + value + '"';
-		}
-		if (typeof value == 'boolean') {
-			value = value.toString();
-		}
-		if (value instanceof Array) {
-			const items = [];
-			for (let item of value) {
-				items.push(this.stringify(item));
-			}
-			value = '[' + items.join(', ') + ']';
-		}
-		if (addBraces && type != 'string') {
-			return '{' + value + '}';
-		}
-		return value;
 	}
 
 	getConstName(name) {

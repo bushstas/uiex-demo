@@ -9,6 +9,7 @@ const PAGES = [
 	'ColorPicker',
 	'Colors',
 	'Input',
+	'InputArray',
 	'InputColor',
 	'InputDate',
 	'InputNumber',

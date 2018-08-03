@@ -12,6 +12,7 @@ import InputRegexpDemo from './components/InputRegexp';
 import ColorPickerDemo from './components/ColorPicker';
 import CellGroupDemo from './components/CellGroup';
 import ColorsDemo from './components/Colors';
+import InputArrayDemo from './components/InputArray';
 
 import './style.scss';
 
@@ -19,7 +20,7 @@ export default class App extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			page: 'Colors',
+			page: 'InputArray',
 			sidePanelOpen: false,
 			windowIsOpen: false
 		}
@@ -78,7 +79,9 @@ export default class App extends React.Component {
 
 			case 'Colors':
 				return <ColorsDemo/>	
-			
+
+			case 'InputArray':
+				return <InputArrayDemo/>
 		}
 	}
 

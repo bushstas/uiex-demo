@@ -194,6 +194,11 @@ export default class Mapper extends React.Component {
 			clearable: true
 		};
 		switch (item.type) {
+			case 'array':
+				const arrayValue = 'Array (' + (value instanceof Array ? value.length : (!!value ? 1 : 0)) + ')';
+				input = <Input {...props} readOnly value={arrayValue}/>
+			break;
+
 			case 'number':
 				const numberProps = {
 					measure,

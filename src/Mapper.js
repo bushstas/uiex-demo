@@ -105,7 +105,7 @@ export default class Mapper extends React.Component {
 							<div className="mapper-handlers">
 								{handlers.map((h) => {
 									return (
-										<div ref={h} className={this.getHandlerClassName()} key={h}>
+										<div ref={h} className={this.getHandlerClassName()} key={h} title={this.getHandlerTitle(h)}>
 											<div className="inner">
 												{h}
 											</div>
@@ -121,6 +121,19 @@ export default class Mapper extends React.Component {
 				</BoxSection>
 			</div>
 		)
+	}
+
+	getHandlerTitle(name) {
+		const {args} = this.props;
+		let ar = '';
+		if (args instanceof Object && args[name]) {
+			if (args[name] instanceof Array) {
+				ar = args[name].join(', ');
+			} else if (typeof args[name] == 'string') {
+				ar = args[name];
+			}
+		}
+		return name + ' (' + ar + ') { ... }'
 	}
 
 	renderExtraPropsCheckbox() {

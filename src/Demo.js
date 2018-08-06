@@ -40,7 +40,7 @@ export default class Demo extends React.Component {
     }
     
     renderMapper() {
-        const {componentName, map, mapperProps} = this.constructor;
+        const {componentName, map, mapperProps, handlers, args} = this.constructor;
         return (
             <Mapper 
 				ref="mapper"
@@ -48,8 +48,9 @@ export default class Demo extends React.Component {
 				map={map} 
                 data={this.state.data}
                 {...mapperProps}
-				onChange={this.handleChangeData}
-				handlers={this.constructor.handlers}
+                handlers={handlers}
+                args={args}
+                onChange={this.handleChangeData}
 			/>
         )
     }
@@ -148,8 +149,8 @@ export default class Demo extends React.Component {
     }
 
     getEventHandler(name) {
-        return (arg1 = null, arg2 = null, arg3 = null) => {
-            const {changeState} = this.constructor;
+        return (arg1 = null, arg2 = null, arg3 = null, arg4 = null) => {
+            const {changeState, args} = this.constructor;
             if (changeState instanceof Object) {
                 let key, value = arg1;
                 if (typeof changeState[name] == 'string') {
@@ -166,6 +167,37 @@ export default class Demo extends React.Component {
                 });
             }
             this.fire(name);
+            if (args[name]) {
+                this.logEvent(name);
+                if (args instanceof Object) {
+                    if (args[name] instanceof Array) {
+                        for (let i = 0; i < args[name].length; i++) {
+                            let arg;
+                            if (i == 0) {
+                                arg = arg1;
+                            } else if (i == 1) {
+                                arg = arg2;
+                            } else if (i == 2) {
+                                arg = arg3;
+                            } else if (i == 3) {
+                                arg = arg4;
+                            }
+                            this.logEventArg(i + 1, args[name][i], arg);
+                        }
+                    }
+                } else  if (typeof args[name] == 'string') {
+                    this.logEventArg(1, args[name], arg1);
+                }
+                console.log('==================');
+            }
         }
+    }
+    logEvent(name) {
+        console.log('Fired event "' + name + '"');
+    }
+
+    logEventArg(index, argName, argValue) {
+        console.log('Argument ' + index + ': ' + argName);
+        console.log(argValue);
     }
 }

@@ -61,9 +61,16 @@ export default class Preview extends React.Component {
 		}
 		let code = 'import {Component} from "react";' + N;
 		code += 'import {' + name + addImport + '} from "uiex/' + name + '";' + N + N;
+		let constsAdded = 0;
 		if (consts instanceof Array) {
 			for (let c of consts) {
-				code += 'const ' + this.getConstName(c) + ' = ' + stringify(data[c]) + ';' + N + N;
+				if (data[c] != null) {
+					constsAdded++;
+					code += 'const ' + this.getConstName(c) + ' = ' + stringify(data[c]) + ';' + N;
+				}
+			}
+			if (constsAdded) {
+				code += N;
 			}
 		}
 		code += 'export default class ' + name + 'Demo extends Component {' + N;
@@ -74,10 +81,16 @@ export default class Preview extends React.Component {
 			const lines = [];
 			for (let item of stateProps) {
 				let val = data[item];
-				if (data[item] == null) {
-					val = '""';
-				} else if (typeof data[item] == 'string') {
-					val = '"' + data[item] + '"';
+				if (consts instanceof Array && consts.indexOf(item) > -1) {
+					val = this.getConstName(item);
+				} else {
+					if (data[item] == null) {
+						val = '""';
+					} else if (typeof data[item] == 'string') {
+						val = '"' + data[item] + '"';
+					} else {
+						val = stringify(data[item]);
+					}
 				}
 				lines.push(T + T + T + item + ': ' + val);
 			}
@@ -100,7 +113,7 @@ export default class Preview extends React.Component {
 			}
 		}
 		for (let k in data) {
-			if (consts instanceof Array && consts.indexOf(k) > -1) {
+			if (consts instanceof Array && consts.indexOf(k) > -1 && (!(stateProps instanceof Array) || stateProps.indexOf(k) == -1)) {
 				code += T + T + T + T + k + '={' + this.getConstName(k) + '}' + N;
 				continue;
 			}

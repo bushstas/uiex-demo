@@ -15,6 +15,9 @@ export default class InputArrayDemo extends Demo {
 			colorTypes: {
 				description: 'Use different color for each type'
 			},
+			withControls: {
+				description: 'With controls'
+			},
 			withoutInput: {
 				description: 'Without input'
 			},
@@ -26,10 +29,14 @@ export default class InputArrayDemo extends Demo {
 			},
 			doubleClickEdit: {
 				description: 'Edit item on double click on it'
+			},
+			addToBeginning: {
+				description: 'Added items will be placed before existing items'
 			}
 		},
 		inputs: [
 			{
+				_COLUMNS: 18,
 				value: {
 					description: 'Value',
 					type: 'array'
@@ -55,31 +62,51 @@ export default class InputArrayDemo extends Demo {
 					type: 'select',
 					options: ARRAY_INPUT_TYPES,
 					multiple: true
+				},
+				delimiter: {
+					description: 'Delimiter'
+				},
+				inputTextEventTimeout: {
+					description: 'Input text event will be fired after given timeout',
+					type: 'number',
+					maxValue: 2000,
+					positive: true
+				},
+				placeholder: {
+					description: 'Input placeholder',
+					stretched: true
 				}
 			}
 		]
 	};
 	static data = {
-		value: ['string', 10000, false, null, undefined, ()=>{}, {a: 2}, [1,2,3], /[a-z]{1,3}/g],
+		value: [Symbol('name'), NaN, Infinity, 'string', 10000, false, null, undefined, ()=>{}, {a: 2}, [1,2,3], /[a-z]{1,3}/g],
 		width: 500,
 		height: 250,
 		autoDefine: true,
-		colorTypes: true
+		colorTypes: true,
+		delimiter: ',',
+		inputTextEventTimeout: 400
 	};	
 	static excluded = ['align', 'valign', 'vertical', 'children'];
-	static handlers = ['onChange', 'onChangeHue', 'onSelectPreset'];
+	static handlers = ['onChange', 'onAddItem', 'onRemoveItem', 'onInputText'];
 	static args = {
-		onChange: ['value', 'colorData'],
-		onChangeHue: ['hue'],
-		onSelectPreset: ['value']
+		onChange: ['value'],
+		onAddItem: ['addedItemsArr', 'value'],
+		onRemoveItem: ['removedItemValue', 'removedItemIndex', 'value'],
+		onInputText: ['inputText']
 	};
-	static stateProps = ['value'];
+	static stateProps = ['value', 'inputText'];
 	static funcs = {
-		onChange: 'this.setState({value});'
+		onChange: 'this.setState({value});',
+		onInputText: 'this.setState({inputText});'
 	};
-	static consts = ['presetColors'];
+	static consts = ['value', 'allowedTypes', 'exceptTypes'];
 	static componentName = 'InputArray';
 	static component = InputArray;
+	static previewProps = {
+		unclosable: true
+	};
 	static changeState = {
 		onChange: 'value'
 	};

@@ -13,6 +13,7 @@ import ColorPickerDemo from './components/ColorPicker';
 import CellGroupDemo from './components/CellGroup';
 import ColorsDemo from './components/Colors';
 import InputArrayDemo from './components/InputArray';
+import AutoCompleteDemo from './components/AutoComplete';
 
 import './style.scss';
 
@@ -82,6 +83,9 @@ export default class App extends React.Component {
 
 			case 'InputArray':
 				return <InputArrayDemo/>
+
+			case 'AutoComplete':
+				return <AutoCompleteDemo/>				
 		}
 	}
 

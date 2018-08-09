@@ -150,7 +150,7 @@ export default class Demo extends React.Component {
 
     getEventHandler(name) {
         return (arg1 = null, arg2 = null, arg3 = null, arg4 = null) => {
-            const {changeState, args} = this.constructor;
+            const {changeState, args, callbacks} = this.constructor;
             if (changeState instanceof Object) {
                 let key, value = arg1;
                 if (typeof changeState[name] == 'string') {
@@ -159,12 +159,14 @@ export default class Demo extends React.Component {
                     key = changeState[name][0];
                     value = changeState[name][1];
                 }
-                this.setState({ 
-                    data: {
-                        ...this.state.data,
-                        [key]: value
-                    }
-                });
+                if (key) {
+                    this.setState({ 
+                        data: {
+                            ...this.state.data,
+                            [key]: value
+                        }
+                    });
+                }
             }
             this.fire(name);
             if (args[name]) {
@@ -189,6 +191,9 @@ export default class Demo extends React.Component {
                     this.logEventArg(1, args[name], arg1);
                 }
                 console.log('==================');
+            }
+            if (callbacks instanceof Object && typeof callbacks[name] == 'string' && typeof this[callbacks[name]] == 'function') {
+                this[callbacks[name]].call(this, arg1, arg2, arg3, arg4);
             }
         }
     }

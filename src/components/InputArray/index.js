@@ -86,7 +86,8 @@ export default class InputArrayDemo extends Demo {
 		autoDefine: true,
 		colorTypes: true,
 		delimiter: ',',
-		inputTextEventTimeout: 400
+		inputTextEventTimeout: 400,
+		autoCompleteOptions: ['green', 'red', 'blue']
 	};	
 	static excluded = ['align', 'valign', 'vertical', 'children'];
 	static handlers = ['onChange', 'onAddItem', 'onRemoveItem', 'onInputText'];
@@ -110,4 +111,11 @@ export default class InputArrayDemo extends Demo {
 	static changeState = {
 		onChange: 'value'
 	};
+	static callbacks = {
+		onInputText: 'handleInputText'
+	};
+
+	handleInputText(inputText) {
+		
+	}
 }

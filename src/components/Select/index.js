@@ -1,42 +1,40 @@
 import React from 'react';
 import Demo from '../../Demo';
-import {Input} from 'uiex/Input';
-import InputMapper from '../InputMapper';
+import {Select} from 'uiex/Select';
+import SelectMapper from '../SelectMapper';
+import {SELECT_OPTIONS_ARRAY} from 'uiex/consts';
 
 import './style.scss';
 
-export default class InputDemo extends Demo {
+export default class SelectDemo extends Demo {
 	static excluded = ['height', 'vertical', 'align', 'valign', 'children'];
-	static handlers = ['onChange', 'onFocus', 'onBlur', 'onEnter', 'onChangeValidity', 'onDisabledClick'];
+	static handlers = ['onChange', 'onFocus', 'onBlur', 'onDisabledClick'];
 	static args = {
 		onChange: ['value', 'name'],
 		onFocus: ['value', 'name'],
 		onBlur: ['value', 'name'],
-		onEnter: ['value', 'name'],
-		onChangeValidity: ['isValid', 'value', 'name'],
 		onDisabledClick: ['name']
 	};
 	static stateProps = ['value'];
 	static funcs = {
 		onChange: 'this.setState({value});'
 	};
-	static consts = ['pattern'];
 	static data = {
 		width: 300,
-		placeholder: 'Input a value'
+		placeholder: 'Choose an option',
+		options: SELECT_OPTIONS_ARRAY
 	};
-	static previewProps = {
-		unclosable: true
-	};
-	static componentName = 'Input';
-	static component = Input;
+	static componentName = 'Select';
+	static component = Select;
 	static changeState = {
 		onChange: 'value'
 	};
+	static additionalImport = ['SelectOption'];
+	static consts = ['options'];
 
 	renderMapper() {
 		return (
-			<InputMapper 
+			<SelectMapper 
 				ref="mapper"
 				isOpen={true}
 				data={this.state.data}

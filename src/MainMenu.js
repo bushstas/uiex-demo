@@ -18,6 +18,7 @@ const PAGES = [
 	'Modal',
 	'RateForm',
 	'SearchForm',
+	'Select',
 	'SidePanel',
 	'Tab',
 	'Tabs'

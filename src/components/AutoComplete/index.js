@@ -1,6 +1,10 @@
 import React from 'react';
 import Demo from '../../Demo';
+import SelectOptionMapper from '../SelectOptionMapper';
+import SelectMapper from '../SelectMapper';
 import {AutoComplete} from 'uiex/AutoComplete';
+
+const SELECT_EXCLUDED = ['multiple', 'empty'];
 
 export default class AutoCompleteDemo extends Demo {
 	static map = {
@@ -17,18 +21,7 @@ export default class AutoCompleteDemo extends Demo {
 			passive: {
 				description: 'Passive AutoComplete will show matched options only when you input text (not on focus). Dynamic component can\'t be passive. In other words an active (not passive) component works more like normal select'	
 			}
-		},
-		inputs: [
-			{
-				value: {
-					description: 'Value',
-				},
-				placeholder: {
-					description: 'Input placeholder',
-					stretched: true
-				}
-			}
-		]
+		}
 	};
 	static data = {
 		value: 'blue',
@@ -59,4 +52,43 @@ export default class AutoCompleteDemo extends Demo {
 	static changeState = {
 		onChange: 'value'
 	};
+
+	static customState = {
+		optionsData: [],
+		currentOption: 0
+	};
+
+	static additionalImport = ['AutoCompleteOption'];
+
+	renderMapperBefore() {
+		return (
+			<SelectMapper
+				isOpen={true}
+				data={this.state.data}
+				onChange={this.handleChangeData}
+				excluded={SELECT_EXCLUDED}
+			/>
+		)
+	}
+
+	renderAdditionalMappers() {
+		return (
+			<SelectOptionMapper
+				isOpen={true}
+				data={this.getOptionData()}
+				onChange={this.handleChangeOptionData}
+			/>
+		)
+	}
+
+	getOptionData() {
+		const {optionsData, currentOption} = this.state;
+		return optionsData[currentOption] || {};
+	}
+
+	handleChangeOptionData = (data) => {
+		const {optionsData} = this.state;
+		optionsData[this.state.currentOption] = data; 
+		this.setState({optionsData: {...optionsData}});
+	}
 }

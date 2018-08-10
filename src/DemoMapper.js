@@ -4,8 +4,12 @@ import Mapper from './Mapper';
 export default class DemoMapper extends React.Component {
 	constructor(props) {
         super(props);
+        const {customState} = this.constructor;
         const map = this.initMap();		
-		this.state = {map};
+		this.state = {
+			map, 
+			...customState
+		};
 		this.changeMeasureHandler = this.handleChangeMeasure.bind(this);
     }
     
@@ -14,15 +18,25 @@ export default class DemoMapper extends React.Component {
     }
 
 	render() {
-		const {isOpen, excluded, data, onChange, handlers} = this.props;
+		let {isOpen, excluded, data, onChange, handlers, args} = this.props;
+		if (!handlers) {
+			handlers = this.constructor.handlers;
+		}
+		if (!excluded) {
+			excluded = this.constructor.excluded;
+		}
+		if (!args) {
+			args = this.constructor.args;
+		}
 		return (
 			<Mapper 
 				ref="mapper"
 				isOpen={isOpen}
 				name={this.constructor.componentName}
 				excluded={excluded}
+				args={args}
 				map={this.state.map} 
-				data={data} 
+				data={data}
                 handlers={handlers}
                 onChange={onChange}
                 onChangeMeasure={this.changeMeasureHandler}

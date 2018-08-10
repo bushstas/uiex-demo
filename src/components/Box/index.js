@@ -1,7 +1,6 @@
 import React from 'react';
 import Demo from '../../Demo';
 import {Box} from 'uiex/Box';
-import {ANIM_TYPE, ANIM_SPEED, ANIM_EFFECTS} from 'uiex/consts';
 
 import './style.scss';
 
@@ -10,13 +9,15 @@ export default class ButtonsDemo extends Demo {
 		checkboxes: {
 			isOpen: {
 				type: 'boolean',
-				description: 'Open/Close status flag',
-				default: true
+				description: 'Open/Close status flag'
 			},
 			buttonUnder: {
 				type: 'boolean',
-				description: 'Open/Close button is under the box',
-				default: false
+				description: 'Open/Close button is under the box'
+			},
+			noHideAnimation: {
+				type: 'boolean',
+				description: 'Animation is not used for hiding box'
 			}
 		},
 		inputs: [
@@ -25,27 +26,6 @@ export default class ButtonsDemo extends Demo {
 					description: 'Text of button (String)',
 					example: 'Open/Close',
 					default: ''
-				},
-				animation: {
-					type: 'select',
-					empty: 'Chose an option',
-					description: 'Animation type (String)',
-					options: ANIM_TYPE,
-					default: 'fade-fall'
-				},
-				speed: {
-					type: 'select',
-					empty: 'Chose an option',
-					description: 'Animation speed (String)',
-					options: ANIM_SPEED,
-					default: 'fast'
-				},
-				effect: {
-					type: 'select',
-					empty: 'Chose an option',
-					description: 'Animation effect (String)',
-					options: ANIM_EFFECTS,
-					default: 'ease-in-out'
 				}
 			}
 		]
@@ -58,7 +38,7 @@ export default class ButtonsDemo extends Demo {
 		effect: 'ease-in-out',
 		button: 'Open the box/Close the box'
 	};
-	static excluded = ['vertical', 'block'];
+	static excluded = ['vertical', 'block', 'valign', 'height'];
 	static handlers = ['onToggle', 'onDisabledClick'];
 	static stateProps = ['isOpen'];
 	static funcs = {

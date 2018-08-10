@@ -56,7 +56,7 @@ export default class Demo extends React.Component {
     }
 
     renderPreview() {
-        const {componentName, handlers, args, funcs, stateProps, consts, previewProps} = this.constructor;
+        const {componentName, handlers, args, funcs, stateProps, consts, previewProps, additionalImport} = this.constructor;
         return (
             <Preview
                 owner={this}
@@ -68,6 +68,7 @@ export default class Demo extends React.Component {
 				stateProps={stateProps}
                 consts={consts}
                 contentRenderer={this.renderPreviewContent}
+                additionalImport={additionalImport}
                 {...previewProps}
 			>
                 {this.renderPreviewContentBefore()}
@@ -190,7 +191,7 @@ export default class Demo extends React.Component {
                 } else  if (typeof args[name] == 'string') {
                     this.logEventArg(1, args[name], arg1);
                 }
-                console.log('==================');
+                //console.log('==================');
             }
             if (callbacks instanceof Object && typeof callbacks[name] == 'string' && typeof this[callbacks[name]] == 'function') {
                 this[callbacks[name]].call(this, arg1, arg2, arg3, arg4);
@@ -198,11 +199,11 @@ export default class Demo extends React.Component {
         }
     }
     logEvent(name) {
-        console.log('Fired event "' + name + '"');
+        //console.log('Fired event "' + name + '"');
     }
 
     logEventArg(index, argName, argValue) {
-        console.log('Argument ' + index + ': ' + argName);
-        console.log(argValue);
+       // console.log('Argument ' + index + ': ' + argName);
+        //console.log(argValue);
     }
 }

@@ -6,13 +6,13 @@ import {InputNumber} from 'uiex/InputNumber';
 import {InputColor} from 'uiex/InputColor';
 import {InputBoolean} from 'uiex/InputBoolean';
 import {InputRegexp} from 'uiex/InputRegexp';
-import {Select, SelectOption} from 'uiex/Select';
+import {Select} from 'uiex/Select';
+import {SelectObject} from 'uiex/SelectObject';
 import {Form} from 'uiex/Form';
 import {FormControl} from 'uiex/FormControl';
 import {FormControlGroup} from 'uiex/FormControlGroup';
 import {BoxSection} from 'uiex/BoxSection';
 import {AutoComplete} from 'uiex/AutoComplete';
-import {MultiSelect} from 'uiex/MultiSelect';
 import {getNumber} from 'uiex/utils';
 
 const COLUMNS = 12;
@@ -260,11 +260,10 @@ export default class Mapper extends React.Component {
 
 	renderSelectControl(name, item, value) {
 		let SelectComponent = Select;
-		if (item.multiple) {
-			SelectComponent = MultiSelect;
-		}
 		if (item.autoComplete) {
 			SelectComponent = AutoComplete;
+		} else if (item.type == 'object') {
+			SelectComponent = SelectObject;
 		}
 		return (
 			<FormControl 
@@ -279,6 +278,7 @@ export default class Mapper extends React.Component {
 					name={name}
 					value={value}
 					options={item.options}
+					multiple={item.multiple}
 					placeholder={item.empty}
 				/>
 			</FormControl>

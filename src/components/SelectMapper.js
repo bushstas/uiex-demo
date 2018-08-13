@@ -1,6 +1,6 @@
 import React from 'react';
 import DemoMapper from '../DemoMapper';
-import {SELECT_OPTIONS_ARRAY, SELECT_OPTIONS_OBJECT} from 'uiex/consts';
+import {SELECT_OPTIONS_ARRAY, SELECT_OPTIONS_OBJECTS_ARRAY, SELECT_OPTIONS_OBJECT, SELECT_OPTIONS_PROMISE, SELECT_OPTIONS_FUNCTION} from 'uiex/consts';
 
 export default class SelectMapper extends DemoMapper {
 	static map = {
@@ -31,9 +31,9 @@ export default class SelectMapper extends DemoMapper {
 					example: 'none'
 				},
 				options: {
+					description: 'Select options (Array, Object, Promise, Function)',
 					type: 'object',
-					options: [SELECT_OPTIONS_ARRAY, SELECT_OPTIONS_OBJECT],
-					stretched: true
+					options: [SELECT_OPTIONS_ARRAY, SELECT_OPTIONS_OBJECTS_ARRAY, SELECT_OPTIONS_OBJECT, SELECT_OPTIONS_PROMISE, SELECT_OPTIONS_FUNCTION]
 				}
 			}
 		]

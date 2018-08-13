@@ -3,6 +3,7 @@ import Demo from '../../Demo';
 import SelectOptionMapper from '../SelectOptionMapper';
 import SelectMapper from '../SelectMapper';
 import {AutoComplete} from 'uiex/AutoComplete';
+import {SELECT_OPTIONS_ARRAY} from 'uiex/consts';
 
 const SELECT_EXCLUDED = ['multiple', 'empty'];
 
@@ -26,7 +27,7 @@ export default class AutoCompleteDemo extends Demo {
 	static data = {
 		value: 'blue',
 		width: 300,
-		options: [{title: 'Red', value: 'red'}, {title: 'Green', value: 'green'}, {title: 'Blue', value: 'blue'}, {title: 'Big', value: 'big'}, {title: 'Black', value: 'black'}],
+		options: SELECT_OPTIONS_ARRAY,
 		placeholder: 'Start to input something'
 	};	
 

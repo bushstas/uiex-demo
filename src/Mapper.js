@@ -272,6 +272,7 @@ export default class Mapper extends React.Component {
 				caption={name}
 				size={item.size}
 				lastInRow={item.lastInRow}
+				stretched={item.stretched}
 			>
 				<SelectComponent
 					empty

@@ -3,6 +3,7 @@ import ComponentMapper from '../ComponentMapper';
 import {CellGroup, Cell} from 'uiex/CellGroup';
 import Mapper from '../../Mapper';
 import Preview from '../../Preview';
+import {ALIGN} from 'uiex/consts.js';
 
 const DATA = {
 	columns: 3,
@@ -47,6 +48,11 @@ const MAP = {
 				type: 'number',
 				maxValue: 500,
 				positive: true
+			},
+			cellAlign: {
+				description: 'Cell align',
+				options: ALIGN,
+				empty: 'Chose an option'
 			}
 		}
 	]

@@ -69,6 +69,9 @@ export default class Demo extends React.Component {
                 consts={consts}
                 contentRenderer={this.renderPreviewContent}
                 additionalImport={additionalImport}
+                renderPreviewNote={this.renderPreviewNote}
+                isPropAvailable={this.isPropAvailable}
+                renderPreviewConst={this.renderPreviewConst}
                 {...previewProps}
 			>
                 {this.renderPreviewContentBefore()}
@@ -206,4 +209,16 @@ export default class Demo extends React.Component {
        // console.log('Argument ' + index + ': ' + argName);
         //console.log(argValue);
     }
+
+    renderPreviewNote = () => {
+        return null;
+    }
+
+    isPropAvailable = () => {
+        return true;
+    }
+
+    renderPreviewConst = () => {
+		return null;
+	}
 }

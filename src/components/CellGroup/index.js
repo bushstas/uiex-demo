@@ -4,7 +4,7 @@ import Mapper from '../../Mapper';
 import {CellGroup, Cell} from 'uiex/CellGroup';
 import {Select} from 'uiex/Select';
 import {CELL_ALIGN, ALIGN_SELF} from 'uiex/consts';
-import {stringify} from '../../utils';
+import {stringify, wrap} from '../../utils';
 
 const CELL_MAP = {
 	checkboxes: {
@@ -397,26 +397,26 @@ export default class CellGroupDemo extends Demo {
 			const props = this.getCellData(i);
 			const keys = Object.keys(props);
 			if (keys.length > 1) {
-				content += TAB + '<Cell' + N;
+				content += TAB + wrap('&lt;') + wrap('Cell', 'keyword2') + N;
 				for (let k in props) {
 					if (props[k] === true) {
-						content += TAB2 + k + N;	
+						content += TAB2 + wrap(k, 'key') + N;	
 					} else {
-						content += TAB2 + k + '=' + stringify(props[k], true) + N;
+						content += TAB2 + wrap(k, 'key') + wrap('=') + stringify(props[k], true) + N;
 					}
 				}
-				content += TAB + '>' + N;
+				content += TAB + wrap('&gt;') + N;
 			} else if (keys.length > 0) {
 				if (props[keys[0]] === true) {
-					content += TAB + '<Cell ' + keys[0] + '>' + N;
+					content += TAB + wrap('&lt;') + wrap('Cell ', 'keyword2') + wrap(keys[0], 'key') + wrap('&gt;') + N;
 				} else {
-					content += TAB + '<Cell ' + keys[0] + '=' + stringify(props[keys[0]], true) + '>' + N;
+					content += TAB + wrap('&lt;') + wrap('Cell ', 'keyword2') + wrap(keys[0], 'key') + wrap('=') + stringify(props[keys[0]], true) + wrap('&gt;') + N;
 				}
 			} else {
-				content += TAB + '<Cell>' + N;
+				content += TAB + wrap('&lt;') + wrap('Cell', 'keyword2') + wrap('&gt;') + N;
 			}
 			content += TAB2 + 'Cell #' + (i + 1) + N;
-			content += TAB + '</Cell>' + (i < this.state.cellQuantity - 1 ? N : '');
+			content += TAB + wrap('&lt;/') + wrap('Cell', 'keyword2') + wrap('&gt;') + (i < this.state.cellQuantity - 1 ? N : '');
 		}
 		return content;
 	}

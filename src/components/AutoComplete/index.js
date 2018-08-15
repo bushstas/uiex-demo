@@ -3,9 +3,12 @@ import Demo from '../../Demo';
 import SelectOptionMapper from '../SelectOptionMapper';
 import SelectMapper from '../SelectMapper';
 import {AutoComplete} from 'uiex/AutoComplete';
-import {SELECT_OPTIONS_PROMISE_INSTANCE} from '../../consts';
+import {Checkbox} from 'uiex/Checkbox';
+import {stringify, getSetState} from '../../utils';
+import {SELECT_OPTIONS_PROMISE_INSTANCE, PROMISE_OPTIONS, FUNCTION_OPTIONS, PROMISE_TEXT_HTML, FUNCTION_TEXT} from '../../consts';
 
 const SELECT_EXCLUDED = ['multiple', 'empty'];
+const SELECT_OPTION_EXCLUDED = ['single'];
 
 export default class AutoCompleteDemo extends Demo {
 	static map = {
@@ -48,7 +51,7 @@ export default class AutoCompleteDemo extends Demo {
 	};
 	static stateProps = ['value'];
 	static funcs = {
-		onChange: 'this.setState({value});'
+		onChange: getSetState('value')
 	};
 	static consts = ['options'];
 	static componentName = 'AutoComplete';
@@ -57,10 +60,13 @@ export default class AutoCompleteDemo extends Demo {
 	static changeState = {
 		onChange: 'value'
 	};
+	static callbacks = {
+		onSelectOption: 'handleOptionSelect'
+	}
 
 	static customState = {
-		optionsData: [],
-		currentOption: 0
+		transform: false,
+		optionData: {}
 	};
 
 	static additionalImport = ['AutoCompleteOption'];
@@ -79,21 +85,103 @@ export default class AutoCompleteDemo extends Demo {
 	renderAdditionalMappers() {
 		return (
 			<SelectOptionMapper
+				ref="optionMapper"
+				componentName="AutoCompleteOption"
 				isOpen={true}
+				excluded={SELECT_OPTION_EXCLUDED}
 				data={this.getOptionData()}
-				onChange={this.handleChangeOptionData}
 			/>
 		)
 	}
 
 	getOptionData() {
-		const {optionsData, currentOption} = this.state;
-		return optionsData[currentOption] || {};
+		return this.state.optionData;
 	}
 
-	handleChangeOptionData = (data) => {
-		const {optionsData} = this.state;
-		optionsData[this.state.currentOption] = data; 
-		this.setState({optionsData: {...optionsData}});
+	handleOptionSelect = (index, option) => {
+		if (option.value) {
+			option.selected = true;
+		}
+		this.setState({optionData: option});
+		this.refs.optionMapper.fireSelect();
+	}
+
+	renderPreviewNote = () => {
+		return (
+			<Checkbox checked={this.state.transform} onChange={this.handleCheckboxChange}>
+				Transform options into children
+			</Checkbox>
+		) 
+	}
+
+	handleCheckboxChange = (transform) => {
+		this.setState({transform});
+	}
+
+	renderPreviewContent = () => {
+		if (!this.state.transform) {
+			return '';
+		}
+		let {data: {options}} = this.state;
+		if (options instanceof Promise) {
+			options = PROMISE_OPTIONS;
+		} else if (typeof options == 'function') {
+			options = FUNCTION_OPTIONS;
+		} 
+		if (!(options instanceof Array)) {
+			const properOptions = [];
+			for (let k in options) {
+				properOptions.push({value: k, title: options[k]});
+			}
+			options = properOptions;
+		}
+		const T = "\t";
+		const TAB = T + T + T + T;
+		const TAB2 = TAB + T;
+		const N = "\n";		
+		let content = '';
+		for (let i = 0; i < options.length; i++) {
+			let option = options[i];
+			if (typeof option == 'string') {
+				option = {value: option, title: option};
+			}
+			const keys = Object.keys(option);
+			if (keys.length - 1 > 1) {
+				content += TAB + '&lt;AutoCompleteOption' + N;
+				for (let k in option) {
+					if (k == 'title') {
+						continue;
+					}
+					if (option[k] === true) {
+						content += TAB2 + k + N;	
+					} else {
+						content += TAB2 + k + '=' + stringify(option[k], true) + N;
+					}
+				}
+				content += TAB + '&gt;' + N;
+			} else {
+				content += TAB + '&lt;AutoCompleteOption value=' + stringify(option.value, true) + '&gt;' + N;
+			}
+			content += TAB2 + option.title + N;
+			content += TAB + '&lt;/AutoCompleteOption&gt;' + (i < options.length - 1 ? N : '');
+		}
+		return content;
+	}
+
+	isPropAvailable = (name) => {
+		if (name == 'options' && this.state.transform) {
+			return false;
+		}
+		return true;
+	}
+	
+	renderPreviewConst = (name, value) => {
+		if (name == 'options') {
+			if (value instanceof Promise) {
+				return PROMISE_TEXT_HTML;
+			} else if (typeof value == 'function') {
+				return FUNCTION_TEXT;
+			}
+		}
 	}
 }

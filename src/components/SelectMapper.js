@@ -11,6 +11,9 @@ export default class SelectMapper extends DemoMapper {
 			},
 			multiple: {
 				description: 'You can select few options'
+			},
+			readOnly: {
+				description: 'You can\'t change value'
 			}
 		},
 		inputs: [

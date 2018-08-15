@@ -1,8 +1,11 @@
 import React from 'react';
 import Demo from '../../Demo';
 import {Select} from 'uiex/Select';
+import SelectOptionMapper from '../SelectOptionMapper';
 import SelectMapper from '../SelectMapper';
-import {SELECT_OPTIONS_ARRAY} from '../../consts';
+import {Checkbox} from 'uiex/Checkbox';
+import {stringify} from '../../utils';
+import {SELECT_OPTIONS_ARRAY, PROMISE_OPTIONS, FUNCTION_OPTIONS, PROMISE_TEXT, FUNCTION_TEXT} from '../../consts';
 
 import './style.scss'; 
 
@@ -38,6 +41,10 @@ export default class SelectDemo extends Demo {
 	static callbacks = {
 		onSelectOption: 'handleOptionSelect'
 	}
+	static customState = {
+		transform: false,
+		optionData: {}
+	}
 
 	renderMapper() {
 		return (
@@ -52,7 +59,100 @@ export default class SelectDemo extends Demo {
 		)
 	}
 
+	renderAdditionalMappers() {
+		return (
+			<SelectOptionMapper
+				isOpen={true}
+				data={this.getOptionData()}
+				onChange={this.handleChangeOptionData}
+			/>
+		)
+	}
+
+	getOptionData() {
+		return this.state.optionData;
+	}
+
 	handleOptionSelect = (index, option) => {
-		
+		this.setState({optionData: option});
+	}
+
+	renderPreviewNote = () => {
+		return (
+			<Checkbox checked={this.state.transform} onChange={this.handleCheckboxChange}>
+				Transform options into children
+			</Checkbox>
+		) 
+	}
+
+	handleCheckboxChange = (transform) => {
+		this.setState({transform});
+	}
+
+	renderPreviewContent = () => {
+		if (!this.state.transform) {
+			return '';
+		}
+		let {data: {options}} = this.state;
+		if (options instanceof Promise) {
+			options = PROMISE_OPTIONS;
+		} else if (typeof options == 'function') {
+			options = FUNCTION_OPTIONS;
+		} 
+		if (!(options instanceof Array)) {
+			const properOptions = [];
+			for (let k in options) {
+				properOptions.push({value: k, title: options[k]});
+			}
+			options = properOptions;
+		}
+		const T = "\t";
+		const TAB = T + T + T + T;
+		const TAB2 = TAB + T;
+		const N = "\n";		
+		let content = '';
+		for (let i = 0; i < options.length; i++) {
+			let option = options[i];
+			if (typeof option == 'string') {
+				option = {value: option, title: option};
+			}
+			const keys = Object.keys(option);
+			if (keys.length - 1 > 1) {
+				content += TAB + '&lt;SelectOption' + N;
+				for (let k in option) {
+					if (k == 'title') {
+						continue;
+					}
+					if (option[k] === true) {
+						content += TAB2 + k + N;	
+					} else {
+						content += TAB2 + k + '=' + stringify(option[k], true) + N;
+					}
+				}
+				content += TAB + '&gt;' + N;
+			} else {
+				content += TAB + '&lt;SelectOption value=' + stringify(option.value, true) + '&gt;' + N;
+			}
+			content += TAB2 + option.title + N;
+			content += TAB + '&lt;/SelectOption&gt;' + (i < options.length - 1 ? N : '');
+		}
+		return content;
+	}
+
+	isPropAvailable = (name) => {
+		if (name == 'options' && this.state.transform) {
+			return false;
+		}
+		return true;
+	}
+	
+	renderPreviewConst = (name, value) => {
+		if (name == 'options') {
+			if (value instanceof Promise) {
+				return PROMISE_TEXT;
+			} else if (typeof value == 'function') {
+				return FUNCTION_TEXT;
+			}
+		}
 	}
 }

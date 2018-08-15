@@ -29,10 +29,13 @@ export default class Mapper extends React.Component {
 	}
 
 	render() {
-		const {map: {checkboxes, inputs}, data, name, isOpen = true, excluded, handlers, withExtraProps} = this.props;
+		let {map: {checkboxes, inputs}, data, name, isOpen = true, excluded, handlers, withExtraProps} = this.props;
 		let {columns} = this.props;
 		if (!getNumber(columns)) {
 			columns = COLUMNS;
+		}
+		if (!(data instanceof Object)) {
+			data = {};
 		}
 		return (
 			<div className="mapper">
@@ -190,7 +193,8 @@ export default class Mapper extends React.Component {
 			negative,
 			decimal,
 			toFixed,
-			extra
+			extra,
+			readOnly
 		} = item;
 
 		if (extra && !this.state.extraPropsShown) {
@@ -204,7 +208,8 @@ export default class Mapper extends React.Component {
 			placeholder: example ? 'Example: ' + example : '',
 			maxLength,
 			defaultValue,
-			clearable: true
+			clearable: true,
+			readOnly
 		};
 		switch (item.type) {
 			case 'array':
@@ -278,6 +283,7 @@ export default class Mapper extends React.Component {
 					empty
 					name={name}
 					value={value}
+					readOnly={item.readOnly}
 					options={item.options}
 					multiple={item.multiple}
 					placeholder={item.empty}
@@ -292,6 +298,7 @@ export default class Mapper extends React.Component {
 				key={name}
 				name={name}
 				checked={value}
+				readOnly={item.readOnly}
 				title={item.description + ' (Boolean)'}
 				onChange={this.handleChangeCheckbox}
 			>

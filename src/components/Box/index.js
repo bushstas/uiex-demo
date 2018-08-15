@@ -1,6 +1,7 @@
 import React from 'react';
 import Demo from '../../Demo';
 import {Box} from 'uiex/Box';
+import {getSetState} from '../../utils';
 
 import './style.scss';
 
@@ -36,13 +37,14 @@ export default class ButtonsDemo extends Demo {
 		speed: 'fast',
 		animation: 'fade-fall',
 		effect: 'ease-in-out',
-		button: 'Open the box/Close the box'
+		button: 'Open the box/Close the box',
+		children: '...'
 	};
 	static excluded = ['vertical', 'block', 'valign', 'height'];
 	static handlers = ['onToggle', 'onDisabledClick'];
 	static stateProps = ['isOpen'];
 	static funcs = {
-		onToggle: 'this.setState({isOpen});'
+		onToggle: getSetState('isOpen')
 	};
 	static args = {
 		onToggle: ['isOpen']

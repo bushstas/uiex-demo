@@ -2,6 +2,7 @@ import React from 'react';
 import Demo from '../../Demo';
 import {Input} from 'uiex/Input';
 import InputMapper from '../InputMapper';
+import {getSetState} from '../../utils';
 
 import './style.scss';
 
@@ -18,7 +19,7 @@ export default class InputDemo extends Demo {
 	};
 	static stateProps = ['value'];
 	static funcs = {
-		onChange: 'this.setState({value});'
+		onChange: getSetState('value')
 	};
 	static consts = ['pattern'];
 	static data = {

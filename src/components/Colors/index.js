@@ -2,6 +2,7 @@ import React from 'react';
 import {Colors} from 'uiex/Colors';
 import Demo from '../../Demo';
 import {COLORS} from '../../consts';
+import {getSetState} from '../../utils';
 
 export default class ColorsDemo extends Demo {
 	static map = {
@@ -34,7 +35,7 @@ export default class ColorsDemo extends Demo {
 	static excluded = ['block', 'vertical', 'align', 'valign', 'children', 'height'];
 	static consts = ['colors'];
 	static funcs = {
-		onSelect: 'this.setState({value});'
+		onSelect: getSetState('value')
 	};
 	static stateProps = ['value'];
 	static args = {

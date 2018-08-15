@@ -2,6 +2,7 @@ import React from 'react';
 import Demo from '../../Demo';
 import {InputRegexp} from 'uiex/InputRegexp';
 import InputMapper from '../InputMapper';
+import {getSetState} from '../../utils';
 
 import './style.scss';
 
@@ -31,7 +32,7 @@ export default class InputRegexpDemo extends Demo {
 	};
 	static stateProps = ['value'];
 	static funcs = {
-		onChange: 'this.setState({value});'
+		onChange: getSetState('value')
 	};
 	static previewProps = {
 		unclosable: true

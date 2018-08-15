@@ -2,6 +2,7 @@ import React from 'react';
 import Demo from '../../Demo';
 import {SidePanel} from 'uiex/SidePanel';
 import {Button} from 'uiex/Button';
+import {getSetState} from '../../utils';
 import {SIDES, PANEL_ANIMATION, ANIM_SPEED, ANIM_EFFECTS} from 'uiex/consts';
 
 import './style.scss';
@@ -62,7 +63,7 @@ export default class SidePanelDemo extends Demo {
 	static handlers = ['onClose'];
 	static stateProps = ['isOpen'];
 	static funcs = {
-		onClose: 'this.setState({isOpen: false});'
+		onClose: getSetState('isOpen', false)
 	};
 	static componentName = 'SidePanel';
 	static component = SidePanel;

@@ -3,6 +3,7 @@ import Demo from '../../Demo';
 import {Modal} from 'uiex/Modal';
 import {Button} from 'uiex/Button';
 import {MODAL_ANIMATION} from 'uiex/consts';
+import {getSetState, wrap} from '../../utils';
 
 import './style.scss';
 
@@ -92,8 +93,8 @@ export default class ModalDemo extends Demo {
 	static handlers = ['onExpand', 'onClose', 'onDragEnd'];
 	static stateProps = ['isOpen'];
 	static funcs = {
-		onClose: 'this.setState({isOpen: false});',
-		onDragEnd: 'const {x, y} = coords;'
+		onClose: getSetState('isOpen', false),
+		onDragEnd: wrap('const ', 'keyword2') + wrap('{') + 'x' + wrap(', ') + 'y' + wrap('} = ') + 'coords' + wrap(';')
 	};
 	static args = {
 		onExpand: ['isExpanded'],

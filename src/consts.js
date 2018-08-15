@@ -8,8 +8,9 @@ export const MEASURES = [
 	{id: '%', name: '%'}
 ];
 
-export const PROMISE_TEXT_HTML = wrap('new', 'keyword') + wrap(' Promise', 'keyword2') + wrap('((') + wrap('resolve, reject', 'args') + wrap(')') + wrap(' =>', 'keyword2') + wrap(' {') + "\n\t" + wrap('const', 'keyword2') + ' options ' + wrap("= [") + wrap("'loaded'", 'string') + wrap(',') + wrap(" 'with'", 'string') + wrap(',') + wrap(" 'promise'", 'string') + wrap('];') + "\n\t" + wrap('setTimeout', 'spec') + wrap('(()') + wrap(' =>', 'keyword2') + " {\n\t\t" + wrap('resolve', 'function') + wrap('(') + 'options' + wrap(');') + "\n\t" + wrap('}, ') + wrap(5000, 'number') + wrap(');') + "\n" + wrap('})');
+export const PROMISE_TEXT_HTML = wrap('new', 'keyword') + wrap(' Promise', 'keyword2') + wrap('((') + wrap('resolve, reject', 'args') + wrap(')') + wrap(' =>', 'keyword2') + wrap(' {') + "\n\t" + wrap('const', 'keyword2') + ' options ' + wrap("= [") + wrap("'loaded'", 'string') + wrap(',') + wrap(" 'with'", 'string') + wrap(',') + wrap(" 'promise'", 'string') + wrap('];') + "\n\t" + wrap('setTimeout', 'spec') + wrap('(()') + wrap(' =>', 'keyword2') + wrap(' {') + "\n\t\t" + wrap('resolve', 'function') + wrap('(') + 'options' + wrap(');') + "\n\t" + wrap('}, ') + wrap(5000, 'number') + wrap(');') + "\n" + wrap('})');
 export const PROMISE_TEXT = "new Promise((resolve, reject) => {\n\tconst options = ['loaded', 'with', 'promise'];\n\tsetTimeout(() => {\n\t\tresolve(options);\n\t}, 5000);\n})";
+export const FUNCTION_TEXT_HTML = wrap('()') + wrap(' => ', 'keyword2') + wrap('{') + "\n\t" + wrap('return ', 'keyword') + wrap('[') + wrap("'formed'", 'string') + wrap(', ') + wrap("'with'", 'string') + wrap(', ') + wrap("'function'", 'string') + wrap('];') + "\n" + wrap('}');
 export const FUNCTION_TEXT = "() => {\n\treturn ['formed', 'with', 'function'];\n}";
 
 const jsonPreviewInfoPromise = (

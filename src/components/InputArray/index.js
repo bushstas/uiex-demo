@@ -2,6 +2,7 @@ import React from 'react';
 import Demo from '../../Demo';
 import {InputArray} from 'uiex/InputArray';
 import {ARRAY_INPUT_TYPES} from 'uiex/consts';
+import {getSetState} from '../../utils';
 
 export default class InputArrayDemo extends Demo {
 	static map = {
@@ -99,8 +100,8 @@ export default class InputArrayDemo extends Demo {
 	};
 	static stateProps = ['value', 'inputText'];
 	static funcs = {
-		onChange: 'this.setState({value});',
-		onInputText: 'this.setState({inputText});'
+		onChange: getSetState('value'),
+		onInputText: getSetState('inputText')
 	};
 	static consts = ['value', 'allowedTypes', 'exceptTypes'];
 	static componentName = 'InputArray';

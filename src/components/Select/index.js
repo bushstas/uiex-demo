@@ -4,7 +4,7 @@ import {Select} from 'uiex/Select';
 import SelectOptionMapper from '../SelectOptionMapper';
 import SelectMapper from '../SelectMapper';
 import {Checkbox} from 'uiex/Checkbox';
-import {stringify} from '../../utils';
+import {stringify, getSetState} from '../../utils';
 import {SELECT_OPTIONS_ARRAY, PROMISE_OPTIONS, FUNCTION_OPTIONS, PROMISE_TEXT, FUNCTION_TEXT} from '../../consts';
 
 import './style.scss'; 
@@ -24,7 +24,7 @@ export default class SelectDemo extends Demo {
 	};
 	static stateProps = ['value'];
 	static funcs = {
-		onChange: 'this.setState({value});'
+		onChange: getSetState('value')
 	};
 	static data = {
 		width: 300,

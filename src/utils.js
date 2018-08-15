@@ -8,7 +8,9 @@ export const stringify = (value, addBraces = false) => {
 		}
 	} else 
 		if (typeof value == 'symbol') {
-			value = value.toString().replace(/\(/, '("').replace(/\)$/, '")');
+			value = value.toString();
+			const parts = value.split(/\(|\)/);
+			value = wrap(parts[0], 'keyword2') + wrap('(') + stringify(parts[1]) + wrap(')');
 		} else if (typeof value == 'number') {
 			value = wrap(value, 'number');
 		} else if (typeof value == 'string') {
@@ -23,14 +25,22 @@ export const stringify = (value, addBraces = false) => {
 			value = wrap('[') + items.join(wrap(', ')) + wrap(']');
 		} else if (typeof value == 'function') {
 			value = wrap('() ') + wrap('=>', 'keyword2') + wrap(' {}');
-		} else if (value instanceof RegExp) {
-			value = wrap(value.toString(), 'string');
+		} else if (value instanceof RegExp) {		
+			value = value.toString()
+			const parts = value.split('/');
+			let flags = '';
+			if (parts[parts.length - 1]) {
+				flags = wrap(parts[parts.length - 1], 'keyword');
+				parts[parts.length - 1] = '';
+				value = parts.join('/');
+			}			
+			value = wrap(value, 'string') + flags;		
 		} else if (value instanceof Object) {
 			try {
 				if (value instanceof Document) {
 					value = wrap('document', 'spec');
 				} else {
-					value = JSON.stringify(value);
+					value = stringifyObject(value);
 				}
 			} catch(e) {
 				if (value instanceof Element) {
@@ -46,10 +56,25 @@ export const stringify = (value, addBraces = false) => {
 		return value;
 }
 
+const stringifyObject = (obj) => {
+	const items = [];
+	for (let k in obj) {
+		items.push(wrap(k, 'key') + wrap(': ') + stringify(obj[k]));
+	}
+	return wrap('{') + items.join(wrap(', '))  + wrap('}');
+}
+
 export const wrap = (text, className = 'symbol', tagName = 'span') => {
 	return '<' + tagName + ' class="' + className + '">' + text + '</' + tagName + '>';
 }
 
-export const getSetState = (name) => {
-	return wrap('this', 'args') + wrap('.') + 'setState' + wrap('({') + name + wrap('});');
+export const getSetState = (name, value = null) => {
+	let cn = 'none';
+	if (value !== null) {
+		value = wrap(': ') + stringify(value);
+		cn = 'key';
+	} else {
+		value = '';
+	}
+	return wrap('this', 'args') + wrap('.') + 'setState' + wrap('({') + wrap(name, cn) + value + wrap('});');
 }

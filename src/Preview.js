@@ -61,12 +61,12 @@ export default class Preview extends React.Component {
 		const N = "\n";
 		let addImport = '';
 		if (typeof additionalImport == 'string') {
-			addImport = ', ' + additionalImport;
+			addImport = wrap(', ') + additionalImport;
 		} else if (additionalImport instanceof Array) {
-			addImport = ', ' + additionalImport.join(', ');
+			addImport = wrap(', ') + additionalImport.join(wrap(', '));
 		}
-		let code = wrap('import', 'keyword') + wrap(' {') + 'Component' + wrap('} ') + wrap('from', 'keyword') + wrap(' "react"', 'string') + ';' + N;
-		code += wrap('import', 'keyword') + wrap(' {') + name + addImport + wrap('} ') + wrap('from', 'keyword') + wrap(' "uiex/' + name + '"', 'string') + ';' + N + N;
+		let code = wrap('import', 'keyword') + wrap(' {') + 'Component' + wrap('} ') + wrap('from', 'keyword') + wrap(' "react"', 'string') + wrap(';') + N;
+		code += wrap('import', 'keyword') + wrap(' {') + name + addImport + wrap('} ') + wrap('from', 'keyword') + wrap(' "uiex/' + name + '"', 'string') + wrap(';') + N + N;
 		let constsAdded = 0;
 		if (consts instanceof Array) {
 			for (let c of consts) {

@@ -3,6 +3,7 @@ import Demo from '../../Demo';
 import {RateForm} from 'uiex/RateForm';
 import {ICON_TYPE} from 'uiex/consts';
 import FormMapper from '../FormMapper';
+import {getSetState} from '../../utils';
 
 import './style.scss';
 
@@ -84,7 +85,7 @@ export default class RateFormDemo extends Demo {
 	static handlers = ['onChange', 'onSubmit', 'onReset', 'onDisabledClick'];
 	static stateProps = ['value'];
 	static funcs = {
-		onChange: 'this.setState({value})'
+		onChange: getSetState('value')
 	}
 	static args = {
 		onChange: ['value'],

@@ -5,7 +5,7 @@ import SelectMapper from '../SelectMapper';
 import {AutoComplete} from 'uiex/AutoComplete';
 import {Checkbox} from 'uiex/Checkbox';
 import {stringify, getSetState} from '../../utils';
-import {SELECT_OPTIONS_PROMISE_INSTANCE, PROMISE_OPTIONS, FUNCTION_OPTIONS, PROMISE_TEXT_HTML, FUNCTION_TEXT} from '../../consts';
+import {SELECT_OPTIONS_PROMISE_INSTANCE, PROMISE_OPTIONS, FUNCTION_OPTIONS, PROMISE_TEXT_HTML, FUNCTION_TEXT_HTML} from '../../consts';
 
 const SELECT_EXCLUDED = ['multiple', 'empty'];
 const SELECT_OPTION_EXCLUDED = ['single'];
@@ -180,7 +180,7 @@ export default class AutoCompleteDemo extends Demo {
 			if (value instanceof Promise) {
 				return PROMISE_TEXT_HTML;
 			} else if (typeof value == 'function') {
-				return FUNCTION_TEXT;
+				return FUNCTION_TEXT_HTML;
 			}
 		}
 	}

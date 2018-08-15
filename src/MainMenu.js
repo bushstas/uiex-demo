@@ -7,7 +7,9 @@ const PAGES = [
 	'ButtonGroup',
 	'CellGroup',
 	'ColorPicker',
+	'Colors',
 	'Input',
+	'InputArray',
 	'InputColor',
 	'InputDate',
 	'InputNumber',
@@ -16,6 +18,7 @@ const PAGES = [
 	'Modal',
 	'RateForm',
 	'SearchForm',
+	'Select',
 	'SidePanel',
 	'Tab',
 	'Tabs'

@@ -11,6 +11,10 @@ import InputDemo from './components/Input';
 import InputRegexpDemo from './components/InputRegexp';
 import ColorPickerDemo from './components/ColorPicker';
 import CellGroupDemo from './components/CellGroup';
+import ColorsDemo from './components/Colors';
+import InputArrayDemo from './components/InputArray';
+import AutoCompleteDemo from './components/AutoComplete';
+import SelectDemo from './components/Select';
 
 import './style.scss';
 
@@ -18,7 +22,7 @@ export default class App extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			page: 'CellGroup',
+			page: 'AutoComplete',
 			sidePanelOpen: false,
 			windowIsOpen: false
 		}
@@ -74,7 +78,18 @@ export default class App extends React.Component {
 
 			case 'CellGroup':
 				return <CellGroupDemo/>
-			
+
+			case 'Colors':
+				return <ColorsDemo/>	
+
+			case 'InputArray':
+				return <InputArrayDemo/>
+
+			case 'AutoComplete':
+				return <AutoCompleteDemo/>
+
+			case 'Select':
+				return <SelectDemo/>
 		}
 	}
 

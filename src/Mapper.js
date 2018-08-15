@@ -6,28 +6,34 @@ import {InputNumber} from 'uiex/InputNumber';
 import {InputColor} from 'uiex/InputColor';
 import {InputBoolean} from 'uiex/InputBoolean';
 import {InputRegexp} from 'uiex/InputRegexp';
-import {Select, SelectOption} from 'uiex/Select';
+import {Select} from 'uiex/Select';
+import {SelectObject} from 'uiex/SelectObject';
 import {Form} from 'uiex/Form';
 import {FormControl} from 'uiex/FormControl';
 import {FormControlGroup} from 'uiex/FormControlGroup';
 import {BoxSection} from 'uiex/BoxSection';
 import {AutoComplete} from 'uiex/AutoComplete';
-import {MultiSelect} from 'uiex/MultiSelect';
+import {getNumber} from 'uiex/utils';
 
-const OPTIONS =[{title:'Awesome', value: 'Awesome', withBottomDelimiter: true}, 'Fake', 'Goofie', 'Bad', 'Fucked', 'Fantastic', 'Bold', 'Lovely', 'Green', 'Good', 'Normal', 'Scary', 'Well', 'Safe', 'Lonely', 'Silent', 'Stormy', 'Wet', 'SuperPuperMegaCool', 'Shocked',{title:'Broken', value: 'Broken', withTopDelimiter: true}];
+const COLUMNS = 12;
 
 export default class Mapper extends React.Component {
 
 	constructor(props) {
 		super(props);
 		this.state = {
-			val: ''
+			val: '',
+			extraPropsShown: false
 		}
 		this.timeouts = {}
 	}
 
 	render() {
-		const {map: {checkboxes, inputs}, data, name, isOpen = true, excluded, handlers} = this.props;
+		const {map: {checkboxes, inputs}, data, name, isOpen = true, excluded, handlers, withExtraProps} = this.props;
+		let {columns} = this.props;
+		if (!getNumber(columns)) {
+			columns = COLUMNS;
+		}
 		return (
 			<div className="mapper">
 				<BoxSection 
@@ -35,11 +41,18 @@ export default class Mapper extends React.Component {
 					isOpen={isOpen}
 					animation="fade-fall"
 					iconAtRight
+					note={withExtraProps ? this.renderExtraPropsCheckbox() : null}
 					effect="ease-in-out"
 				>
 					<Form 
 						onChange={this.handleChangeInput}
-						columns="12"
+						columns={columns}
+						columnsTiny="2"
+						columnsSmall="4"
+						columnsMiddle="6"
+						columnsLarger="10"
+						columnsHuge="18"
+						columnsGigantic="24"
 						cellSize="2"
 						rowMargin="10"
 					>
@@ -56,9 +69,16 @@ export default class Mapper extends React.Component {
 						{inputs instanceof Array && 
 							<div className="mapper-inputs">
 								{inputs.map((inps, idx) => {
+									let columns;
+									if (inps._COLUMNS) {
+										columns = inps._COLUMNS;
+									}
 									return (
-										<FormControlGroup key={idx}>
+										<FormControlGroup key={idx} columns={columns}>
 											{Object.keys(inps).map(key => {
+												if (key.charAt(0) == '_') {
+													return;
+												}
 												if (excluded instanceof Array && excluded.indexOf(key) > -1) {
 													return null;
 												}
@@ -85,7 +105,7 @@ export default class Mapper extends React.Component {
 							<div className="mapper-handlers">
 								{handlers.map((h) => {
 									return (
-										<div ref={h} className={this.getHandlerClassName()} key={h}>
+										<div ref={h} className={this.getHandlerClassName()} key={h} title={this.getHandlerTitle(h)}>
 											<div className="inner">
 												{h}
 											</div>
@@ -101,6 +121,34 @@ export default class Mapper extends React.Component {
 				</BoxSection>
 			</div>
 		)
+	}
+
+	getHandlerTitle(name) {
+		const {args} = this.props;
+		let ar = '';
+		if (args instanceof Object && args[name]) {
+			if (args[name] instanceof Array) {
+				ar = args[name].join(', ');
+			} else if (typeof args[name] == 'string') {
+				ar = args[name];
+			}
+		}
+		return name + ' (' + ar + ') { ... }'
+	}
+
+	renderExtraPropsCheckbox() {
+		return (
+			<Checkbox 
+				checked={this.state.extraPropsShown}
+				onChange={this.handleExtraPropsCheckboxChange}
+			>
+				Show extra props
+			</Checkbox>
+		)
+	}
+
+	handleExtraPropsCheckboxChange = (extraPropsShown) => {
+		this.setState({extraPropsShown});
 	}
 
 	renderCheckboxesGroupControl(name, item, value) {
@@ -141,8 +189,13 @@ export default class Mapper extends React.Component {
 			positive,
 			negative,
 			decimal,
-			toFixed
+			toFixed,
+			extra
 		} = item;
+
+		if (extra && !this.state.extraPropsShown) {
+			return null;
+		}
 
 		let input;
 		const props = {
@@ -154,6 +207,11 @@ export default class Mapper extends React.Component {
 			clearable: true
 		};
 		switch (item.type) {
+			case 'array':
+				const arrayValue = 'Array (' + (value instanceof Array ? value.length : (!!value ? 1 : 0)) + ')';
+				input = <Input {...props} readOnly value={arrayValue}/>
+			break;
+
 			case 'number':
 				const numberProps = {
 					measure,
@@ -193,6 +251,7 @@ export default class Mapper extends React.Component {
 				stretched={item.stretched}
 				fullWidth={item.fullWidth}
 				title={item.description}
+				lastInRow={item.lastInRow}
 			>
 				{input}
 			</FormControl>
@@ -201,11 +260,10 @@ export default class Mapper extends React.Component {
 
 	renderSelectControl(name, item, value) {
 		let SelectComponent = Select;
-		if (item.multiple) {
-			SelectComponent = MultiSelect;
-		}
 		if (item.autoComplete) {
 			SelectComponent = AutoComplete;
+		} else if (item.type == 'object') {
+			SelectComponent = SelectObject;
 		}
 		return (
 			<FormControl 
@@ -213,12 +271,15 @@ export default class Mapper extends React.Component {
 				key={name}
 				caption={name}
 				size={item.size}
+				lastInRow={item.lastInRow}
+				stretched={item.stretched}
 			>
 				<SelectComponent
 					empty
 					name={name}
 					value={value}
 					options={item.options}
+					multiple={item.multiple}
 					placeholder={item.empty}
 				/>
 			</FormControl>

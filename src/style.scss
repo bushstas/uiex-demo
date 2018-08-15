@@ -53,7 +53,6 @@ pre {
 }
 .main-content {
 	padding: 30px 30px 30px 320px;
-	max-width: 1200px;
 }
 .mapper {
 	margin-bottom: 12px;
@@ -70,7 +69,6 @@ pre {
 .preview {
 	border: 5px solid #dadada;
 	border-radius: 2px;
-	padding: 15px 25px 30px 25px;
 	& > .uiex-section-caption {
 		& > .uiex-section-note {
 			.uiex-button {
@@ -128,4 +126,12 @@ pre {
 }
 .mr20 {
 	margin-right: 20px;	
+}
+.ml20 {
+	margin-left: 20px;	
+}
+.active-cell {
+	.uiex-cell-content {
+		background-color: #c1c1c1 !important;
+	}
 }

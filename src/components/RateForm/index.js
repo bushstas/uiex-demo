@@ -1,172 +1,106 @@
 import React from 'react';
+import Demo from '../../Demo';
 import {RateForm} from 'uiex/RateForm';
 import {ICON_TYPE} from 'uiex/consts';
-import ComponentMapper from '../ComponentMapper';
 import FormMapper from '../FormMapper';
-import Mapper from '../../Mapper';
-import Preview from '../../Preview';
 
 import './style.scss';
 
-const DATA = {
-	width: 400,
-	caption: 'Rate form',
-	captionInside: false,
-	value: 2
-}
-
-const EXCLUDED = ['vertical'];
 const EXCLUDED_FORM = ['value'];
 
-const MAP = {
-	checkboxes: {
-		resettable: {
-			description: 'Button is only shown on focus',
-			defaultValue: false
-		}
-	},
-	inputs: [
-		{
-			value: {
-				description: 'Current rate',
-				type: 'number',
-				example: '5',
-				maxValue: 10,
-				positive: true
-			},
-			normalColor:{
-				type: 'color',
-				description: 'Normal color of icons'
-			},
-			activeColor:{
-				type: 'color',
-				description: 'Color of active icons'
-			},
-			hoverColor:{
-				type: 'color',
-				description: 'Color of hover icons'
-			},
-			submit:{
-				description: 'Color of hover icons',
-				example: 'Rate'
-			},
-			reset:{
-				description: 'Color of hover icons',
-				example: 'Reset'
+export default class RateFormDemo extends Demo {
+	static map = {
+		checkboxes: {
+			resettable: {
+				description: 'Button is only shown on focus',
+				defaultValue: false
 			}
 		},
-		{
-			scale: {
-				description: 'Value of input',
-				type: 'number',
-				positive: true,
-				example: 'word',
-				minValue: 3,
-				maxValue: 10,
-				
+		inputs: [
+			{
+				value: {
+					description: 'Current rate',
+					type: 'number',
+					example: '5',
+					maxValue: 10,
+					positive: true
+				},
+				normalColor:{
+					type: 'color',
+					description: 'Normal color of icons'
+				},
+				activeColor:{
+					type: 'color',
+					description: 'Color of active icons'
+				},
+				hoverColor:{
+					type: 'color',
+					description: 'Color of hover icons'
+				},
+				submit:{
+					description: 'Color of hover icons',
+					example: 'Rate'
+				},
+				reset:{
+					description: 'Color of hover icons',
+					example: 'Reset'
+				}
 			},
-			icon: {
-				description: 'Icon name',
-				example: 'search',
-				
-			},
-			activeIcon: {
-				description: 'Active icon name',
-				example: 'search',
-				
-			},
-			iconType: {
-				description: 'Icon type',
-				options: ICON_TYPE,
-				empty: 'Chose an option'
+			{
+				scale: {
+					description: 'Value of input',
+					type: 'number',
+					positive: true,
+					example: 'word',
+					minValue: 3,
+					maxValue: 10,
+					
+				},
+				icon: {
+					description: 'Icon name',
+					example: 'search',
+					
+				},
+				activeIcon: {
+					description: 'Active icon name',
+					example: 'search',
+					
+				},
+				iconType: {
+					description: 'Icon type',
+					options: ICON_TYPE,
+					empty: 'Chose an option'
+				}
 			}
-		}
-	]
-}
-
-const HANDLERS = ['onChange', 'onSubmit', 'onReset', 'onDisabledClick'];
-const STATE_PROPS = ['value'];
-const FUNCS = {
-	onChange: 'this.setState({value})'
-}
-const ARGS = {
-	onChange: ['value'],
-	onSubmit: ['value']
-}
-
-
-
-export default class RateFormDemo extends React.Component {
-	constructor() {
-		super();
-		this.state = {
-			data: DATA
-		};
+		]
+	};
+	static data = {
+		width: 400,
+		caption: 'Rate form',
+		captionInside: false,
+		value: 2
+	};
+	static excluded = ['vertical'];
+	static handlers = ['onChange', 'onSubmit', 'onReset', 'onDisabledClick'];
+	static stateProps = ['value'];
+	static funcs = {
+		onChange: 'this.setState({value})'
 	}
+	static args = {
+		onChange: ['value'],
+		onSubmit: ['value']
+	}
+	static componentName = 'RateForm';
+	static component = RateForm;
 
-	render() {
+	renderMapperBefore() {
 		return (
-			<div>
-				<ComponentMapper 
-					isOpen={false}
-					data={this.state.data} 
-					excluded={EXCLUDED}
-					onChange={this.handleChangeData}
-				/>
-				<FormMapper 
-					isOpen={true}
-					data={this.state.data} 
-					excluded={EXCLUDED_FORM}
-					onChange={this.handleChangeData}
-				/>
-				<Mapper 
-					ref="mapper"
-					name="RateForm"
-					map={MAP} 
-					data={this.state.data} 
-					onChange={this.handleChangeData}
-					handlers={HANDLERS}
-				/>
-				<Preview
-					name="RateForm"
-					data={this.state.data}
-					handlers={HANDLERS}
-					args={ARGS}
-					funcs={FUNCS}
-					stateProps={STATE_PROPS}
-				>
-					<RateForm 
-						{...this.state.data} 
-						onSubmit={this.handleSubmit}
-						onReset={this.handleReset}
-						onChange={this.handleChange}
-						onDisabledClick={this.handleDisabledClick}
-					>
-							
-					</RateForm>
-				</Preview>
-			</div>
+			<FormMapper 
+				isOpen={true}
+				data={this.state.data} 
+				excluded={EXCLUDED_FORM}
+				onChange={this.handleChangeData}
+			/>
 		)
-	}
-
-	handleSubmit = (value) => {
-		this.fire('onSubmit');
-	}
-	handleChange = (value) => {
-		this.fire('onChange');
-	}
-	handleReset = (value) => {
-		this.fire('onReset');
-	}
-	handleDisabledClick = (value) => {
-		this.fire('onDisabledClick');
-	}
-
-	handleChangeData = (data) => {
-		this.setState({data});
-	}
-
-	fire(event) {
-		this.refs.mapper.fire(event);
 	}
 }

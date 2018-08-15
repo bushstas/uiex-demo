@@ -1,13 +1,10 @@
 import React from 'react';
+import Demo from '../../Demo';
 import {Button} from 'uiex/Button';
 import {ButtonGroup} from 'uiex/ButtonGroup';
 import ButtonGroupMapper from '../ButtonGroupMapper';
 
 import './style.scss';
-
-const DATA = {
-	iconSize: 18
-}
 
 const BUTTONS_DATA = {
 	save: {
@@ -27,55 +24,33 @@ const BUTTONS_DATA = {
 	}
 }
 
-export default class ButtonsDemo extends React.Component {
-	constructor() {
-		super();
-		this.state = {
-			data: DATA
-		}
-	}
-
-	render() {
-		const {data} = this.state;
+export default class ButtonsDemo extends Demo {
+	static handlers = ['onClick', 'onDisabledClick'];
+	static componentName = 'ButtonGroup';
+	static component = ButtonGroup;
+	static data = {
+		iconSize: 18
+	};
+	
+	renderMapper() {
 		return (
-			<div>
-				<ButtonGroupMapper
-					data={data}
-					onChange={this.handleChangeData}
-				/>
-				<ButtonGroup
-					{...data}
-					onClick={this.handleButtonClick}
-					onDisabledClick={this.handleDisabledButtonClick}
-				>
-					{this.renderButtons()}
-				</ButtonGroup>
-			</div>
+			<ButtonGroupMapper
+				data={this.state.data}
+				onChange={this.handleChangeData}
+			/>
 		)
 	}
 
-	renderButtons() {
+	renderContent() {
 		return Object.keys(BUTTONS_DATA).map(key => {
 			return (
 				<Button
 					key={key}
-					onClick={this.handleButtonClick}
-					onDisabledClick={this.handleDisabledButtonClick}
+					onClick={this.getHandler('onClick')}
+					onDisabledClick={this.getHandler('onDisabledClick')}
 					{...BUTTONS_DATA[key]}
 				/>
 			)
 		})
-	}
-
-	handleButtonClick = (selectedItem) => {
-		this.setState({selectedItem});
-	}
-
-	handleDisabledButtonClick = (value) => {
-		alert(value + ' is disabled')
-	}
-
-	handleChangeData = (data) => {
-		this.setState({...data});
 	}
 }

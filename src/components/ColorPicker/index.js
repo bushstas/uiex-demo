@@ -2,6 +2,7 @@ import React from 'react';
 import Demo from '../../Demo';
 import {ColorPicker} from 'uiex/ColorPicker';
 import {COLORS} from '../../consts';
+import {getSetState} from '../../utils';
 
 export default class ColorPickerDemo extends Demo {
 	static map = {
@@ -39,7 +40,7 @@ export default class ColorPickerDemo extends Demo {
 	};
 	static stateProps = ['value'];
 	static funcs = {
-		onChange: 'this.setState({value});'
+		onChange: getSetState('value')
 	};
 	static consts = ['presetColors'];
 	static componentName = 'ColorPicker';

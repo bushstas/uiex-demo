@@ -18,7 +18,7 @@ export default class DemoMapper extends React.Component {
     }
 
 	render() {
-		let {isOpen, excluded, data, onChange, handlers, args} = this.props;
+		let {isOpen, excluded, data, onChange, handlers, args, componentName} = this.props;
 		if (!handlers) {
 			handlers = this.constructor.handlers;
 		}
@@ -28,11 +28,14 @@ export default class DemoMapper extends React.Component {
 		if (!args) {
 			args = this.constructor.args;
 		}
+		if (!componentName) {
+			componentName = this.constructor.componentName;
+		}
 		return (
 			<Mapper 
 				ref="mapper"
 				isOpen={isOpen}
-				name={this.constructor.componentName}
+				name={componentName}
 				excluded={excluded}
 				args={args}
 				map={this.state.map} 

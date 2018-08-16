@@ -5,8 +5,6 @@ import {Button} from 'uiex/Button';
 import {getSetState} from '../../utils';
 import {SIDES, PANEL_ANIMATION, ANIM_SPEED, ANIM_EFFECTS} from 'uiex/consts';
 
-import './style.scss';
-
 export default class SidePanelDemo extends Demo {
 	static map = {
 		checkboxes: {
@@ -25,27 +23,23 @@ export default class SidePanelDemo extends Demo {
 			{
 				side: {
 					type: 'select',
-					empty: 'Chose an option',
 					description: 'Side',
 					options: SIDES,
 					default: 'left'
 				},
 				animation: {
 					type: 'select',
-					empty: 'Chose an option',
 					description: 'Animation type',
 					options: PANEL_ANIMATION
 				},
 				speed: {
 					type: 'select',
-					empty: 'Chose an option',
 					description: 'Animation speed',
 					options: ANIM_SPEED,
 					default: 'fast'
 				},
 				effect: {
 					type: 'select',
-					empty: 'Chose an option',
 					description: 'Animation effect',
 					options: ANIM_EFFECTS,
 					default: 'ease-in-out'

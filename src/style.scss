@@ -87,6 +87,19 @@ pre {
 	}
 	.uiex-modal-body {
 		background-color: #2e3031;
+		&.uiex-scrollable {
+			&::-webkit-scrollbar {
+				background-color: #666;
+			}
+			&::-webkit-scrollbar-thumb {
+				background: #999; 
+			}
+		}
+	}
+	.uiex-modal-header {
+		background-color: #2e3031;
+		color: #d6d6d6;
+		border-bottom: 1px solid #555;
 	}
 	pre {
 		color: #f5f5f5;

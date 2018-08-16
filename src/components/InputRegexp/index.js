@@ -4,8 +4,6 @@ import {InputRegexp} from 'uiex/InputRegexp';
 import InputMapper from '../InputMapper';
 import {getSetState} from '../../utils';
 
-import './style.scss';
-
 const EXCLUDED = ['type', 'pattern', 'textarea'];
 
 export default class InputRegexpDemo extends Demo {

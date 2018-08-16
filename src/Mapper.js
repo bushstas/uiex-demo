@@ -6,6 +6,7 @@ import {InputNumber} from 'uiex/InputNumber';
 import {InputColor} from 'uiex/InputColor';
 import {InputBoolean} from 'uiex/InputBoolean';
 import {InputRegexp} from 'uiex/InputRegexp';
+import {InputDate} from 'uiex/InputDate';
 import {Select} from 'uiex/Select';
 import {SelectObject} from 'uiex/SelectObject';
 import {Form} from 'uiex/Form';
@@ -240,6 +241,10 @@ export default class Mapper extends React.Component {
 				input = <InputRegexp {...props}/>
 			break;
 
+			case 'date':
+				input = <InputDate {...props}/>
+			break;
+
 			case 'boolean':
 				input = <InputBoolean {...props}/>
 			break;
@@ -286,7 +291,7 @@ export default class Mapper extends React.Component {
 					readOnly={item.readOnly}
 					options={item.options}
 					multiple={item.multiple}
-					placeholder={item.empty}
+					placeholder={item.placeholder || 'Choose an option'}
 				/>
 			</FormControl>
 		)

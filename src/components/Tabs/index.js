@@ -50,8 +50,7 @@ const MAP = {
 			},
 			activeColor: {
 				description: 'Color of an active tab buttons',
-				options: COLORS,
-				empty: 'Chose an option'
+				options: COLORS
 			}
 		}
 	]

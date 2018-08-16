@@ -3,6 +3,7 @@ import Demo from '../../Demo';
 import {InputArray} from 'uiex/InputArray';
 import {ARRAY_INPUT_TYPES} from 'uiex/consts';
 import {getSetState} from '../../utils';
+import {SELECT_OPTIONS_ARRAY, SELECT_OPTIONS_OBJECTS_ARRAY, SELECT_OPTIONS_OBJECT, SELECT_OPTIONS_PROMISE, SELECT_OPTIONS_FUNCTION} from '../../consts';
 
 export default class InputArrayDemo extends Demo {
 	static map = {
@@ -49,6 +50,7 @@ export default class InputArrayDemo extends Demo {
 					positive: true
 				},
 				onlyType: {
+					description: 'The only allowed type for adding',
 					type: 'select',
 					options: ARRAY_INPUT_TYPES
 				},
@@ -65,7 +67,7 @@ export default class InputArrayDemo extends Demo {
 					multiple: true
 				},
 				delimiter: {
-					description: 'Delimiter'
+					description: 'Delimiter to add few values at the same time'
 				},
 				inputTextEventTimeout: {
 					description: 'Input text event will be fired after given timeout',
@@ -76,6 +78,11 @@ export default class InputArrayDemo extends Demo {
 				placeholder: {
 					description: 'Input placeholder',
 					stretched: true
+				},
+				autoCompleteOptions: {
+					description: 'AutoComplete options (Array, Object, Promise, Function)',
+					type: 'object',
+					options: [SELECT_OPTIONS_ARRAY, SELECT_OPTIONS_OBJECTS_ARRAY, SELECT_OPTIONS_OBJECT, SELECT_OPTIONS_PROMISE, SELECT_OPTIONS_FUNCTION]
 				}
 			}
 		]
@@ -88,7 +95,7 @@ export default class InputArrayDemo extends Demo {
 		colorTypes: true,
 		delimiter: ',',
 		inputTextEventTimeout: 400,
-		autoCompleteOptions: ['green', 'red', 'blue']
+		autoCompleteOptions: SELECT_OPTIONS_ARRAY
 	};	
 	static excluded = ['align', 'valign', 'vertical', 'children'];
 	static handlers = ['onChange', 'onAddItem', 'onRemoveItem', 'onInputText'];
@@ -103,7 +110,7 @@ export default class InputArrayDemo extends Demo {
 		onChange: getSetState('value'),
 		onInputText: getSetState('inputText')
 	};
-	static consts = ['value', 'allowedTypes', 'exceptTypes'];
+	static consts = ['value', 'allowedTypes', 'exceptTypes', 'autoCompleteOptions'];
 	static componentName = 'InputArray';
 	static component = InputArray;
 	static previewProps = {

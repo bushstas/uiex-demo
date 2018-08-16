@@ -4,7 +4,7 @@ import SelectOptionMapper from '../SelectOptionMapper';
 import SelectMapper from '../SelectMapper';
 import {AutoComplete} from 'uiex/AutoComplete';
 import {Checkbox} from 'uiex/Checkbox';
-import {stringify, getSetState} from '../../utils';
+import {stringify, getSetState, wrap} from '../../utils';
 import {SELECT_OPTIONS_PROMISE_INSTANCE, PROMISE_OPTIONS, FUNCTION_OPTIONS, PROMISE_TEXT_HTML, FUNCTION_TEXT_HTML} from '../../consts';
 
 const SELECT_EXCLUDED = ['multiple', 'empty'];
@@ -99,9 +99,6 @@ export default class AutoCompleteDemo extends Demo {
 	}
 
 	handleOptionSelect = (index, option) => {
-		if (option.value) {
-			option.selected = true;
-		}
 		this.setState({optionData: option});
 		this.refs.optionMapper.fireSelect();
 	}
@@ -147,23 +144,23 @@ export default class AutoCompleteDemo extends Demo {
 			}
 			const keys = Object.keys(option);
 			if (keys.length - 1 > 1) {
-				content += TAB + '&lt;AutoCompleteOption' + N;
+				content += TAB + wrap('&lt;') + wrap('AutoCompleteOption', 'keyword2') + N;
 				for (let k in option) {
 					if (k == 'title') {
 						continue;
 					}
 					if (option[k] === true) {
-						content += TAB2 + k + N;	
+						content += TAB2 + wrap(k, 'key') + N;
 					} else {
-						content += TAB2 + k + '=' + stringify(option[k], true) + N;
+						content += TAB2 + wrap(k, 'key') + wrap('=') + stringify(option[k], true) + N;
 					}
 				}
-				content += TAB + '&gt;' + N;
+				content += TAB + wrap('&gt;') + N;
 			} else {
-				content += TAB + '&lt;AutoCompleteOption value=' + stringify(option.value, true) + '&gt;' + N;
+				content += TAB + wrap('&lt;') + wrap('AutoCompleteOption ', 'keyword2') + wrap('value', 'key') + wrap('=') + stringify(option.value, true) + wrap('&gt;') + N;
 			}
 			content += TAB2 + option.title + N;
-			content += TAB + '&lt;/AutoCompleteOption&gt;' + (i < options.length - 1 ? N : '');
+			content += TAB + wrap('&lt;/') + wrap('AutoCompleteOption', 'keyword2') + wrap('&gt;') + (i < options.length - 1 ? N : '');
 		}
 		return content;
 	}

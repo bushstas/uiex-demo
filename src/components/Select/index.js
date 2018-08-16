@@ -4,10 +4,8 @@ import {Select} from 'uiex/Select';
 import SelectOptionMapper from '../SelectOptionMapper';
 import SelectMapper from '../SelectMapper';
 import {Checkbox} from 'uiex/Checkbox';
-import {stringify, getSetState} from '../../utils';
+import {stringify, getSetState, wrap} from '../../utils';
 import {SELECT_OPTIONS_ARRAY, PROMISE_OPTIONS, FUNCTION_OPTIONS, PROMISE_TEXT, FUNCTION_TEXT} from '../../consts';
-
-import './style.scss'; 
 
 export default class SelectDemo extends Demo {
 	static excluded = ['height', 'vertical', 'align', 'valign', 'children'];
@@ -62,6 +60,7 @@ export default class SelectDemo extends Demo {
 	renderAdditionalMappers() {
 		return (
 			<SelectOptionMapper
+				ref="optionMapper"
 				isOpen={true}
 				data={this.getOptionData()}
 				onChange={this.handleChangeOptionData}
@@ -75,6 +74,7 @@ export default class SelectDemo extends Demo {
 
 	handleOptionSelect = (index, option) => {
 		this.setState({optionData: option});
+		this.refs.optionMapper.fireSelect();
 	}
 
 	renderPreviewNote = () => {
@@ -118,23 +118,23 @@ export default class SelectDemo extends Demo {
 			}
 			const keys = Object.keys(option);
 			if (keys.length - 1 > 1) {
-				content += TAB + '&lt;SelectOption' + N;
+				content += TAB + wrap('&lt;') + wrap('SelectOption', 'keyword2') + N;
 				for (let k in option) {
 					if (k == 'title') {
 						continue;
 					}
 					if (option[k] === true) {
-						content += TAB2 + k + N;	
+						content += TAB2 + wrap(k, 'key') + N;
 					} else {
-						content += TAB2 + k + '=' + stringify(option[k], true) + N;
+						content += TAB2 + wrap(k, 'key') + wrap('=') + stringify(option[k], true) + N;
 					}
 				}
-				content += TAB + '&gt;' + N;
+				content += TAB + wrap('&gt;') + N;
 			} else {
-				content += TAB + '&lt;SelectOption value=' + stringify(option.value, true) + '&gt;' + N;
+				content += TAB + wrap('&lt;') + wrap('SelectOption ', 'keyword2') + wrap('value', 'key') + wrap('=') + stringify(option.value, true) + wrap('&gt;') + N;
 			}
 			content += TAB2 + option.title + N;
-			content += TAB + '&lt;/SelectOption&gt;' + (i < options.length - 1 ? N : '');
+			content += TAB + wrap('&lt;/') + wrap('SelectOption', 'keyword2') + wrap('&gt;') + (i < options.length - 1 ? N : '');
 		}
 		return content;
 	}

@@ -5,8 +5,6 @@ import {Button} from 'uiex/Button';
 import {MODAL_ANIMATION} from 'uiex/consts';
 import {getSetState, wrap} from '../../utils';
 
-import './style.scss';
-
 export default class ModalDemo extends Demo {
 	static map = {
 		checkboxes: {
@@ -67,7 +65,6 @@ export default class ModalDemo extends Demo {
 				},
 				animation: {
 					type: 'select',
-					empty: 'Chose an option',
 					description: 'Animation type',
 					options: MODAL_ANIMATION,
 					default: 'fade-fall'

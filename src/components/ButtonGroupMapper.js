@@ -61,18 +61,15 @@ export default class ButtonGroupMapper extends DemoMapper {
 			{
 				view: {
 					description: 'Width of tab buttons',
-					options: viewOptions,
-					empty: 'Chose an option'
+					options: viewOptions
 				},
 				buttonColor: {
 					description: 'Color of tab buttons',
-					options: COLORS,
-					empty: 'Chose an option'
+					options: COLORS
 				},
 				iconType: {
 					description: 'Icon type',
-					options: ICON_TYPE,
-					empty: 'Chose an option'
+					options: ICON_TYPE
 				}
 			}
 		]

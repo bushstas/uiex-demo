@@ -5,8 +5,6 @@ import {ICON_TYPE} from 'uiex/consts';
 import FormMapper from '../FormMapper';
 import {getSetState} from '../../utils';
 
-import './style.scss';
-
 const EXCLUDED_FORM = ['value'];
 
 export default class RateFormDemo extends Demo {
@@ -69,8 +67,7 @@ export default class RateFormDemo extends Demo {
 				},
 				iconType: {
 					description: 'Icon type',
-					options: ICON_TYPE,
-					empty: 'Chose an option'
+					options: ICON_TYPE
 				}
 			}
 		]

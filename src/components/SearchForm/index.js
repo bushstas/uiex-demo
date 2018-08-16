@@ -5,8 +5,6 @@ import {ICON_TYPE} from 'uiex/consts';
 import FormMapper from '../FormMapper';
 import {MEASURES} from '../../consts';
 
-import './style.scss';
-
 export default class SearchFormDemo extends Demo {
 	static map = {
 		checkboxes: {
@@ -43,8 +41,7 @@ export default class SearchFormDemo extends Demo {
 				},
 				iconType: {
 					description: 'Icon type',
-					options: ICON_TYPE,
-					empty: 'Chose an option'
+					options: ICON_TYPE
 				}
 			}
 		]

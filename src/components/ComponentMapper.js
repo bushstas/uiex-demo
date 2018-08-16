@@ -60,6 +60,9 @@ const MAP = {
 				options: VALIGN,
 				empty: 'Chose an option'
 			},
+			tagName: {
+				description: 'Component main element tag name (String)'
+			},
 			className: {
 				description: 'Custom ClassName attribute (String)',
 				stretched: true

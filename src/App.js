@@ -13,6 +13,7 @@ import ColorPickerDemo from './components/ColorPicker';
 import CellGroupDemo from './components/CellGroup';
 import ColorsDemo from './components/Colors';
 import InputArrayDemo from './components/InputArray';
+import InputDateDemo from './components/InputDate';
 import AutoCompleteDemo from './components/AutoComplete';
 import SelectDemo from './components/Select';
 
@@ -72,6 +73,9 @@ export default class App extends React.Component {
 
 			case 'InputRegexp':
 				return <InputRegexpDemo/>
+
+			case 'InputDate':
+				return <InputDateDemo/>
 
 			case 'ColorPicker':
 				return <ColorPickerDemo/>

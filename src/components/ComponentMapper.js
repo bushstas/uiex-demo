@@ -1,126 +1,96 @@
 import React from 'react';
-import Mapper from '../Mapper';
-import {VALIGN, ALIGN, FLOAT} from 'uiex/consts.js';
+import DemoMapper from '../DemoMapper';
+import {VALIGN, ALIGN, FLOAT} from 'uiex/consts';
+import {MEASURES} from '../utils';
 
-const MEASURES = [
-	{id: 'px', name: 'px'},
-	{id: '%', name: '%'}
-]
-
-const MAP = {
-	checkboxes: {
-		block: {
-			description: 'Display block',
-			defaultValue: false
-		},
-		disabled: {
-			description: 'Disabled',
-			defaultValue: false
-		},
-		hidden: {
-			description: 'hidden',
-			defaultValue: false
-		},
-		vertical: {
-			description: 'vertical',
-			defaultValue: false
-		}
-	},
-	inputs: [
-		{
-			width: {
-				type: 'number',
-				description: 'Width style attribute (Number | String)',
-				example: '120',
-				maxValue: 1000,
-				measure: 'px',
-				measures: MEASURES,
-				positive: true
-			},
-			height: {
-				type: 'number',
-				description: 'Height style attribute (Number | String)',
-				example: '50',
-				maxValue: 200,
-				measure: 'px',
-				positive: true
-			},
-			float: {
-				description: 'Float style attribute (String)',
-				options: FLOAT,
-				empty: 'Chose an option'
-			},
-			align: {
-				description: 'Align style attribute (String)',
-				options: ALIGN,
-				empty: 'Chose an option'
-			},
-			valign: {
-				description: 'Vertical align style attribute (String)',
-				options: VALIGN,
-				empty: 'Chose an option'
-			},
-			tagName: {
-				description: 'Component main element tag name (String)'
-			},
-			className: {
-				description: 'Custom ClassName attribute (String)',
-				stretched: true
-			},
-			children: {
-				description: 'Content (ReactElement | Array | String)',
-				stretched: true
-			}
-		}
-	]
-}
-
-export default class ComponentMapper extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			map: MAP
-		}
-		if (props.maxWidth) {
-			MAP.inputs[0].width.maxValue = props.maxWidth;
-		}
-		if (props.maxHeight) {
-			MAP.inputs[0].height.maxValue = props.maxHeight;
-		}
+const filterTagName = (value) => {
+	if ((/^[a-z]+\d{0,1}$/i).test(value)) {
+		return value;
 	}
+	return value.replace(/[^a-z]/gi, '');
+};
 
-	render() {
-		return (
-			<Mapper 
-				isOpen={this.props.isOpen}
-				name="UIEXComponent"
-				excluded={this.props.excluded}
-				map={this.state.map} 
-				data={this.props.data} 
-				onChange={this.props.onChange}
-				onChangeMeasure={this.handleChangeMeasure}
-			/>
-		)
+export default class ComponentMapper extends DemoMapper {
+	static map = {
+		checkboxes: {
+			block: {
+				description: 'Display block',
+				defaultValue: false
+			},
+			disabled: {
+				description: 'Disabled',
+				defaultValue: false
+			},
+			hidden: {
+				description: 'hidden',
+				defaultValue: false
+			},
+			vertical: {
+				description: 'vertical',
+				defaultValue: false
+			}
+		},
+		inputs: [
+			{
+				width: {
+					type: 'number',
+					description: 'Width style attribute (Number | String)',
+					example: '120',
+					maxValue: 1000,
+					measure: 'px',
+					measures: MEASURES,
+					positive: true
+				},
+				height: {
+					type: 'number',
+					description: 'Height style attribute (Number | String)',
+					example: '50',
+					maxValue: 200,
+					measure: 'px',
+					positive: true
+				},
+				float: {
+					description: 'Float style attribute (String)',
+					options: FLOAT,
+					empty: 'Chose an option'
+				},
+				align: {
+					description: 'Align style attribute (String)',
+					options: ALIGN,
+					empty: 'Chose an option'
+				},
+				valign: {
+					description: 'Vertical align style attribute (String)',
+					options: VALIGN,
+					empty: 'Chose an option'
+				},
+				tagName: {
+					description: 'Component main element tag name (String)',
+					customFilter: filterTagName,
+					maxLength: 15
+				},
+				className: {
+					description: 'Custom ClassName attribute (String)',
+					stretched: true
+				},
+				children: {
+					description: 'Content (ReactElement | Array | String)',
+					stretched: true
+				}
+			}
+		]
 	}
+	static componentName = 'UIEXComponent';
 
-	handleChangeMeasure = (id, idx, name) => {
-		const {map} = this.state;
-		const {inputs} = map;
-		let inp;
-		for (let item of inputs) {
-			if (item[name]) {
-				inp = item[name];
-				break;
-			}
+	initMap() {
+		const map = super.initMap();
+		const {maxWidth, maxHeight} = this.props;
+		if (maxWidth) {
+			map.inputs[0].width.maxValue = maxWidth;
 		}
-		if (inp) {
-			inp.measure = id;
-			if (id == 'px') {
-				inp.maxValue = 1000;
-			} else {
-				inp.maxValue = 100;
-			}
-			this.setState({map, buttonWidthMeasure: id});
+		if (maxHeight) {
+			map.inputs[0].height.maxValue = maxHeight;
 		}
+        return map;
 	}
 }

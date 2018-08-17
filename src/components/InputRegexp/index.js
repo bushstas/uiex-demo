@@ -3,6 +3,7 @@ import Demo from '../../Demo';
 import {InputRegexp} from 'uiex/InputRegexp';
 import InputMapper from '../InputMapper';
 import {getSetState} from '../../utils';
+import {INPUT_COMPONENT_EXCLUDED} from '../../consts';
 
 const EXCLUDED = ['type', 'pattern', 'textarea'];
 
@@ -18,7 +19,7 @@ export default class InputRegexpDemo extends Demo {
 		width: 300,
 		placeholder: 'Input a value'
 	};
-	static excluded = ['height', 'vertical', 'align', 'valign', 'children'];
+	static excluded = INPUT_COMPONENT_EXCLUDED;
 	static handlers = ['onChange', 'onFocus', 'onBlur', 'onEnter', 'onChangeValidity', 'onDisabledClick'];
 	static args = {
 		onChange: ['value', 'name'],

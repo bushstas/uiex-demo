@@ -195,7 +195,8 @@ export default class Mapper extends React.Component {
 			decimal,
 			toFixed,
 			extra,
-			readOnly
+			readOnly,
+			customFilter
 		} = item;
 
 		if (extra && !this.state.extraPropsShown) {
@@ -210,7 +211,8 @@ export default class Mapper extends React.Component {
 			maxLength,
 			defaultValue,
 			clearable: true,
-			readOnly
+			readOnly,
+			customFilter
 		};
 		switch (item.type) {
 			case 'array':

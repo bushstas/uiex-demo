@@ -3,9 +3,10 @@ import Demo from '../../Demo';
 import {Input} from 'uiex/Input';
 import InputMapper from '../InputMapper';
 import {getSetState} from '../../utils';
+import {INPUT_COMPONENT_EXCLUDED} from '../../consts';
 
 export default class InputDemo extends Demo {
-	static excluded = ['height', 'vertical', 'align', 'valign', 'children'];
+	static excluded = INPUT_COMPONENT_EXCLUDED;
 	static handlers = ['onChange', 'onFocus', 'onBlur', 'onEnter', 'onChangeValidity', 'onDisabledClick'];
 	static args = {
 		onChange: ['value', 'name'],

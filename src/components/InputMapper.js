@@ -71,7 +71,7 @@ export default class InputMapper extends DemoMapper {
 
 	initMap() {
 		const map = super.initMap();
-		const {type, nameExample, valueExample} = this.props;
+		const {type, nameExample, valueExample, defaultValueExample} = this.props;
 		if (type) {
 			map.inputs[0].value.type = type;
 		}
@@ -80,7 +80,10 @@ export default class InputMapper extends DemoMapper {
 		}
 		if (valueExample) {
 			map.inputs[0].value.example = valueExample;
-		}      
+		}
+		if (defaultValueExample) {
+			map.inputs[0].defaultValue.example = defaultValueExample;
+		}
         return map;
     }
 }

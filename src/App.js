@@ -14,6 +14,7 @@ import CellGroupDemo from './components/CellGroup';
 import ColorsDemo from './components/Colors';
 import InputArrayDemo from './components/InputArray';
 import InputDateDemo from './components/InputDate';
+import InputNumberDemo from './components/InputNumber';
 import AutoCompleteDemo from './components/AutoComplete';
 import SelectDemo from './components/Select';
 
@@ -94,6 +95,9 @@ export default class App extends React.Component {
 
 			case 'Select':
 				return <SelectDemo/>
+
+			case 'InputNumber':
+				return <InputNumberDemo/>
 		}
 	}
 

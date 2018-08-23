@@ -15,6 +15,7 @@ import ColorsDemo from './components/Colors';
 import InputArrayDemo from './components/InputArray';
 import InputDateDemo from './components/InputDate';
 import InputNumberDemo from './components/InputNumber';
+import InputColorDemo from './components/InputColor';
 import AutoCompleteDemo from './components/AutoComplete';
 import SelectDemo from './components/Select';
 
@@ -24,7 +25,7 @@ export default class App extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			page: 'AutoComplete',
+			page: 'InputColor',
 			sidePanelOpen: false,
 			windowIsOpen: false
 		}
@@ -98,6 +99,9 @@ export default class App extends React.Component {
 
 			case 'InputNumber':
 				return <InputNumberDemo/>
+
+			case 'InputColor':
+				return <InputColorDemo/>
 		}
 	}
 

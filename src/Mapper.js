@@ -196,7 +196,8 @@ export default class Mapper extends React.Component {
 			toFixed,
 			extra,
 			readOnly,
-			customFilter
+			customFilter,
+			onChangeMeasure
 		} = item;
 
 		if (extra && !this.state.extraPropsShown) {
@@ -229,9 +230,10 @@ export default class Mapper extends React.Component {
 					positive,
 					negative,
 					decimal,
-					toFixed
+					toFixed,
+					onChangeMeasure: this.getChangeMeasureHandler(onChangeMeasure)
 				};
-				input = <InputNumber {...props} {...numberProps} onChangeMeasure={this.props.onChangeMeasure}/>
+				input = <InputNumber {...props} {...numberProps}/>
 			break;
 
 			case 'color':
@@ -344,5 +346,17 @@ export default class Mapper extends React.Component {
 
 	getHandlerClassName(className = '') {
 		return 'mapper-handler' + (className ? ' ' + className : '');
+	}
+
+	getChangeMeasureHandler(handlerName) {
+		this.changeMeasureHandlers = this.changeMeasureHandlers || {};
+		if (!this.changeMeasureHandlers[handlerName]) {
+			this.changeMeasureHandlers[handlerName] = (measure) => {
+				if (this.props.owner) {
+					this.props.owner[handlerName](measure);
+				}
+			}
+		}
+		return this.changeMeasureHandlers[handlerName];
 	}
 }

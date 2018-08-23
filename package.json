@@ -16,10 +16,10 @@
   "email": "bushstas@mail.ru",
   "license": "ISC",
   "dependencies": {
-    "react": "^16.2.0",
+    "react": "^16.4.2",
     "react-color": "^2.14.1",
     "react-dom": "^16.2.0",
-    "uiex": "0.0.2"
+    "uiex": "0.0.4"
   },
   "devDependencies": {
     "babel-core": "^6.18.2",

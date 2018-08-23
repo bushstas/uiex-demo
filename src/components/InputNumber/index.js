@@ -21,6 +21,9 @@ export default class InputNumberDemo extends Demo {
 			},
 			correctionOnBlur: {
 				description: 'MinValue / MaxValue correction will be done only on input blur event'
+			},
+			valueWithMeasure: {
+				description: 'Returns value with measure on change, so it will be a string instead of a number'
 			}
 		},
 		inputs: [

@@ -5,7 +5,7 @@ import InputMapper from '../InputMapper';
 import {getSetState} from '../../utils';
 import {INPUT_COMPONENT_EXCLUDED} from '../../consts';
 
-const EXCLUDED = ['type', 'pattern', 'textarea', 'minLength', 'maxLength'];
+const EXCLUDED = ['type', 'pattern', 'textarea', 'minLength', 'maxLength', 'withIndicator'];
 
 export default class InputDateDemo extends Demo {
 	static map = {

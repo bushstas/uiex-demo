@@ -1,7 +1,7 @@
 import React from 'react';
 import Demo from '../../Demo';
 import {ColorPicker} from 'uiex/ColorPicker';
-import {COLORS} from '../../consts';
+import {COLORS, COLORS2} from '../../consts';
 import {getSetState} from '../../utils';
 
 export default class ColorPickerDemo extends Demo {
@@ -23,6 +23,8 @@ export default class ColorPickerDemo extends Demo {
 				},
 				presetColors: {
 					description: 'Array of preset colors hex strings',
+					type: 'object',
+					options: [COLORS, COLORS2]
 				}
 			}
 		]

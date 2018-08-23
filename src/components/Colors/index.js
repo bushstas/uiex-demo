@@ -1,7 +1,7 @@
 import React from 'react';
 import {Colors} from 'uiex/Colors';
 import Demo from '../../Demo';
-import {COLORS} from '../../consts';
+import {COLORS, COLORS2} from '../../consts';
 import {getSetState} from '../../utils';
 
 export default class ColorsDemo extends Demo {
@@ -16,16 +16,21 @@ export default class ColorsDemo extends Demo {
 		inputs: [
 			{
 				columns: {
-					description: 'Columns quantity',
+					description: 'Columns quantity (Number | Numeric String)',
 					type: 'number',
 					maxValue: 40,
 					positive: true
 				},
 				colorHeight: {
-					description: 'Color height',
+					description: 'Color height (Number | Numeric String)',
 					type: 'number',
 					maxValue: 100,
 					positive: true
+				},
+				colors: {
+					description: 'Colors list (Array)',
+					type: 'object',
+					options: [COLORS, COLORS2]
 				}
 			}
 		]

@@ -1,8 +1,9 @@
-
 import React from 'react';
 import ComponentMapper from './components/ComponentMapper';
 import Mapper from './Mapper';
 import Preview from './Preview';
+
+const LOG_EVENTS = false;
 
 export default class Demo extends React.Component {
     constructor(props) {
@@ -30,7 +31,8 @@ export default class Demo extends React.Component {
         const {componentMapperProps, excluded} = this.constructor;
         return (
             <ComponentMapper 
-				isOpen={false}
+                ref="componentMapper"    
+                isOpen={false}
                 data={this.state.data}
                 excluded={excluded}
                 {...componentMapperProps}
@@ -194,7 +196,9 @@ export default class Demo extends React.Component {
                 } else  if (typeof args[name] == 'string') {
                     this.logEventArg(1, args[name], arg1);
                 }
-                //console.log('==================');
+                if (LOG_EVENTS) {
+                    console.log('==================');
+                }
             }
             if (callbacks instanceof Object && typeof callbacks[name] == 'string' && typeof this[callbacks[name]] == 'function') {
                 this[callbacks[name]].call(this, arg1, arg2, arg3, arg4);
@@ -202,12 +206,16 @@ export default class Demo extends React.Component {
         }
     }
     logEvent(name) {
-        //console.log('Fired event "' + name + '"');
+        if (LOG_EVENTS) {
+            console.log('Fired event "' + name + '"');
+        }
     }
 
     logEventArg(index, argName, argValue) {
-       // console.log('Argument ' + index + ': ' + argName);
-        //console.log(argValue);
+        if (LOG_EVENTS) {
+            console.log('Argument ' + index + ': ' + argName);
+            console.log(argValue);
+        }
     }
 
     renderPreviewNote = () => {

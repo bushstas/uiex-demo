@@ -1,26 +1,33 @@
 import React from 'react';
 import DemoMapper from '../DemoMapper';
 
+const NAME_EXAMPLE = 'email';
+const VALUE_EXAMPLE = 'Some value';
+const DEFAULT_VALUE_EXAMPLE = 'Initial value';
+
 export default class InputMapper extends DemoMapper {
 	static map = {
 		checkboxes: {
 			readOnly: {
-				description: 'readOnly'
+				description: 'Input becomes readonly'
 			},
 			textarea: {
-				description: 'textarea'
+				description: 'Input becomes a Textarea'
 			},
 			clearable: {
-				description: 'clearable'
+				description: 'Input will have a clear button (when not empty)'
 			},
 			valid: {
-				description: 'valid'
+				description: 'Input will be marked as valid'
 			},
 			invalid: {
-				description: 'invalid'
+				description: 'Input will be marked as invalid'
 			},
 			required: {
-				description: 'required'
+				description: 'Input will be required, so you should fill it to pass through validation'
+			},
+			withIndicator: {
+				description: 'Input will have an indicator of inputed symbols count (it requires maxLength prop)'
 			}
 		},
 		inputs: [
@@ -31,11 +38,11 @@ export default class InputMapper extends DemoMapper {
 				},
 				name: {
 					description: 'Input name (String)',
-					example: 'email'
+					example: NAME_EXAMPLE
 				},
 				value: {
 					description: 'Input value (String | Number)',
-					example: 'Some value'
+					example: VALUE_EXAMPLE
 				},
 				placeholder: {
 					description: 'Input placeholder (String)',
@@ -57,7 +64,7 @@ export default class InputMapper extends DemoMapper {
 				},
 				defaultValue: {
 					description: 'Input initial value (String | Number)',
-					example: 'Initial value'
+					example: DEFAULT_VALUE_EXAMPLE
 				},
 				pattern: {
 					type: 'regexp',
@@ -71,19 +78,12 @@ export default class InputMapper extends DemoMapper {
 
 	initMap() {
 		const map = super.initMap();
-		const {type, nameExample, valueExample, defaultValueExample} = this.props;
-		if (type) {
-			map.inputs[0].value.type = type;
-		}
-		if (nameExample) {
-			map.inputs[0].name.example = nameExample;
-		}
-		if (valueExample) {
-			map.inputs[0].value.example = valueExample;
-		}
-		if (defaultValueExample) {
-			map.inputs[0].defaultValue.example = defaultValueExample;
-		}
+		const {type, defaultType, nameExample, valueExample, defaultValueExample} = this.props;
+		map.inputs[0].value.type = type || '';
+		map.inputs[0].defaultValue.type = defaultType || '';
+		map.inputs[0].name.example = nameExample || NAME_EXAMPLE;
+		map.inputs[0].value.example = valueExample || VALUE_EXAMPLE;
+		map.inputs[0].defaultValue.example = defaultValueExample || DEFAULT_VALUE_EXAMPLE;
         return map;
     }
 }

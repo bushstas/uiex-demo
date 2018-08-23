@@ -1,7 +1,7 @@
 import React from 'react';
 import DemoMapper from '../DemoMapper';
 import {VALIGN, ALIGN, FLOAT} from 'uiex/consts';
-import {MEASURES} from '../utils';
+import {MEASURES, MAX_WIDTH, MAX_HEIGHT} from '../consts';
 
 const filterTagName = (value) => {
 	if ((/^[a-z]+\d{0,1}$/i).test(value)) {
@@ -36,18 +36,21 @@ export default class ComponentMapper extends DemoMapper {
 					type: 'number',
 					description: 'Width style attribute (Number | String)',
 					example: '120',
-					maxValue: 1000,
+					maxValue: MAX_WIDTH,
 					measure: 'px',
 					measures: MEASURES,
-					positive: true
+					positive: true,
+					onChangeMeasure: 'handleChangeWidthMeasure'
 				},
 				height: {
 					type: 'number',
 					description: 'Height style attribute (Number | String)',
 					example: '50',
-					maxValue: 200,
+					maxValue: MAX_HEIGHT,
 					measure: 'px',
-					positive: true
+					measures: MEASURES,
+					positive: true,
+					onChangeMeasure: 'handleChangeHeightMeasure'
 				},
 				float: {
 					description: 'Float style attribute (String)',
@@ -92,5 +95,33 @@ export default class ComponentMapper extends DemoMapper {
 			map.inputs[0].height.maxValue = maxHeight;
 		}
         return map;
+	}
+
+	handleChangeWidthMeasure = (measure) => {
+		const {map} = this.state;
+		const {inputs} = map;
+		const {width} = inputs[0];
+		width.measure = measure;
+		if (measure == 'px') {
+			width.maxValue = this.props.maxWidth || MAX_WIDTH;
+		} else {
+			width.maxValue = 100;
+		}
+		const state = {map: {...map}};
+		this.setState(state);
+	}
+
+	handleChangeHeightMeasure = (measure) => {
+		const {map} = this.state;
+		const {inputs} = map;
+		const {height} = inputs[0];
+		height.measure = measure;
+		if (measure == 'px') {
+			height.maxValue = this.props.maxHeight || MAX_HEIGHT;
+		} else {
+			height.maxValue = 100;
+		}
+		const state = {map: {...map}};
+		this.setState(state);
 	}
 }

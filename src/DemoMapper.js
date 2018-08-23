@@ -1,7 +1,7 @@
 import React from 'react';
 import Mapper from './Mapper';
 
-export default class DemoMapper extends React.Component {
+export default class DemoMapper extends React.PureComponent {
 	constructor(props) {
         super(props);
         const {customState} = this.constructor;
@@ -33,6 +33,7 @@ export default class DemoMapper extends React.Component {
 		return (
 			<Mapper 
 				ref="mapper"
+				owner={this}
 				isOpen={isOpen}
 				name={componentName}
 				excluded={excluded}

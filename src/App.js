@@ -25,7 +25,7 @@ export default class App extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			page: 'InputColor',
+			page: 'Select',
 			sidePanelOpen: false,
 			windowIsOpen: false
 		}

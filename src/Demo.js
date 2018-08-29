@@ -175,7 +175,7 @@ export default class Demo extends React.Component {
                 }
             }
             this.fire(name);
-            if (args[name]) {
+            if (args) {
                 this.logEvent(name);
                 if (args instanceof Object) {
                     if (args[name] instanceof Array) {

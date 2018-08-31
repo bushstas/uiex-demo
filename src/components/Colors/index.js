@@ -8,9 +8,16 @@ export default class ColorsDemo extends Demo {
 	static map = {
 		checkboxes: {
 			isOpen: {
-				type: 'boolean',
-				description: 'Open/Close status flag',
-				default: true
+				description: 'Open/Close status flag'
+			},
+			selectable: {
+				description: 'Selected color will be highlighted'
+			},
+			round: {
+				description: 'Colors will be round-shaped'
+			},
+			withoutBorder: {
+				description: 'Colors don\'t have borders'
 			}
 		},
 		inputs: [
@@ -31,6 +38,12 @@ export default class ColorsDemo extends Demo {
 					description: 'Colors list (Array)',
 					type: 'object',
 					options: [COLORS, COLORS2]
+				},
+				margin: {
+					description: 'Horizontal and vertical margin between colors',
+					type: 'number',
+					maxValue: 40,
+					positive: true
 				}
 			}
 		]
@@ -50,11 +63,15 @@ export default class ColorsDemo extends Demo {
 	static component = Colors;
 	static data = {
 		columns: 8,
-		width: 220,
+		width: 235,
 		colorHeight: 24,
-		colors: COLORS
+		colors: COLORS,
+		margin: 5
 	}
 	static previewProps = {
 		unclosable: true
+	}
+	static changeState = {
+		onSelect: 'value'
 	}
 }

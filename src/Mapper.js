@@ -194,6 +194,7 @@ export default class Mapper extends React.Component {
 			negative,
 			decimal,
 			toFixed,
+			correctionOnBlur,
 			extra,
 			readOnly,
 			customFilter,
@@ -231,6 +232,7 @@ export default class Mapper extends React.Component {
 					negative,
 					decimal,
 					toFixed,
+					correctionOnBlur,
 					onChangeMeasure: this.getChangeMeasureHandler(onChangeMeasure)
 				};
 				input = <InputNumber {...props} {...numberProps}/>

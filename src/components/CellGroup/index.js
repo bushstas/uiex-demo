@@ -9,19 +9,19 @@ import {stringify, wrap} from '../../utils';
 const CELL_MAP = {
 	checkboxes: {
 		firstInRow: {
-			description: 'firstInRow'
+			description: 'A cell will start a new row'
 		},
 		lastInRow: {
-			description: 'lastInRow'
+			description: 'A cell will be last in a row'
 		},
 		floatSide: {
-			description: 'floatSide'
+			description: 'A cell will get right and will be last in a row'
 		},
 		stretched: {
-			description: 'stretched'
+			description: 'A cell will occupy all remaining space in a row'
 		},
 		fullWidth: {
-			description: 'fullWidth'
+			description: 'A cell will occupy all space in a row'
 		}
 	},
 	inputs: [
@@ -31,19 +31,22 @@ const CELL_MAP = {
 				description: 'Cell size',
 				type: 'number',
 				maxValue: 10,
-				positive: true
+				positive: true,
+				example: 2
 			},
 			shift: {
 				description: 'Cell shift',
 				type: 'number',
 				maxValue: 10,
-				positive: true
+				positive: true,
+				example: 1
 			},
 			maxSize: {
 				description: 'Max size for stretched cells',
 				type: 'number',
 				maxValue: 10,
-				positive: true
+				positive: true,
+				example: 6
 			},
 			alignSelf: {
 				description: 'Cell vertical align instead of being stretched',
@@ -54,7 +57,8 @@ const CELL_MAP = {
 				description: 'Cell height',
 				type: 'number',
 				maxValue: 1000,
-				positive: true
+				positive: true,
+				example: 200
 			},
 			cellAlign: {
 				description: 'Cell align',
@@ -66,7 +70,8 @@ const CELL_MAP = {
 				type: 'number',
 				maxValue: 1000,
 				positive: true,
-				lastInRow: true
+				lastInRow: true,
+				example: 100
 			}
 		},
 		{
@@ -135,7 +140,7 @@ export default class CellGroupDemo extends Demo {
 	static map = {
 		checkboxes: {
 			sideShrink: {
-				description: 'sideShrink'
+				description: 'Side cells don\'t have left and right padding respectivly so they are a little bit bigger, this flag will make them the same size as others'
 			},
 			cellAutoHeight: {
 				description: "Every cell has own height based on it's content (cells are not stretched)"
@@ -148,43 +153,50 @@ export default class CellGroupDemo extends Demo {
 					description: 'Columns count',
 					type: 'number',
 					maxValue: 10,
-					positive: true
+					positive: true,
+					example: 10
 				},
 				cellSize: {
 					description: 'Cell default size',
 					type: 'number',
 					maxValue: 10,
-					positive: true
+					positive: true,
+					example: 2
 				},
 				maxCellSize: {
 					description: 'Cell max default size',
 					type: 'number',
 					maxValue: 10,
-					positive: true
+					positive: true,
+					example: 6
 				},
 				cellMargin: {
 					description: 'Space between columns in px',
 					type: 'number',
 					maxValue: 30,
-					positive: true
+					positive: true,
+					example: 10
 				},
 				rowMargin: {
 					description: 'Space between rows in px',
 					type: 'number',
 					maxValue: 30,
-					positive: true
+					positive: true,
+					example: 10
 				},
 				cellHeight: {
 					description: 'Height of cells',
 					type: 'number',
 					maxValue: 500,
-					positive: true
+					positive: true,
+					example: 100
 				},
 				cellMinHeight: {
 					description: 'Minimal height of cells',
 					type: 'number',
 					maxValue: 500,
-					positive: true
+					positive: true,
+					example: 60
 				},
 				cellAlign: {
 					description: 'Align of cells',

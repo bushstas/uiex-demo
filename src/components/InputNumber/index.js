@@ -41,8 +41,20 @@ export default class InputNumberDemo extends Demo {
 				toFixed: {
 					description: 'Maximal count of digits after point of decimal value',
 					type: 'number',
+					correctionOnBlur: true,
+					minValue: 1,
 					maxValue: 20,
-					example: 2
+					example: 2,
+					positive: true
+				},
+				addStep: {
+					description: 'Тumber to add per one mouse wheel or keyboard up/down key events (To change value use mouse wheel within the input or up/down arrows on a keyboard when the input is focused)',
+					type: 'number',
+					correctionOnBlur: true,
+					minValue: 1,
+					maxValue: 1000000,
+					example: 100,
+					positive: true
 				},
 				measure: {
 					description: 'Number measure to display at right (String)',

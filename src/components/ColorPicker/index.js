@@ -30,7 +30,6 @@ export default class ColorPickerDemo extends Demo {
 		]
 	};
 	static data = {
-		value: '#FD4DF5',
 		presetColors: COLORS
 	};	
 	static excluded = ['width', 'height', 'align', 'valign', 'block', 'vertical', 'children'];

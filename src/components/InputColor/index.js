@@ -36,9 +36,7 @@ export default class InputColorDemo extends Demo {
 	static data = {
 		width: 250,
 		placeholder: 'Input a value',
-		colors: COLORS,
-		pickerShown: true,
-		name: 'fuck'
+		colors: COLORS
 	};
 	static excluded = INPUT_COMPONENT_EXCLUDED;
 	static handlers = ['onChange', 'onChangePicker', 'onInput', 'onFocus', 'onBlur', 'onEnter', 'onChangeValidity', 'onDisabledClick'];

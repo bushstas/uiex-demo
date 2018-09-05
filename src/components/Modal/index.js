@@ -3,64 +3,60 @@ import Demo from '../../Demo';
 import {Modal} from 'uiex/Modal';
 import {Button} from 'uiex/Button';
 import {MODAL_ANIMATION} from 'uiex/consts';
-import {getSetState, wrap} from '../../utils';
+import {getSetState} from '../../utils';
 
 export default class ModalDemo extends Demo {
 	static map = {
 		checkboxes: {
 			isOpen: {
 				type: 'boolean',
-				description: 'Open/Close status flag',
-				default: true
+				description: 'Open/Close status flag'
 			},
 			draggable: {
 				type: 'boolean',
-				description: 'draggable',
-				default: false
+				description: 'Draggable flag'
 			},
-			dragWithinScreen: {
+			dragWithinWindow: {
 				type: 'boolean',
-				description: 'dragWithinScreen',
-				default: false
+				description: 'Will have drag limits within the window'
 			},
 			withoutMask: {
 				type: 'boolean',
-				description: 'withoutMask',
-				default: false
+				description: 'The mask will no be rendered if it\'s true'
 			},
 			noMaskClose: {
 				type: 'boolean',
-				description: 'noMaskClose',
-				default: false
+				description: 'Clicks on the mask will not cause the modal closing'
 			},
 			unclosable: {
 				type: 'boolean',
-				description: 'unclosable',
-				default: true
+				description: 'Usual ways to close the modal will not work'
 			},
 			expandable: {
 				type: 'boolean',
-				description: 'expandable',
-				default: false
+				description: 'The modal will have expand control to get full window'
 			},
 			expanded: {
 				type: 'boolean',
-				description: 'expanded',
-				default: false
+				description: 'Full window flag'
 			},
+			withoutPortal: {
+				type: 'boolean',
+				description: 'The modal will be rendered in the real parent without using a portal'
+			}
 		},
 		inputs: [
 			{
 				header: {
-					description: 'Content of header',
+					description: 'Content of header. Can be a React element',
 					default: ''
 				},
 				footer: {
-					description: 'Content of footer',
+					description: 'Content of footer. Can be a React element',
 					default: ''
 				},
 				outerContent: {
-					description: 'Outer content',
+					description: 'Outer content rendered above the mask. Can be a React element',
 					default: ''
 				},
 				animation: {
@@ -85,17 +81,18 @@ export default class ModalDemo extends Demo {
 		isOpen: false,
 		header: 'Modal Header',
 		footer: 'Modal Footer',
+		expanded: false
 	};	
 	static excluded = ['vertical', 'block', 'float', 'align', 'valign', 'hidden', 'disabled'];
 	static handlers = ['onExpand', 'onClose', 'onDragEnd'];
-	static stateProps = ['isOpen'];
+	static stateProps = ['isOpen', 'expanded'];
 	static funcs = {
 		onClose: getSetState('isOpen', false),
-		onDragEnd: wrap('const ', 'keyword2') + wrap('{') + 'x' + wrap(', ') + 'y' + wrap('} = ') + 'coords' + wrap(';')
+		onExpand: getSetState('expanded', false)
 	};
 	static args = {
-		onExpand: ['isExpanded'],
-		onDragEnd: ['coords']
+		onExpand: ['expanded'],
+		onDragEnd: ['x', 'y']
 	};
 	static componentName = 'Modal';
 	static component = Modal;

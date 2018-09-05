@@ -18,6 +18,8 @@ import InputNumberDemo from './components/InputNumber';
 import InputColorDemo from './components/InputColor';
 import AutoCompleteDemo from './components/AutoComplete';
 import SelectDemo from './components/Select';
+import SliderScaleDemo from './components/SliderScale';
+import DraggableDemo from './components/Draggable';
 
 import './style.scss';
 
@@ -25,7 +27,7 @@ export default class App extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			page: 'Select',
+			page: 'Draggable',
 			sidePanelOpen: false,
 			windowIsOpen: false
 		}
@@ -102,6 +104,12 @@ export default class App extends React.Component {
 
 			case 'InputColor':
 				return <InputColorDemo/>
+
+			case 'SliderScale':
+				return <SliderScaleDemo/>
+			
+			case 'Draggable':
+				return <DraggableDemo/>
 		}
 	}
 

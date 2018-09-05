@@ -5,19 +5,16 @@ import {getSetState} from '../../utils';
 
 import './style.scss';
 
-export default class ButtonsDemo extends Demo {
+export default class BoxDemo extends Demo {
 	static map = {
 		checkboxes: {
 			isOpen: {
-				type: 'boolean',
 				description: 'Open/Close status flag'
 			},
 			buttonUnder: {
-				type: 'boolean',
 				description: 'Open/Close button is under the box'
 			},
 			noHideAnimation: {
-				type: 'boolean',
 				description: 'Animation is not used for hiding box'
 			}
 		},

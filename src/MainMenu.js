@@ -8,6 +8,7 @@ const PAGES = [
 	'CellGroup',
 	'ColorPicker',
 	'Colors',
+	'Draggable',
 	'Input',
 	'InputArray',
 	'InputColor',
@@ -20,6 +21,7 @@ const PAGES = [
 	'SearchForm',
 	'Select',
 	'SidePanel',
+	'SliderScale',
 	'Tab',
 	'Tabs'
 ]

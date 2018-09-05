@@ -94,18 +94,24 @@ export default class Demo extends React.Component {
             return (
                 <div>
                     {this.renderContentBefore()}
-                    <Component 
-                        {...this.state.data}
-                        {...restProps}
-                    >
-                        {this.renderContent()}
-                        {this.state.data.children}
-                    </Component>
+                    {this.renderComponent(Component, restProps)}
                     {this.renderContentAfter()}
                 </div>
             )
         }
         return null;
+    }
+
+    renderComponent(Component, props) {
+        return (
+            <Component 
+                {...this.state.data}
+                {...props}
+            >
+                {this.renderContent()}
+                {this.state.data.children}
+            </Component>
+        )
     }
 
     renderPreviewContentBefore() {
@@ -158,18 +164,19 @@ export default class Demo extends React.Component {
         return (arg1 = null, arg2 = null, arg3 = null, arg4 = null) => {
             const {changeState, args, callbacks} = this.constructor;
             if (changeState instanceof Object) {
-                let key, value = arg1;
+                let addedData;
                 if (typeof changeState[name] == 'string') {
-                    key = changeState[name];
+                    addedData = {[changeState[name]]: arg1};
                 } else if (changeState[name] instanceof Array) {
-                    key = changeState[name][0];
-                    value = changeState[name][1];
+                    addedData = {[changeState[name][0]]: changeState[name][1]};
+                } else if (changeState[name] instanceof Function) {
+                    addedData = changeState[name].call(this, arg1, arg2, arg3, arg4);
                 }
-                if (key) {
+                if (addedData) {
                     this.setState({ 
                         data: {
                             ...this.state.data,
-                            [key]: value
+                            ...addedData
                         }
                     });
                 }

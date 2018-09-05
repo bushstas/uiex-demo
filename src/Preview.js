@@ -23,6 +23,7 @@ export default class Preview extends React.Component {
 			>
 				{this.props.children}
 				<Modal
+					className="preview-modal"
 					header={'Code of ' + this.props.name}
 					width="800"
 					isOpen={codeShown}

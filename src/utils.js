@@ -76,5 +76,16 @@ export const getSetState = (name, value = null) => {
 	} else {
 		value = '';
 	}
-	return wrap('this', 'args') + wrap('.') + 'setState' + wrap('({') + wrap(name, cn) + value + wrap('});');
+	let str = wrap('this', 'args') + wrap('.') + 'setState' + wrap('({');
+	if (typeof name == 'string') {
+		str += wrap(name, cn) + value;
+	} else if (name instanceof Array) {
+		const names = [];
+		for (let item of name) {
+			names.push(wrap(item, cn));
+		}
+		str += names.join(wrap(', '));
+	}
+	str += wrap('});');
+	return  str;
 }

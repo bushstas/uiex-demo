@@ -88,24 +88,30 @@ export default class Preview extends React.Component {
 		if (stateProps instanceof Array) {
 			code += T + wrap('constructor', 'keyword2') + wrap('(') + wrap('props', 'args') + wrap(') {') + N;
 			code += T + T + wrap('super', 'args') + wrap('(') + 'props' + wrap(');') + N;
-			code += T + T + wrap('this', 'args') + wrap('.') + 'state' + wrap(' = {') + N;
+			code += T + T + wrap('this', 'args') + wrap('.') + 'state' + wrap(' = {');
 			const lines = [];
 			for (let item of stateProps) {
 				let val = data[item];
 				if (consts instanceof Array && consts.indexOf(item) > -1) {
 					val = this.getConstName(item);
 				} else {
-					if (data[item] == null) {
-						val = wrap('""', 'string');
+					if (data[item] === undefined) {
+						val = null;
 					} else if (typeof data[item] == 'string') {
 						val = wrap('"' + data[item] + '"', 'string');
 					} else {
 						val = stringify(data[item]);
 					}
 				}
-				lines.push(T + T + T + wrap(item, 'key') + wrap(': ') + val);
+				if (val != null) {
+					lines.push(T + T + T + wrap(item, 'key') + wrap(': ') + val);
+				}
 			}
-			code += lines.join(',' + N) + N + T + T + wrap('}') + N;
+			if (lines.length > 0) {
+				code += N + lines.join(wrap(',') + N) + N + T + T + wrap('};') + N;
+			} else {
+				code += wrap('};') + N;
+			}
 			code += T + wrap('}') + N + N;
 		}
 		code += T + wrap('render', 'function') + wrap('() {') + N;
@@ -173,7 +179,7 @@ export default class Preview extends React.Component {
 		code += T + T + wrap(')') + N + T +  wrap('}');
 		code += (funcsContent || '') + N + wrap('}');
 		return (
-			<pre dangerouslySetInnerHTML={{__html: code}}/>
+			<pre className="decorated" dangerouslySetInnerHTML={{__html: code}}/>
 		)
 	}
 

@@ -71,6 +71,20 @@ export default class ModalDemo extends Demo {
 					example: '5',
 					maxValue: 10,
 					positive: true
+				},
+				maskColor: {
+					description: 'Mask background color',
+					type: 'color'
+				},
+				x: {
+					type: 'number',
+					description: 'Current X coordinate (Number | Numeric String)',
+					example: 50
+				},
+				y: {
+					type: 'number',
+					description: 'Current Y coordinate (Number | Numeric String)',
+					example: 50
 				}
 			}
 		]
@@ -84,14 +98,17 @@ export default class ModalDemo extends Demo {
 		expanded: false
 	};	
 	static excluded = ['vertical', 'block', 'float', 'align', 'valign', 'hidden', 'disabled'];
-	static handlers = ['onExpand', 'onClose', 'onDragEnd'];
-	static stateProps = ['isOpen', 'expanded'];
+	static handlers = ['onExpand', 'onClose',  'onDragStart', 'onDrag', 'onDragEnd'];
+	static stateProps = ['isOpen', 'expanded', 'x', 'y'];
 	static funcs = {
 		onClose: getSetState('isOpen', false),
-		onExpand: getSetState('expanded', false)
+		onExpand: getSetState('expanded', false),
+		onDrag: getSetState(['x', 'y']),
 	};
 	static args = {
 		onExpand: ['expanded'],
+		onDrag: ['x', 'y'],
+		onDragStart: ['x', 'y'],
 		onDragEnd: ['x', 'y']
 	};
 	static componentName = 'Modal';
@@ -102,7 +119,10 @@ export default class ModalDemo extends Demo {
 	static changeState = {
 		onExpand: 'expanded',
 		onClose: ['isOpen', false],
-		onShow: ['isOpen', true]
+		onShow: ['isOpen', true],
+		onDrag: function(x, y) {
+			return {x, y};
+		}
 	};
 
 	renderPreviewContentBefore() {

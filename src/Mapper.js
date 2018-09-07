@@ -197,6 +197,7 @@ export default class Mapper extends React.Component {
 			correctionOnBlur,
 			extra,
 			readOnly,
+			valueWithMeasure,
 			customFilter,
 			onChangeMeasure
 		} = item;
@@ -232,6 +233,7 @@ export default class Mapper extends React.Component {
 					negative,
 					decimal,
 					toFixed,
+					valueWithMeasure,
 					correctionOnBlur,
 					onChangeMeasure: this.getChangeMeasureHandler(onChangeMeasure)
 				};

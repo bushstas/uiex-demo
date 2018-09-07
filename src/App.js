@@ -27,7 +27,7 @@ export default class App extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			page: 'Draggable',
+			page: 'Modal',
 			sidePanelOpen: false,
 			windowIsOpen: false
 		}

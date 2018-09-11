@@ -7,14 +7,14 @@ import {getSetState} from '../../utils';
 export default class ColorsDemo extends Demo {
 	static map = {
 		checkboxes: {
-			isOpen: {
-				description: 'Open/Close status flag'
-			},
 			selectable: {
 				description: 'Selected color will be highlighted'
 			},
 			round: {
 				description: 'Colors will be round-shaped'
+			},
+			square: {
+				description: 'Colors will not have border radius'
 			},
 			withoutBorder: {
 				description: 'Colors don\'t have borders'

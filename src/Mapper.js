@@ -7,6 +7,7 @@ import {InputColor} from 'uiex/InputColor';
 import {InputBoolean} from 'uiex/InputBoolean';
 import {InputRegexp} from 'uiex/InputRegexp';
 import {InputDate} from 'uiex/InputDate';
+import {InputPhone} from 'uiex/InputPhone';
 import {Select} from 'uiex/Select';
 import {SelectObject} from 'uiex/SelectObject';
 import {Form} from 'uiex/Form';
@@ -30,7 +31,7 @@ export default class Mapper extends React.Component {
 	}
 
 	render() {
-		let {map: {checkboxes, inputs}, data, name, isOpen = true, excluded, handlers, withExtraProps} = this.props;
+		let {map: {checkboxes, inputs}, data, name, isOpen = true, excluded, handlers, withExtraProps, customEvents} = this.props;
 		let {columns} = this.props;
 		if (!getNumber(columns)) {
 			columns = COLUMNS;
@@ -38,6 +39,7 @@ export default class Mapper extends React.Component {
 		if (!(data instanceof Object)) {
 			data = {};
 		}
+		const withCustomEvents = customEvents instanceof Object;
 		return (
 			<div className="mapper">
 				<BoxSection 
@@ -106,7 +108,7 @@ export default class Mapper extends React.Component {
 							</div>
 						}
 						{handlers instanceof Array && 
-							<div className="mapper-handlers">
+							<div className={'mapper-handlers' +(withCustomEvents ? ' with-custom-events' : '')}>
 								{handlers.map((h) => {
 									return (
 										<div ref={h} className={this.getHandlerClassName()} key={h} title={this.getHandlerTitle(h)}>
@@ -115,6 +117,19 @@ export default class Mapper extends React.Component {
 											</div>
 											<div className="mask">
 												{h}
+											</div>
+										</div>
+									)
+								})}
+							</div>
+						}
+						{withCustomEvents && 
+							<div className="mapper-handlers custom-events">
+								{Object.keys(customEvents).map((k) => {
+									return (
+										<div className="mapper-handler" key={k} title={customEvents[k]}>
+											<div className="inner">
+												{k}
 											</div>
 										</div>
 									)
@@ -247,6 +262,10 @@ export default class Mapper extends React.Component {
 
 			case 'regexp':
 				input = <InputRegexp {...props}/>
+			break;
+
+			case 'phone':
+				input = <InputPhone {...props}/>
 			break;
 
 			case 'date':

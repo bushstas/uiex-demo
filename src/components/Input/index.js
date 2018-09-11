@@ -7,7 +7,7 @@ import {INPUT_COMPONENT_EXCLUDED} from '../../consts';
 
 export default class InputDemo extends Demo {
 	static excluded = INPUT_COMPONENT_EXCLUDED;
-	static handlers = ['onChange', 'onFocus', 'onBlur', 'onEnter', 'onChangeValidity', 'onDisabledClick'];
+	static handlers = ['onChange', 'onClear', 'onFocus', 'onBlur', 'onEnter', 'onChangeValidity', 'onDisabledClick'];
 	static args = {
 		onChange: ['value', 'name'],
 		onFocus: ['value', 'name'],

@@ -60,7 +60,7 @@ export default class InputDateDemo extends Demo {
 		placeholder: 'Input a value'
 	};
 	static excluded = INPUT_COMPONENT_EXCLUDED;
-	static handlers = ['onChange', 'onFocus', 'onBlur', 'onEnter', 'onChangeValidity', 'onDisabledClick'];
+	static handlers = ['onChange', 'onClear', 'onFocus', 'onBlur', 'onEnter', 'onChangeValidity', 'onDisabledClick'];
 	static args = {
 		onChange: ['value', 'name'],
 		onFocus: ['value', 'name'],
@@ -90,6 +90,7 @@ export default class InputDateDemo extends Demo {
 				data={this.state.data} 
 				onChange={this.handleChangeData}
 				type="date"
+				defaultType="date"
 				nameExample="date"
 				valueExample="01.06.2015"
 				defaultValueExample="01.01.2015"

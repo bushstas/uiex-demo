@@ -63,7 +63,7 @@ export default class InputMapper extends DemoMapper {
 					positive: true
 				},
 				defaultValue: {
-					description: 'Input initial value (String | Number)',
+					description: 'Input initial value,  (String | Number)',
 					example: DEFAULT_VALUE_EXAMPLE
 				},
 				pattern: {
@@ -78,7 +78,8 @@ export default class InputMapper extends DemoMapper {
 
 	initMap() {
 		const map = super.initMap();
-		const {type, defaultType, nameExample, valueExample, defaultValueExample} = this.props;
+		const {type, defaultType, nameExample, valueExample, defaultValueExample, valueReadOnly} = this.props;
+		map.inputs[0].value.readOnly = valueReadOnly || false;
 		map.inputs[0].value.type = type || '';
 		map.inputs[0].defaultValue.type = defaultType || '';
 		map.inputs[0].name.example = nameExample || NAME_EXAMPLE;

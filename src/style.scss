@@ -140,6 +140,15 @@ pre {
 }
 .mapper-handlers {
 	margin-top: 20px;
+	&.custom-events {
+		margin-top: 0;
+		.mapper-handler {
+			.inner {
+				background-color: #f1eed6;
+				color: #636151;
+			}
+		}
+	}
 }
 .mapper-handler {
 	display: inline-block;

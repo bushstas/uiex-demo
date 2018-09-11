@@ -18,7 +18,7 @@ export default class DraggableDemo extends Demo {
 				description: 'Dragging only along the Y axis'
 			},
 			fixed: {
-				description: 'With CSS fixed position'
+				description: 'With CSS fixed position. Drag limits can be none or window'
 			},
 			withOwnPosition: {
 				description: 'Will not have added CSS absolute or fixed position'
@@ -26,6 +26,11 @@ export default class DraggableDemo extends Demo {
 		},
 		inputs: [
 			{
+				_COLUMNS: 14,
+				name: {
+					description: 'Add a name to have just one handler for many draggable items (String)',
+					example: 'item'
+				},
 				dragLimits: {
 					type: 'select',
 					empty: 'Chose an option',
@@ -72,9 +77,9 @@ export default class DraggableDemo extends Demo {
 	static excluded = ['vertical', 'block', 'valign', 'float', 'align'];
 	static handlers = ['onDragStart', 'onDrag', 'onDragEnd'];
 	static args = {
-		onDragStart: ['x', 'y'],
-		onDrag: ['x', 'y'],
-		onDragEnd: ['x', 'y']
+		onDragStart: ['x', 'y', 'name'],
+		onDrag: ['x', 'y', 'name'],
+		onDragEnd: ['x', 'y', 'name']
 	};
 	static funcs = {
 		onDrag: getSetState(['x', 'y'])

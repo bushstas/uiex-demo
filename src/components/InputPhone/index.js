@@ -1,23 +1,46 @@
 import React from 'react';
 import Demo from '../../Demo';
-import {InputRegexp} from 'uiex/InputRegexp';
+import {InputPhone} from 'uiex/InputPhone';
 import InputMapper from '../InputMapper';
 import {getSetState} from '../../utils';
 import {INPUT_COMPONENT_EXCLUDED} from '../../consts';
 
-const EXCLUDED = ['type', 'pattern', 'textarea'];
+const EXCLUDED = ['type', 'pattern', 'textarea', 'minLength', 'maxLength', 'withIndicator'];
 
-export default class InputRegexpDemo extends Demo {
+export default class InputPhoneDemo extends Demo {
 	static map = {
 		checkboxes: {
-			stringified: {
-				description: 'On change returns a string instead of a RegExp object'
+			numeric: {
+				description: 'Format 0000-00-00 instead of 00-00-0000'
+			},
+			withCode: {
+				description: 'Time is available'
 			}
-		}
+		},
+		inputs: [
+			{
+				code: {
+					description: 'Delimiter between numbers',
+					example: '+7'
+				},
+				mask: {
+					description: 'Minimal allowed year',
+					example: '(XXX) XXX-XX-XX'
+				},
+				numericCode: {
+					description: 'Maximal allowed year',
+					type: 'number',
+					maxValue: 9999,
+					example: 8
+				}
+			}
+		]
 	};
 	static data = {
 		width: 300,
-		placeholder: 'Input a value'
+		placeholder: 'Input a value',
+		code: '+7',
+		mask: '(XXX) XXX-XX-XX'
 	};
 	static excluded = INPUT_COMPONENT_EXCLUDED;
 	static handlers = ['onChange', 'onClear', 'onFocus', 'onBlur', 'onEnter', 'onChangeValidity', 'onDisabledClick'];
@@ -36,8 +59,8 @@ export default class InputRegexpDemo extends Demo {
 	static previewProps = {
 		unclosable: true
 	};
-	static componentName = 'InputRegexp';
-	static component = InputRegexp;
+	static componentName = 'InputPhone';
+	static component = InputPhone;
 	static changeState = {
 		onChange: 'value'
 	};	
@@ -49,8 +72,12 @@ export default class InputRegexpDemo extends Demo {
 				excluded={EXCLUDED}
 				data={this.state.data} 
 				onChange={this.handleChangeData}
-				type="regexp"
-				defaultType="regexp"
+				type="phone"
+				defaultType="phone"
+				nameExample="phone"
+				valueExample=""
+				defaultValueExample=""
+				valueReadOnly
 			/>
 		)
 	}

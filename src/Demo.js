@@ -42,7 +42,7 @@ export default class Demo extends React.Component {
     }
     
     renderMapper() {
-        const {componentName, map, mapperProps, handlers, args} = this.constructor;
+        const {componentName, map, mapperProps, handlers, args, customEvents} = this.constructor;
         return (
             <Mapper 
 				ref="mapper"
@@ -52,6 +52,7 @@ export default class Demo extends React.Component {
                 {...mapperProps}
                 handlers={handlers}
                 args={args}
+                customEvents={customEvents}
                 onChange={this.handleChangeData}
 			/>
         )

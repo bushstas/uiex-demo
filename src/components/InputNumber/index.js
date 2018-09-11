@@ -48,7 +48,7 @@ export default class InputNumberDemo extends Demo {
 					positive: true
 				},
 				addStep: {
-					description: 'Тumber to add per one mouse wheel or keyboard up/down key events (To change value use mouse wheel within the input or up/down arrows on a keyboard when the input is focused)',
+					description: 'Number to add per one mouse wheel or keyboard up/down key events (To change value use mouse wheel within the input or up/down arrows on a keyboard when the input is focused)',
 					type: 'number',
 					correctionOnBlur: true,
 					minValue: 1,
@@ -74,7 +74,7 @@ export default class InputNumberDemo extends Demo {
 		placeholder: 'Input a value'
 	};
 	static excluded = INPUT_COMPONENT_EXCLUDED;
-	static handlers = ['onChange', 'onFocus', 'onBlur', 'onEnter', 'onChangeValidity', 'onChangeMeasure', 'onDisabledClick'];
+	static handlers = ['onChange', 'onClear', 'onFocus', 'onBlur', 'onEnter', 'onChangeValidity', 'onChangeMeasure', 'onDisabledClick'];
 	static args = {
 		onChange: ['value', 'name'],
 		onFocus: ['value', 'name'],
@@ -99,6 +99,10 @@ export default class InputNumberDemo extends Demo {
 		onChange: 'value',
 		onChangeMeasure: 'measure'
 	};
+	static customEvents = {
+		Wheel: 'You can change value with mouse wheel on the Input',
+		KeyPress: 'You can change value with Up and Down keys when the Input is focused'
+	};
 
 	renderMapperBefore() {
 		return (
@@ -108,6 +112,7 @@ export default class InputNumberDemo extends Demo {
 				data={this.state.data} 
 				onChange={this.handleChangeData}
 				type="number"
+				defaultType="number"
 				nameExample="age"
 				valueExample="20"
 				defaultValueExample="100"

@@ -85,6 +85,17 @@ export default class ModalDemo extends Demo {
 					type: 'number',
 					description: 'Current Y coordinate (Number | Numeric String)',
 					example: 50
+				},
+				blurSelector: {
+					description: 'Css selector of an element that should be blurred, when the modal is shown. Works only for modals in portal (String)',
+					example: '#root'
+				},
+				blurValue: {
+					description: 'Strength of blurring from 1 to 10 (Number | Numeric String)',
+					type: 'number',
+					positive: true,
+					maxValue: 10,
+					example: 3
 				}
 			}
 		]

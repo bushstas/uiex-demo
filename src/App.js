@@ -14,6 +14,7 @@ import CellGroupDemo from './components/CellGroup';
 import ColorsDemo from './components/Colors';
 import InputArrayDemo from './components/InputArray';
 import InputDateDemo from './components/InputDate';
+import InputPhoneDemo from './components/InputPhone';
 import InputNumberDemo from './components/InputNumber';
 import InputColorDemo from './components/InputColor';
 import AutoCompleteDemo from './components/AutoComplete';
@@ -27,7 +28,7 @@ export default class App extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			page: 'Modal',
+			page: 'InputPhone',
 			sidePanelOpen: false,
 			windowIsOpen: false
 		}
@@ -74,6 +75,9 @@ export default class App extends React.Component {
 
 			case 'Input':
 				return <InputDemo/>
+
+			case 'InputPhone':
+				return <InputPhoneDemo/>
 
 			case 'InputRegexp':
 				return <InputRegexpDemo/>

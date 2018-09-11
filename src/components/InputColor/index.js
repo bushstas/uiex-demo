@@ -39,7 +39,7 @@ export default class InputColorDemo extends Demo {
 		colors: COLORS
 	};
 	static excluded = INPUT_COMPONENT_EXCLUDED;
-	static handlers = ['onChange', 'onChangePicker', 'onInput', 'onFocus', 'onBlur', 'onEnter', 'onChangeValidity', 'onDisabledClick'];
+	static handlers = ['onChange', 'onClear', 'onChangePicker', 'onInput', 'onFocus', 'onBlur', 'onEnter', 'onChangeValidity', 'onDisabledClick'];
 	static args = {
 		onChange: ['value', 'name'],
 		onChangePicker: ['value', 'colorData', 'name'],

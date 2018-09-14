@@ -11,24 +11,24 @@ export default class InputPhoneDemo extends Demo {
 	static map = {
 		checkboxes: {
 			numeric: {
-				description: 'Format 0000-00-00 instead of 00-00-0000'
+				description: 'Returns only digits on change'
 			},
 			withCode: {
-				description: 'Time is available'
+				description: 'Returns value with given code. Returns "numericCode" instead "code" if "numeric" is true'
 			}
 		},
 		inputs: [
 			{
 				code: {
-					description: 'Delimiter between numbers',
+					description: 'The code of a phone number',
 					example: '+7'
 				},
 				mask: {
-					description: 'Minimal allowed year',
+					description: 'The mask of a number. Key symbols can be any latin letters or digits e.g. (0D4) 5Gd-4S-xX',
 					example: '(XXX) XXX-XX-XX'
 				},
 				numericCode: {
-					description: 'Maximal allowed year',
+					description: 'The code of a phone number which will be added if "numeric" is true',
 					type: 'number',
 					maxValue: 9999,
 					example: 8
@@ -39,8 +39,11 @@ export default class InputPhoneDemo extends Demo {
 	static data = {
 		width: 300,
 		placeholder: 'Input a value',
-		code: '+7',
-		mask: '(XXX) XXX-XX-XX'
+		code: '+7 ',
+		mask: '(XXX) XXX-XX-XX',
+		numericCode: 8,
+		withCode: true,
+		numeric: true
 	};
 	static excluded = INPUT_COMPONENT_EXCLUDED;
 	static handlers = ['onChange', 'onClear', 'onFocus', 'onBlur', 'onEnter', 'onChangeValidity', 'onDisabledClick'];
@@ -72,11 +75,9 @@ export default class InputPhoneDemo extends Demo {
 				excluded={EXCLUDED}
 				data={this.state.data} 
 				onChange={this.handleChangeData}
-				type="phone"
-				defaultType="phone"
 				nameExample="phone"
-				valueExample=""
-				defaultValueExample=""
+				valueExample="9005002020"
+				defaultValueExample="9005002020"
 				valueReadOnly
 			/>
 		)

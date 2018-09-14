@@ -21,6 +21,9 @@ export default class InputColorDemo extends Demo {
 			},
 			pickerShown: {
 				description: 'Color picker will be always shown'
+			},
+			pickerOnTop: {
+				description: 'Color picker will be on top'
 			}
 		},
 		inputs: [

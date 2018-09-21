@@ -24,6 +24,9 @@ export default class InputNumberDemo extends Demo {
 			},
 			valueWithMeasure: {
 				description: 'Returns value with measure on change, so it will be a string instead of a number'
+			},
+			withoutControls: {
+				description: 'The Up and Down arrow controls will not be displayed'
 			}
 		},
 		inputs: [
@@ -71,7 +74,10 @@ export default class InputNumberDemo extends Demo {
 	};
 	static data = {
 		width: 300,
-		placeholder: 'Input a value'
+		placeholder: 'Input a value',
+		value: '0.665',
+		decimal: true,
+		name: 'fuck'
 	};
 	static excluded = INPUT_COMPONENT_EXCLUDED;
 	static handlers = ['onChange', 'onClear', 'onFocus', 'onBlur', 'onEnter', 'onChangeValidity', 'onChangeMeasure', 'onDisabledClick'];

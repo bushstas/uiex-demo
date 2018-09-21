@@ -21,6 +21,9 @@ export default class InputDateDemo extends Demo {
 			},
 			future: {
 				description: 'Only future date is allowed'
+			},
+			withoutIcon: {
+				description: 'The date icon will not be displayed'
 			}
 		},
 		inputs: [

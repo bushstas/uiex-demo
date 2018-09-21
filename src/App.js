@@ -1,7 +1,7 @@
 import React from 'react';
 import MainMenu from './MainMenu';
 import TabsDemo from './components/Tabs';
-import ButtonsDemo from './components/Buttons';
+import ButtonGroupDemo from './components/ButtonGroup';
 import BoxDemo from './components/Box';
 import SearchFormDemo from './components/SearchForm';
 import RateFormDemo from './components/RateForm';
@@ -21,6 +21,9 @@ import AutoCompleteDemo from './components/AutoComplete';
 import SelectDemo from './components/Select';
 import SliderScaleDemo from './components/SliderScale';
 import DraggableDemo from './components/Draggable';
+import ArrowDemo from './components/Arrow';
+import ButtonDemo from './components/Button';
+import ScrollContainerDemo from './components/ScrollContainer';
 
 import './style.scss';
 
@@ -28,7 +31,7 @@ export default class App extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			page: 'InputPhone',
+			page: 'ScrollContainer',
 			sidePanelOpen: false,
 			windowIsOpen: false
 		}
@@ -52,11 +55,14 @@ export default class App extends React.Component {
 	renderContent() {
 		const {page} = this.state;
 		switch (page) {
+			case 'Arrow':
+				return <ArrowDemo/>
+
 			case 'Box':
 				return <BoxDemo/>
 
 			case 'ButtonGroup':
-				return <ButtonsDemo/>
+				return <ButtonGroupDemo/>
 
 			case 'RateForm':
 				return <RateFormDemo/>
@@ -114,6 +120,12 @@ export default class App extends React.Component {
 			
 			case 'Draggable':
 				return <DraggableDemo/>
+
+			case 'Button':
+				return <ButtonDemo/>
+
+			case 'ScrollContainer':
+				return <ScrollContainerDemo/>
 		}
 	}
 

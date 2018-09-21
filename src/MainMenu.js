@@ -1,9 +1,11 @@
 import React from 'react';
 
 const PAGES = [
+	'Arrow',
 	'AutoComplete',
 	'Box',
 	'BoxSection',
+	'Button',
 	'ButtonGroup',
 	'CellGroup',
 	'ColorPicker',
@@ -18,6 +20,7 @@ const PAGES = [
 	'InputRegexp',
 	'Modal',
 	'RateForm',
+	'ScrollContainer',
 	'SearchForm',
 	'Select',
 	'SidePanel',

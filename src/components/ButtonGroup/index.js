@@ -24,7 +24,7 @@ const BUTTONS_DATA = {
 	}
 }
 
-export default class ButtonsDemo extends Demo {
+export default class ButtonGroupDemo extends Demo {
 	static handlers = ['onClick', 'onDisabledClick'];
 	static componentName = 'ButtonGroup';
 	static component = ButtonGroup;

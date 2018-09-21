@@ -113,7 +113,7 @@ export default class ModalDemo extends Demo {
 	static stateProps = ['isOpen', 'expanded', 'x', 'y'];
 	static funcs = {
 		onClose: getSetState('isOpen', false),
-		onExpand: getSetState('expanded', false),
+		onExpand: getSetState('expanded'),
 		onDrag: getSetState(['x', 'y']),
 	};
 	static args = {

@@ -14,7 +14,7 @@ export default class Preview extends React.Component {
 	}
 
 	render() {
-		const {codeShown} = this.state;
+		const {codeShown, expanded} = this.state;
 		return (
 			<Section 
 				className="preview" 
@@ -24,10 +24,13 @@ export default class Preview extends React.Component {
 				{this.props.children}
 				<Modal
 					className="preview-modal"
+					expanded={expanded}
 					header={'Code of ' + this.props.name}
 					width="800"
+					expandable
 					isOpen={codeShown}
 					onClose={this.handleModalClose}
+					onExpand={this.handleModalExpand}
 				>
 					{codeShown && this.renderCode()}
 				</Modal>
@@ -52,6 +55,10 @@ export default class Preview extends React.Component {
 
 	handleModalClose = () => {
 		this.setState({codeShown: false});
+	}
+
+	handleModalExpand = (expanded) => {
+		this.setState({expanded});
 	}
 
 	renderCode() {
@@ -125,7 +132,7 @@ export default class Preview extends React.Component {
 			}
 		}
 		for (let item of priority) {
-			if (data[item] !== undefined) {
+			if (data[item] !== undefined && data[item] !== '') {
 				code += T + T + T + T + wrap(item, 'key') + wrap('=') + (typeof data[item] == 'string' ? wrap('"' + data[item] + '"', 'string') : wrap('{') + stringify(data[item]) + wrap('}')) + N;
 			}
 		}

@@ -106,6 +106,7 @@ export default class Demo extends React.Component {
     renderComponent(Component, props) {
         return (
             <Component 
+                ref="component"
                 {...this.state.data}
                 {...props}
             >

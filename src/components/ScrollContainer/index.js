@@ -7,35 +7,71 @@ const TEXT = 'Lorem ipsum dolor sit amet, at dicam propriae nam, sed case veri u
 
 export default class ScrollContainerDemo extends Demo {
 	static map = {
+		checkboxes: {
+			noTransitionOnDrag: {
+				description: 'Content scrolling transition will be off on scroller dragging',
+			}
+		},		
 		inputs: [
 			{
 				scrollTop: {
 					description: 'Scroll position in pixels (Higher priority) (Number | Numeric String)',
-					example: '50'
+					type: 'number',
+					maxValue: 5000,
+					positive: true,
+					example: 300
 				},
 				scrollTopPercent: {
-					description: 'Scroll position in percents from 0 to 100 (Number | Numeric String)',
-					example: '50'
+					description: 'Scroll position in percents from 0 to 100. It\'s not taken into account if "scrollTop" is defined (Number | Numeric String)',
+					type: 'number',
+					maxValue: 100,
+					positive: true,
+					decimal: true,
+					toFixed: 2,
+					example: 50
+				},
+				scrollStep: {
+					description: 'Scroll step from 20 to 500 (Number | Numeric String)',
+					type: 'number',
+					maxValue: 500,
+					positive: true,
+					example: 100
+				},
+				transitionSpeed: {
+					description: 'Scroll animation speed from 1 (fast) to 8 (slow). Zero means no animation (Number | Numeric String)',
+					type: 'number',
+					maxValue: 8,
+					positive: true,
+					example: 5
 				}
 			}
 		]
 	};
 	static data = {
 		children: TEXT,
-		fontSize: 45
+		fontSize: 45,
+		scrollTopPercent: 50
 	};
-	static stateProps = ['scrollTop'];
+	static stateProps = ['scrollTop', 'scrollTopPercent'];
 	static args = {
 		onWheel: ['scrollTop', 'scrollTopPercent']
 	};
 	static changeState = {
-		onWheel: 'scrollTop'
+		onWheel: (scrollTop, scrollTopPercent) => {
+			return {
+				scrollTop,
+				scrollTopPercent
+			}
+		}
 	};
 	static funcs = {
-		onWheel: getSetState('scrollTop')
+		onWheel: getSetState(['scrollTop', 'scrollTopPercent'])
 	};
 	static excluded = ['valign', 'vertical'];
 	static handlers = ['onWheel', 'onDisabledWheel'];
 	static componentName = 'ScrollContainer';
 	static component = ScrollContainer;
+	static componentMapperProps = {
+		maxHeight: 5000
+	};
 }

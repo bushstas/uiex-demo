@@ -1,6 +1,7 @@
 import React from 'react';
 import Demo from '../../Demo';
 import {Box} from 'uiex/Box';
+import AnimatedMapper from '../AnimatedMapper'; 
 import {getSetState} from '../../utils';
 
 import './style.scss';
@@ -50,6 +51,16 @@ export default class BoxDemo extends Demo {
 	static component = Box;
 	static changeState = {
 		onToggle: 'isOpen'
+	}
+
+	renderMapperBefore() {
+		return (
+			<AnimatedMapper 
+				isOpen={true}
+				data={this.state.data} 
+				onChange={this.handleChangeData}
+			/>
+		)
 	}
 
 	renderContent() {

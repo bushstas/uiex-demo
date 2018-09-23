@@ -59,7 +59,7 @@ export default class Demo extends React.Component {
     }
 
     renderPreview() {
-        const {componentName, handlers, args, funcs, stateProps, consts, previewProps, additionalImport} = this.constructor;
+        const {componentName, handlers, args, funcs, stateProps, consts, previewProps, additionalImport, imports, componentRef} = this.constructor;
         return (
             <Preview
                 owner={this}
@@ -73,8 +73,14 @@ export default class Demo extends React.Component {
                 contentRenderer={this.renderPreviewContent}
                 additionalImport={additionalImport}
                 renderPreviewNote={this.renderPreviewNote}
+                wrapper={this.getPreviewWrap()}
+                contentBeforeRenderer={this.renderPreviewCodeBefore}
+                contentAfterRenderer={this.renderPreviewCodeAfter}
                 isPropAvailable={this.isPropAvailable}
                 renderPreviewConst={this.renderPreviewConst}
+                renderMethods={this.renderMethods}
+                imports={imports}
+                componentRef={componentRef}
                 {...previewProps}
 			>
                 {this.renderPreviewContentBefore()}
@@ -84,9 +90,9 @@ export default class Demo extends React.Component {
     }
 
     renderInternal() {
-        const {component: Component, handlers} = this.constructor;
+        const {component: Component, handlers, componentProps} = this.constructor;
         if (Component instanceof Object) {
-            const restProps = {};
+            const restProps = componentProps || {};
             if (handlers instanceof Array) {
                 for (let h of handlers) {
                     restProps[h] = this.getHandler(h);
@@ -116,6 +122,10 @@ export default class Demo extends React.Component {
         )
     }
 
+    renderMethods() {
+        return null;
+    }
+
     renderPreviewContentBefore() {
         return null;
     }
@@ -143,6 +153,18 @@ export default class Demo extends React.Component {
     renderPreviewContent() {
         return null;
     }
+
+    getPreviewWrap() {
+        return null;
+    }
+
+    renderPreviewCodeBefore() {
+		return null;
+    }
+    
+    renderPreviewCodeAfter() {
+		return null;
+	}
     
     handleChangeData = (data) => {
 		this.setState({data});

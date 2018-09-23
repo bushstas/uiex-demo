@@ -2,7 +2,7 @@ import React from 'react';
 import {Section} from 'uiex/Section';
 import {Button} from 'uiex/Button';
 import {Modal} from 'uiex/Modal';
-import {stringify, wrap} from './utils';
+import {stringify, wrap, tabulation} from './utils';
 
 export default class Preview extends React.Component {
 	constructor(props) {
@@ -25,8 +25,8 @@ export default class Preview extends React.Component {
 				<Modal
 					className="preview-modal"
 					expanded={expanded}
-					header={'Code of ' + this.props.name}
-					width="800"
+					header={'Demo code of ' + this.props.name}
+					width="900"
 					expandable
 					isOpen={codeShown}
 					onClose={this.handleModalClose}
@@ -43,7 +43,7 @@ export default class Preview extends React.Component {
 			<span>
 				{this.props.renderPreviewNote()}
 				<Button onClick={this.handleGetCodeClick}>
-					Get code
+					Get demo code
 				</Button>
 			</span>
 		)
@@ -62,19 +62,56 @@ export default class Preview extends React.Component {
 	}
 
 	renderCode() {
+		tabulation.init();
 		const priority = ['className', 'title', 'width', 'height'];
-		const {owner, data, name, unclosable, handlers, args, funcs, stateProps, consts, contentRenderer, additionalImport, isPropAvailable, renderPreviewConst} = this.props;
+		let {
+			owner,
+			data,
+			name,
+			unclosable,
+			handlers,
+			args,
+			funcs,
+			stateProps,
+			consts,
+			contentRenderer,
+			additionalImport,
+			isPropAvailable,
+			renderPreviewConst,
+			wrapper,
+			contentBeforeRenderer,
+			contentAfterRenderer,
+			imports,
+			renderMethods,
+			componentRef
+		} = this.props;
 		const bools = [];
-		const T = "\t";
+
 		const N = "\n";
+
+		// imports
 		let addImport = '';
 		if (typeof additionalImport == 'string') {
 			addImport = wrap(', ') + additionalImport;
 		} else if (additionalImport instanceof Array) {
 			addImport = wrap(', ') + additionalImport.join(wrap(', '));
 		}
-		let code = wrap('import', 'keyword') + wrap(' {') + 'Component' + wrap('} ') + wrap('from', 'keyword') + wrap(' "react"', 'string') + wrap(';') + N;
-		code += wrap('import', 'keyword') + wrap(' {') + name + addImport + wrap('} ') + wrap('from', 'keyword') + wrap(' "uiex/' + name + '"', 'string') + wrap(';') + N + N;
+		let code = wrap('import', 'keyword') + ' React ' + wrap('from', 'keyword') + wrap(' "react"', 'string') + wrap(';') + N;
+		code += wrap('import', 'keyword') + wrap(' {') + name + addImport + wrap('} ') + wrap('from', 'keyword') + wrap(' "uiex/' + name + '"', 'string') + wrap(';') + N;
+		if (imports) {
+			if (typeof imports == 'string') {
+				imports = [imports];
+			}
+			if (imports instanceof Array) {
+				for (let i = 0; i < imports.length; i++) {
+					const imp = imports[i];
+					code += wrap('import', 'keyword') + wrap(' {') + imp + wrap('} ') + wrap('from', 'keyword') + wrap(' "uiex/' + imp + '"', 'string') + wrap(';') + N;
+				}
+			}
+		}
+		code += N;
+		
+		// class
 		let constsAdded = 0;
 		if (consts instanceof Array) {
 			for (let c of consts) {
@@ -91,12 +128,19 @@ export default class Preview extends React.Component {
 				code += N;
 			}
 		}
-		code += wrap('export default', 'keyword') + wrap(' class ', 'keyword2') + wrap(name + 'Demo', 'name') + wrap(' extends', 'keyword') + wrap(' Component', 'name') + wrap(' {') + N;
+		code += wrap('export default', 'keyword') + wrap(' class ', 'keyword2') + wrap(name + 'Demo', 'name') + wrap(' extends', 'keyword') + wrap(' React.Component', 'name') + wrap(' {') + N;
+		tabulation.add();
+		
+		
+		// constructor
 		if (stateProps instanceof Array) {
-			code += T + wrap('constructor', 'keyword2') + wrap('(') + wrap('props', 'args') + wrap(') {') + N;
-			code += T + T + wrap('super', 'args') + wrap('(') + 'props' + wrap(');') + N;
-			code += T + T + wrap('this', 'args') + wrap('.') + 'state' + wrap(' = {');
+			code += tabulation.render(wrap('constructor', 'keyword2') + wrap('(') + wrap('props', 'args') + wrap(') {'), true);
+			tabulation.add();
+			code += tabulation.render(wrap('super', 'args') + wrap('(') + 'props' + wrap(');'), true);
+			code += tabulation.render(wrap('this', 'args') + wrap('.') + 'state' + wrap(' = {'));
+
 			const lines = [];
+			tabulation.add();
 			for (let item of stateProps) {
 				let val = data[item];
 				if (consts instanceof Array && consts.indexOf(item) > -1) {
@@ -111,29 +155,57 @@ export default class Preview extends React.Component {
 					}
 				}
 				if (val != null) {
-					lines.push(T + T + T + wrap(item, 'key') + wrap(': ') + val);
+					lines.push(tabulation.render(wrap(item, 'key') + wrap(': ') + val));
 				}
 			}
+			tabulation.reduce();
 			if (lines.length > 0) {
-				code += N + lines.join(wrap(',') + N) + N + T + T + wrap('};') + N;
+				code += N + lines.join(wrap(',') + N) + N;
+				code += tabulation.render(wrap('};'), true);
 			} else {
 				code += wrap('};') + N;
 			}
-			code += T + wrap('}') + N + N;
+			tabulation.reduce();
+			code += tabulation.render(wrap('}'), 2);
 		}
-		code += T + wrap('render', 'function') + wrap('() {') + N;
+
+		// render
+		code += tabulation.render(wrap('render', 'function') + wrap('() {'), true);
+		tabulation.add();
 		if (stateProps instanceof Array) {
-			code += T + T + wrap('const', 'keyword2') + wrap(' {') + stateProps.join(', ') + wrap('} = ') + wrap('this', 'args') + wrap('.') + 'state' + wrap(';') + N;
+			code += tabulation.render(wrap('const', 'keyword2') + wrap(' {') + stateProps.join(', ') + wrap('} = ') + wrap('this', 'args') + wrap('.') + 'state' + wrap(';'), true);
 		}
-		code += T + T + wrap('return', 'keyword') + wrap(' (') + N + T + T + T + wrap('&lt;') + wrap(name, 'keyword2') + N;
+		code += tabulation.render(wrap('return', 'keyword') + wrap(' ('), true);
+		
+		
+		
+		// ================ start component
+		tabulation.add();
+		if (wrapper) {
+			if (typeof wrapper == 'string') {
+				code += tabulation.render(wrap('&lt;') + wrap(wrapper, 'tag') + wrap('&gt;'), true);
+			}
+			tabulation.add();
+			if (typeof contentBeforeRenderer == 'function') {
+				const contentBefore = contentBeforeRenderer();
+				if (contentBefore) {
+					code += contentBefore + N;
+				}
+			}
+		}
+		code += tabulation.render(wrap('&lt;') + wrap(name, 'keyword2'), true);
+		tabulation.add();
+		if (componentRef && typeof componentRef == 'string') {
+			code += tabulation.render(wrap('ref', 'key') + wrap('=') + wrap('"' + componentRef + '"', 'string'), true);
+		}
 		if (stateProps instanceof Array) {
 			for (let k of stateProps) {
-				code += T + T + T + T + wrap(k, 'key') + wrap('={') + k + wrap('}') + N;
+				code += tabulation.render(wrap(k, 'key') + wrap('={') + k + wrap('}'), true);
 			}
 		}
 		for (let item of priority) {
 			if (data[item] !== undefined && data[item] !== '') {
-				code += T + T + T + T + wrap(item, 'key') + wrap('=') + (typeof data[item] == 'string' ? wrap('"' + data[item] + '"', 'string') : wrap('{') + stringify(data[item]) + wrap('}')) + N;
+				code += tabulation.render(wrap(item, 'key') + wrap('=') + (typeof data[item] == 'string' ? wrap('"' + data[item] + '"', 'string') : wrap('{') + stringify(data[item]) + wrap('}')), true);
 			}
 		}
 		for (let k in data) {
@@ -141,19 +213,19 @@ export default class Preview extends React.Component {
 				continue;
 			}
 			if (consts instanceof Array && consts.indexOf(k) > -1 && (!(stateProps instanceof Array) || stateProps.indexOf(k) == -1)) {
-				code += T + T + T + T + wrap(k, 'key') + wrap('={') + this.getConstName(k) + wrap('}') + N;
+				code += tabulation.render(wrap(k, 'key') + wrap('={') + this.getConstName(k) + wrap('}'), true);
 				continue;
 			}
 			if (k != 'children' && priority.indexOf(k) == -1 && (!(stateProps instanceof Array) || stateProps.indexOf(k) == -1)) {
 				if (data[k] === true) {
 					bools.push(k);
 				} else if (data[k]) {
-					code += T + T + T + T + wrap(k, 'key') + wrap('=') + (typeof data[k] == 'string' ? wrap('"' + data[k] + '"', 'string') : wrap('{') + stringify(data[k]) + wrap('}')) + N;
+					code += tabulation.render(wrap(k, 'key') + wrap('=') + (typeof data[k] == 'string' ? wrap('"' + data[k] + '"', 'string') : wrap('{') + stringify(data[k]) + wrap('}')), true);
 				}
 			}
 		}
 		for (let item of bools) {
-			code += T + T + T + T + wrap(item, 'key') + N;
+			code += tabulation.render(wrap(item, 'key'), true);
 		}
 		let funcsContent;
 		if (handlers instanceof Array) {
@@ -172,18 +244,53 @@ export default class Preview extends React.Component {
 				}				
 				const ha = 'handle' + h.replace(/^on/, '');
 				const ha2 = wrap('handle' + h.replace(/^on/, ''), 'name');
-				code += T + T + T + T + wrap(h, 'key') + wrap('={') + wrap('this', 'args') + wrap('.') + ha + wrap('}') + N;
-				funcsContent += N + N + T + ha2 + wrap(' = (') + wrap(a, 'args') + wrap(') ') + wrap('=>', 'keyword2') + wrap(' {') + N + T + T + func + N + T + wrap('}');
+				code += tabulation.render(wrap(h, 'key') + wrap('={') + wrap('this', 'args') + wrap('.') + ha + wrap('}'), true);
+				funcsContent += N + N;
+				funcsContent += tabulation.renderWith(ha2 + wrap(' = (') + wrap(a, 'args') + wrap(') ') + wrap('=>', 'keyword2') + wrap(' {'), 1, true);
+				funcsContent += tabulation.renderWith(func, 2, true);
+				funcsContent += tabulation.renderWith(wrap('}'), 1);
 			}
 		}
-		const content = contentRenderer.call(owner);
+		let content = contentRenderer.call(owner);
+		tabulation.reduce();
 		const hasContent = content || data.children;
-		if (hasContent && !unclosable) {			
-			code += T + T + T + wrap('&gt;') + N + (content || (T + T + T + T + (data.children || ''))) + N + T + T + T + wrap('&lt;/') + wrap(name, 'keyword2') + wrap('&gt;') + N;
-		} else {
-			code += T + T + T + wrap('/&gt;') + N;
+		if (content) {
+			content += N;
 		}
-		code += T + T + wrap(')') + N + T +  wrap('}');
+		if (hasContent && !unclosable) {
+			code += tabulation.render(wrap('&gt;'), true);
+			tabulation.add();
+			code += content || tabulation.render(data.children, true);
+			tabulation.reduce();
+			code += tabulation.render(wrap('&lt;/') + wrap(name, 'keyword2') + wrap('&gt;'), true);
+		} else {
+			code += tabulation.render(wrap('/&gt;'), true);
+		}
+		if (wrapper) {
+			if (typeof contentAfterRenderer == 'function') {
+				const contentAfter = contentAfterRenderer();
+				if (contentAfter) {
+					code += contentAfter + N;
+				}
+			}
+			tabulation.reduce();
+			if (typeof wrapper == 'string') {
+				code += tabulation.render(wrap('&lt;/') + wrap(wrapper, 'tag') + wrap('&gt;'), true);
+			}
+		}
+		// ======================= end component
+
+
+		tabulation.reduce();
+		code += tabulation.render(wrap(')'), true);
+		tabulation.reduce();
+		code += tabulation.render(wrap('}'));
+		if (typeof renderMethods == 'function') {
+			const methods = renderMethods();
+			if (methods) {
+				code += methods;
+			}
+		}
 		code += (funcsContent || '') + N + wrap('}');
 		return (
 			<pre className="decorated" dangerouslySetInnerHTML={{__html: code}}/>

@@ -23,6 +23,9 @@ pre {
 		.keyword {
 			color: #ff4868;
 		}
+		.tag {
+			color: #ff4868;
+		}
 		.keyword2 {
 			color: #64daff;
 			font-style: italic;
@@ -41,6 +44,9 @@ pre {
 		}
 		.symbol {
 			color: #8c8c8c;
+		}
+		.comment {
+			color: #777;
 		}
 		.key {
 			color: #8593a2;
@@ -62,12 +68,13 @@ pre {
 	left: 0;
 	top: 0;
 	bottom: 0;
-	width: 250px;
+	width: 265px;
 	box-sizing: border-box;
-	padding: 20px;
+	padding: 20px 0 20px 20px;
 	user-select: none;
+	height: auto !important;
 
-	& > div {
+	.main-menu-button {
 		width: 200px;
 		border: 1px solid #ddd;
 		background-color: #eee;
@@ -232,4 +239,7 @@ pre {
 }
 .scroll-container-preview-buttons {
 	margin-bottom: 20px;
+}
+.uiex-scroll-container.scroll-container-preview {
+	border: 1px solid #aaa;
 }

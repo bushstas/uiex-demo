@@ -89,3 +89,43 @@ export const getSetState = (name, value = null) => {
 	str += wrap('});');
 	return  str;
 }
+
+class Tabulation {
+	constructor() {
+		this.tabs = ['', "\t", "\t\t", "\t\t\t", "\t\t\t\t", "\t\t\t\t\t", "\t\t\t\t\t\t", "\t\t\t\t\t\t\t", "\t\t\t\t\t\t\t\t", "\t\t\t\t\t\t\t\t\t", "\t\t\t\t\t\t\t\t\t\t"];
+		this.ns = ['', "\n", "\n\n", "\n\n\n"];
+	}
+	init() {
+		this.level = 0;
+	}
+	add(q = 1) {
+		this.level += q;
+	}
+	reduce(q = 1) {
+		this.level -= q;
+	}
+	get() {
+		return this.tabs[this.level];	
+	}
+	render(str, withN = false) {
+		if (typeof str != 'string') {
+			str = '';
+		}
+		if (withN === true) {
+			withN = 1;
+		}
+		return this.get() + str + (withN ? this.ns[withN] : '');
+	}
+	renderWith(str, q, withN = false) {
+		let level = this.level;
+		this.level = q;
+		str = this.render(str, withN);
+		this.level = level;
+		return str;
+	}
+	getCount() {
+		return this.level;
+	}
+}
+
+export const tabulation = new Tabulation();

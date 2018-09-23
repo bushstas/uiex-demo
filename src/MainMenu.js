@@ -1,4 +1,5 @@
 import React from 'react';
+import {ScrollContainer} from 'uiex/ScrollContainer';
 
 const PAGES = [
 	'Arrow',
@@ -30,15 +31,29 @@ const PAGES = [
 ]
 
 export default class MainMenu extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {};
+	}
 
 	render() {
 		const {onChange, active} = this.props;
 		return (
-			<div className="main-menu">
+			<ScrollContainer 
+				className="main-menu"
+				scrollerWidth="6"
+				scrollTop={this.state.scrollTop}
+				sliderColor="#BBB"
+				trackColor="#DDD"
+				overflowMaskColor="#FFF"
+				overflowMaskHeight="20"
+				hiddenScrollbar
+				onWheel={this.handleWheel}
+			>
 				{PAGES.map(item => {
-					let className;
+					let className = 'main-menu-button';
 					if (item == active) {
-						className = 'active';
+						className += ' active';
 					}
 					return (
 						<div 
@@ -50,7 +65,11 @@ export default class MainMenu extends React.Component {
 						</div>
 					)
 				})}
-			</div>
+			</ScrollContainer>
 		)
+	}
+
+	handleWheel = (scrollTop) => {
+		this.setState({scrollTop});
 	}
 }

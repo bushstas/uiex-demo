@@ -4,8 +4,8 @@ import {Select} from 'uiex/Select';
 import SelectOptionMapper from '../SelectOptionMapper';
 import SelectMapper from '../SelectMapper';
 import {Checkbox} from 'uiex/Checkbox';
-import {stringify, getSetState, wrap} from '../../utils';
-import {SELECT_OPTIONS_ARRAY, PROMISE_OPTIONS, FUNCTION_OPTIONS, PROMISE_TEXT, FUNCTION_TEXT} from '../../consts';
+import {stringify, getSetState, wrap, tabulation} from '../../utils';
+import {SELECT_OPTIONS_ARRAY, PROMISE_OPTIONS, FUNCTION_OPTIONS, PROMISE_TEXT_HTML, FUNCTION_TEXT_HTML} from '../../consts';
 
 export default class SelectDemo extends Demo {
 	static excluded = ['height', 'vertical', 'align', 'valign', 'children'];
@@ -106,9 +106,6 @@ export default class SelectDemo extends Demo {
 			}
 			options = properOptions;
 		}
-		const T = "\t";
-		const TAB = T + T + T + T;
-		const TAB2 = TAB + T;
 		const N = "\n";		
 		let content = '';
 		for (let i = 0; i < options.length; i++) {
@@ -118,23 +115,27 @@ export default class SelectDemo extends Demo {
 			}
 			const keys = Object.keys(option);
 			if (keys.length - 1 > 1) {
-				content += TAB + wrap('&lt;') + wrap('SelectOption', 'keyword2') + N;
+				content += tabulation.render(wrap('&lt;') + wrap('SelectOption', 'keyword2'), true);
+				tabulation.add();
 				for (let k in option) {
 					if (k == 'title') {
 						continue;
 					}
 					if (option[k] === true) {
-						content += TAB2 + wrap(k, 'key') + N;
+						content += tabulation.render(wrap(k, 'key'), true);
 					} else {
-						content += TAB2 + wrap(k, 'key') + wrap('=') + stringify(option[k], true) + N;
+						content += tabulation.render(wrap(k, 'key') + wrap('=') + stringify(option[k], true), true);
 					}
 				}
-				content += TAB + wrap('&gt;') + N;
+				tabulation.reduce();
+				content += tabulation.render(wrap('&gt;'), true);
 			} else {
-				content += TAB + wrap('&lt;') + wrap('SelectOption ', 'keyword2') + wrap('value', 'key') + wrap('=') + stringify(option.value, true) + wrap('&gt;') + N;
+				content += tabulation.render(wrap('&lt;') + wrap('SelectOption ', 'keyword2') + wrap('value', 'key') + wrap('=') + stringify(option.value, true) + wrap('&gt;'), true);
 			}
-			content += TAB2 + option.title + N;
-			content += TAB + wrap('&lt;/') + wrap('SelectOption', 'keyword2') + wrap('&gt;') + (i < options.length - 1 ? N : '');
+			tabulation.add();
+			content += tabulation.render(option.title, true);
+			tabulation.reduce();
+			content += tabulation.render(wrap('&lt;/') + wrap('SelectOption', 'keyword2') + wrap('&gt;'), i < options.length - 1);
 		}
 		return content;
 	}
@@ -149,9 +150,9 @@ export default class SelectDemo extends Demo {
 	renderPreviewConst = (name, value) => {
 		if (name == 'options') {
 			if (value instanceof Promise) {
-				return PROMISE_TEXT;
+				return PROMISE_TEXT_HTML;
 			} else if (typeof value == 'function') {
-				return FUNCTION_TEXT;
+				return FUNCTION_TEXT_HTML;
 			}
 		}
 	}

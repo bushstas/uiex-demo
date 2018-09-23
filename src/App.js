@@ -47,7 +47,7 @@ export default class App extends React.Component {
 				
 				<div className="main-content">
 					{this.renderContent()}
-				</div>				
+				</div>
 			</div>
 		)
 	}

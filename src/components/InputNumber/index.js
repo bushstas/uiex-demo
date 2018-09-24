@@ -107,7 +107,7 @@ export default class InputNumberDemo extends Demo {
 	};
 	static customEvents = {
 		Wheel: 'You can change value with mouse wheel on the Input',
-		KeyPress: 'You can change value with Up and Down keys when the Input is focused'
+		KeyPress: 'You can change value with ArrowUp and ArrowDown keys when the Input is focused'
 	};
 
 	renderMapperBefore() {

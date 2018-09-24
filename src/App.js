@@ -3,6 +3,7 @@ import MainMenu from './MainMenu';
 import TabsDemo from './components/Tabs';
 import ButtonGroupDemo from './components/ButtonGroup';
 import BoxDemo from './components/Box';
+import BoxSectionDemo from './components/BoxSection';
 import SearchFormDemo from './components/SearchForm';
 import RateFormDemo from './components/RateForm';
 import ModalDemo from './components/Modal';
@@ -24,6 +25,7 @@ import DraggableDemo from './components/Draggable';
 import ArrowDemo from './components/Arrow';
 import ButtonDemo from './components/Button';
 import ScrollContainerDemo from './components/ScrollContainer';
+import TimeScaleDemo from './components/TimeScale';
 
 import './style.scss';
 
@@ -60,6 +62,9 @@ export default class App extends React.Component {
 
 			case 'Box':
 				return <BoxDemo/>
+
+			case 'BoxSection':
+				return <BoxSectionDemo/>
 
 			case 'ButtonGroup':
 				return <ButtonGroupDemo/>
@@ -126,6 +131,9 @@ export default class App extends React.Component {
 
 			case 'ScrollContainer':
 				return <ScrollContainerDemo/>
+
+			case 'TimeScale':
+				return <TimeScaleDemo/>				
 		}
 	}
 

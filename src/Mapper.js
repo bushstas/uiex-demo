@@ -25,13 +25,15 @@ export default class Mapper extends React.Component {
 		super(props);
 		this.state = {
 			val: '',
-			extraPropsShown: false
+			extraPropsShown: false,
+			isOpen: props.isOpen
 		}
 		this.timeouts = {}
 	}
 
 	render() {
-		let {map: {checkboxes, inputs}, data, name, isOpen = true, excluded, handlers, withExtraProps, customEvents} = this.props;
+		let {map: {checkboxes, inputs}, data, name, excluded, handlers, withExtraProps, customEvents} = this.props;
+		const {isOpen = true} = this.state;
 		let {columns} = this.props;
 		if (!getNumber(columns)) {
 			columns = COLUMNS;
@@ -49,6 +51,7 @@ export default class Mapper extends React.Component {
 					iconAtRight
 					note={withExtraProps ? this.renderExtraPropsCheckbox() : null}
 					effect="ease-in-out"
+					onToggle={this.handleBoxSectionToggle}
 				>
 					<Form 
 						onChange={this.handleChangeInput}
@@ -142,6 +145,10 @@ export default class Mapper extends React.Component {
 		)
 	}
 
+	handleBoxSectionToggle = (isOpen) => {
+		this.setState({isOpen});
+	}
+
 	getHandlerTitle(name) {
 		const {args} = this.props;
 		let ar = '';
@@ -214,7 +221,8 @@ export default class Mapper extends React.Component {
 			readOnly,
 			valueWithMeasure,
 			customFilter,
-			onChangeMeasure
+			onChangeMeasure,
+			react
 		} = item;
 
 		if (extra && !this.state.extraPropsShown) {
@@ -277,6 +285,9 @@ export default class Mapper extends React.Component {
 			break;
 
 			default:
+				if (react) {
+					props.value = '<React.Children>';
+				}
 				input = <Input {...props}/>
 		}
 		return (

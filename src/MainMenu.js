@@ -27,7 +27,8 @@ const PAGES = [
 	'SidePanel',
 	'SliderScale',
 	'Tab',
-	'Tabs'
+	'Tabs',
+	'TimeScale'
 ]
 
 export default class MainMenu extends React.Component {
@@ -41,10 +42,12 @@ export default class MainMenu extends React.Component {
 		return (
 			<ScrollContainer 
 				className="main-menu"
-				scrollerWidth="6"
+				sliderWidth="5"
+				trackWidth="1"
 				scrollTop={this.state.scrollTop}
 				sliderColor="#BBB"
-				trackColor="#DDD"
+				trackColor="#CCC"
+				scrollbarRadius="5"
 				overflowMaskColor="#FFF"
 				overflowMaskHeight="20"
 				hiddenScrollbar

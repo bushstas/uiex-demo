@@ -87,14 +87,13 @@ export default class ComponentMapper extends DemoMapper {
 
 	initMap() {
 		const map = super.initMap();
-		const {maxWidth, maxHeight} = this.props;
-		if (maxWidth) {
-			map.inputs[0].width.maxValue = maxWidth;
-		}
-		if (maxHeight) {
-			map.inputs[0].height.maxValue = maxHeight;
-		}
-        return map;
+		const {maxWidth, maxHeight, childrenReadOnly, react} = this.props;
+		const [data] = map.inputs;
+		data.width.maxValue = maxWidth || MAX_WIDTH;
+		data.height.maxValue = maxHeight || MAX_HEIGHT;
+		data.children.readOnly = !!childrenReadOnly;
+		data.children.react = !!react;
+		return map;
 	}
 
 	handleChangeWidthMeasure = (measure) => {

@@ -1,43 +1,43 @@
 import React from 'react';
 import Demo from '../../Demo';
-import {Box} from 'uiex/Box';
+import {BoxSection} from 'uiex/BoxSection';
 import AnimatedMapper from '../AnimatedMapper'; 
 import {getSetState} from '../../utils';
 import {BOX_CONTENT} from '../../consts';
 
-import './style.scss';
-
-export default class BoxDemo extends Demo {
+export default class BoxSectionDemo extends Demo {
 	static map = {
 		checkboxes: {
 			isOpen: {
 				description: 'Open/Close status flag'
 			},
-			buttonUnder: {
-				description: 'Open/Close button is under the box'
-			},
 			noHideAnimation: {
 				description: 'Animation is not used for hiding box'
+			},
+			iconAtRight: {
+				description: 'Arrow icon in the header will be displayed at right'
 			}
 		},
 		inputs: [
 			{
-				button: {
-					description: 'Text of the expand button. Use "/" to separate text for open and closed states (String)',
-					example: 'Open/Close',
-					default: ''
+				_COLUMNS: 4,
+				caption: {
+					description: 'Text of the section header. Can be a React element (String)',
+					example: 'Super section'
+				},
+				note: {
+					description: 'Text of the section note at right in the header. Can be a React element (String)',
+					example: 'Super section note'
 				}
 			}
 		]
 	};
 	static data = {
 		isOpen: true,
-		buttonUnder: false,
 		speed: 'fast',
 		animation: 'fade-fall',
 		effect: 'ease-in-out',
-		button: 'Open the box/Close the box',
-		children: '...'
+		caption: 'Some section'
 	};
 	static excluded = ['vertical', 'block', 'valign', 'height'];
 	static handlers = ['onToggle', 'onDisabledClick'];
@@ -48,8 +48,8 @@ export default class BoxDemo extends Demo {
 	static args = {
 		onToggle: ['isOpen']
 	};
-	static componentName = 'Box';
-	static component = Box;
+	static componentName = 'BoxSection';
+	static component = BoxSection;
 	static changeState = {
 		onToggle: 'isOpen'
 	}

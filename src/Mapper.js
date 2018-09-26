@@ -233,7 +233,7 @@ export default class Mapper extends React.Component {
 		const props = {
 			name,
 			value,
-			placeholder: example ? 'Example: ' + example : '',
+			placeholder: example || example === 0 ? 'Example: ' + example : '',
 			maxLength,
 			defaultValue,
 			clearable: true,

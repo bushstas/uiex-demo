@@ -4,6 +4,7 @@ import {BoxSection} from 'uiex/BoxSection';
 import AnimatedMapper from '../AnimatedMapper'; 
 import {getSetState} from '../../utils';
 import {BOX_CONTENT} from '../../consts';
+import {BOX_SECTION_VIEWS} from 'uiex/consts';
 
 export default class BoxSectionDemo extends Demo {
 	static map = {
@@ -20,20 +21,25 @@ export default class BoxSectionDemo extends Demo {
 		},
 		inputs: [
 			{
-				_COLUMNS: 4,
+				view: {
+					description: 'Section header view (String)',
+					type: 'select',
+					options: BOX_SECTION_VIEWS
+				},
 				caption: {
 					description: 'Text of the section header. Can be a React element (String)',
-					example: 'Super section'
+					example: 'Super section',
+					size: 5
 				},
 				note: {
 					description: 'Text of the section note at right in the header. Can be a React element (String)',
-					example: 'Super section note'
+					example: 'Super section note',
+					size: 5
 				}
 			}
 		]
 	};
 	static data = {
-		isOpen: true,
 		speed: 'fast',
 		animation: 'fade-fall',
 		effect: 'ease-in-out',

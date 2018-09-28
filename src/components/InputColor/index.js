@@ -10,6 +10,9 @@ const EXCLUDED = ['type', 'pattern', 'textarea', 'withIndicator', 'minLength', '
 export default class InputColorDemo extends Demo {
 	static map = {
 		checkboxes: {
+			pickerShown: {
+				description: 'Color picker will be shown'
+			},
 			withoutHash: {
 				description: 'The input returns value without hash on change'
 			},
@@ -18,9 +21,6 @@ export default class InputColorDemo extends Demo {
 			},
 			fullWidthPicker: {
 				description: 'Color picker will have the same width as the input'
-			},
-			pickerShown: {
-				description: 'Color picker will be always shown'
 			},
 			pickerOnTop: {
 				description: 'Color picker will be on top'
@@ -42,20 +42,22 @@ export default class InputColorDemo extends Demo {
 		colors: COLORS
 	};
 	static excluded = INPUT_COMPONENT_EXCLUDED;
-	static handlers = ['onChange', 'onClear', 'onChangePicker', 'onInput', 'onFocus', 'onBlur', 'onEnter', 'onChangeValidity', 'onDisabledClick'];
+	static handlers = ['onChange', 'onClear', 'onChangePicker', 'onShowPicker', 'onInput', 'onFocus', 'onBlur', 'onEnter', 'onChangeValidity', 'onDisabledClick'];
 	static args = {
 		onChange: ['value', 'name'],
 		onChangePicker: ['value', 'colorData', 'name'],
 		onInput: ['value', 'name'],
+		onShowPicker: ['pickerShown'],
 		onFocus: ['value', 'name'],
 		onBlur: ['value', 'name'],
 		onEnter: ['value', 'name'],
 		onChangeValidity: ['isValid', 'value', 'name'],
 		onDisabledClick: ['name']
 	};
-	static stateProps = ['value', 'measure'];
+	static stateProps = ['value', 'measure', 'pickerShown'];
 	static funcs = {
-		onChange: getSetState('value')
+		onChange: getSetState('value'),
+		onShowPicker: getSetState('pickerShown')
 	};
 	static previewProps = {
 		unclosable: true
@@ -64,7 +66,8 @@ export default class InputColorDemo extends Demo {
 	static componentName = 'InputColor';
 	static component = InputColor;
 	static changeState = {
-		onChange: 'value'
+		onChange: 'value',
+		onShowPicker: 'pickerShown'
 	};
 
 	renderMapperBefore() {

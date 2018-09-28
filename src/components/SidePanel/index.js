@@ -51,13 +51,13 @@ export default class SidePanelDemo extends Demo {
 		width: '50%',
 		height: '50%',
 		side: 'right',
-		isOpen: false
+		isOpen: true
 	};
 	static excluded = ['vertical', 'block', 'float', 'align', 'valign', 'disabled', 'hidden'];
-	static handlers = ['onClose'];
+	static handlers = ['onCollapse'];
 	static stateProps = ['isOpen'];
 	static funcs = {
-		onClose: getSetState('isOpen', false)
+		onCollapse: getSetState('isOpen', false)
 	};
 	static componentName = 'SidePanel';
 	static component = SidePanel;
@@ -65,8 +65,7 @@ export default class SidePanelDemo extends Demo {
 		maxHeight: 1000
 	};
 	static changeState = {
-		onExpand: 'expanded',
-		onClose: ['isOpen', false],
+		onCollapse: ['isOpen', false],
 		onShow: ['isOpen', true]
 	};
 

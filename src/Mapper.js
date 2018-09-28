@@ -45,6 +45,7 @@ export default class Mapper extends React.Component {
 		return (
 			<div className="mapper">
 				<BoxSection 
+					view="header"
 					caption={name}
 					isOpen={isOpen}
 					animation="fade-fall"

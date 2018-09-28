@@ -1,13 +1,30 @@
 import React from 'react';
 import Demo from '../../Demo';
 import {TimeScale} from 'uiex/TimeScale';
+import {DISPLAY_TIME} from 'uiex/consts';
 import {getSetState} from '../../utils';
+
+const TIME_STYLE_OPTIONS = [
+	{
+		color: '#ffffff',
+		fontWeight: 'bold'
+	},
+	{
+		backgroundColor: '#ffffff',
+		padding: '2px 4px',
+		borderRadius: '5px',
+		marginTop: '-8px'
+	}
+]
 
 export default class TimeScaleDemo extends Demo {
 	static map = {
 		checkboxes: {
 			playing: {
-				description: 'Timescale is running',
+				description: 'Timescale is running'
+			},
+			hiddenTime: {
+				description: 'Time will be shown only on mouse over'
 			}
 		},
 		inputs: [
@@ -28,16 +45,17 @@ export default class TimeScaleDemo extends Demo {
 				startValue: {
 					description: 'Start timescale value. Can be number in seconds or string in format 00:00. Zero by default (Number | Numeric String)',
 					example: 0,
-					maxValue: 4000,
-					positive: true,
-					type: 'number'
+					maxLength: 4
 				},
 				endValue: {
 					description: 'End timescale value. Can be number in seconds or string in format 00:00. Is required (Number | String)',
 					example: 100,
-					maxValue: 5000,
-					positive: true,
-					type: 'number'
+					maxLength: 4
+				},
+				displayTime: {
+					description: 'End timescale value. Can be number in seconds or string in format 00:00. Is required (Number | String)',
+					type: 'select',
+					options: DISPLAY_TIME
 				},
 				borderRadius: {
 					description: 'The track border radius (Number | Numeric String)',
@@ -60,6 +78,11 @@ export default class TimeScaleDemo extends Demo {
 				indicatorColor: {
 					description: 'Color of the indicator (String)',
 					type: 'color'
+				},
+				timeStyle: {
+					description: 'Color of the indicator (String)',
+					type: 'object',
+					options: TIME_STYLE_OPTIONS
 				}
 			}
 		]
@@ -69,14 +92,14 @@ export default class TimeScaleDemo extends Demo {
 		width: 900,
 		height: 20,
 		borderRadius: 15,
-		startValue: 0,
-		endValue: 60
+		startValue: '00:10',
+		endValue: '01:00'
 	};
 	static excluded = ['vertical', 'valign'];
 	static handlers = ['onChange', 'onClickChange', 'onChangeStatus', 'onEnd', 'onDisabledClick'];
-	static stateProps = ['value', 'playing'];
+	static stateProps = ['value', 'time', 'playing'];
 	static funcs = {
-		onChange: getSetState('value'),
+		onChange: getSetState(['value', 'time']),
 		onChangeStatus: getSetState('playing')
 	};
 	static args = {
@@ -95,4 +118,5 @@ export default class TimeScaleDemo extends Demo {
 	static componentMapperProps = {
 		maxHeight: 200
 	};
+	static consts = ['timeStyle'];
 }

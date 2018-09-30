@@ -219,7 +219,7 @@ export default class Preview extends React.Component {
 			if (k != 'children' && priority.indexOf(k) == -1 && (!(stateProps instanceof Array) || stateProps.indexOf(k) == -1)) {
 				if (data[k] === true) {
 					bools.push(k);
-				} else if (data[k]) {
+				} else if (data[k] || k == 'valid') {
 					code += tabulation.render(wrap(k, 'key') + wrap('=') + (typeof data[k] == 'string' ? wrap('"' + data[k] + '"', 'string') : wrap('{') + stringify(data[k]) + wrap('}')), true);
 				}
 			}

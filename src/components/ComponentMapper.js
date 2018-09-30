@@ -14,20 +14,19 @@ export default class ComponentMapper extends DemoMapper {
 	static map = {
 		checkboxes: {
 			block: {
-				description: 'Display block',
-				defaultValue: false
+				description: 'Display block'
 			},
 			disabled: {
-				description: 'Disabled',
-				defaultValue: false
+				description: 'Disabled'
 			},
 			hidden: {
-				description: 'hidden',
-				defaultValue: false
+				description: 'hidden'
 			},
 			vertical: {
-				description: 'vertical',
-				defaultValue: false
+				description: 'vertical'
+			},
+			uncontrolled: {
+				description: 'The component will be uncontrolled, so all props such as "value" or "status" will be initial, and you can\'t change it'
 			}
 		},
 		inputs: [

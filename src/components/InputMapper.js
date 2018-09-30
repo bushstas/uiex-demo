@@ -5,6 +5,17 @@ const NAME_EXAMPLE = 'email';
 const VALUE_EXAMPLE = 'Some value';
 const DEFAULT_VALUE_EXAMPLE = 'Initial value';
 
+const OPTIONS = [
+	{
+		title: 'true',
+		value: true
+	},
+	{
+		title: 'false',
+		value: false
+	}
+];
+
 export default class InputMapper extends DemoMapper {
 	static map = {
 		checkboxes: {
@@ -16,12 +27,6 @@ export default class InputMapper extends DemoMapper {
 			},
 			clearable: {
 				description: 'Input will have a clear button (when not empty)'
-			},
-			valid: {
-				description: 'Input will be marked as valid'
-			},
-			invalid: {
-				description: 'Input will be marked as invalid'
 			},
 			required: {
 				description: 'Input will be required, so you should fill it to pass through validation'
@@ -47,6 +52,10 @@ export default class InputMapper extends DemoMapper {
 				placeholder: {
 					description: 'Input placeholder (String)',
 					example: 'Some placeholder'
+				},
+				valid: {
+					description: 'Input valid/invalid flag (Boolean)',
+					options: OPTIONS
 				},
 				minLength: {
 					description: 'Minimal value length for being valid (Number | Numeric String)',

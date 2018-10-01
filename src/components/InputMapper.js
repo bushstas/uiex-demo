@@ -19,6 +19,9 @@ const OPTIONS = [
 export default class InputMapper extends DemoMapper {
 	static map = {
 		checkboxes: {
+			validating: {
+				description: 'Input should be validated'
+			},
 			readOnly: {
 				description: 'Input becomes readonly'
 			},

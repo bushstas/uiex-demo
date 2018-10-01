@@ -80,6 +80,7 @@ export default class Demo extends React.Component {
                 renderPreviewConst={this.renderPreviewConst}
                 renderMethods={this.renderMethods}
                 imports={imports}
+                uncontrolled={this.state.data.uncontrolled}
                 componentRef={componentRef}
                 {...previewProps}
 			>
@@ -186,8 +187,9 @@ export default class Demo extends React.Component {
 
     getEventHandler(name) {
         return (arg1 = null, arg2 = null, arg3 = null, arg4 = null) => {
+            const {uncontrolled} = this.state.data;
             const {changeState, args, callbacks} = this.constructor;
-            if (changeState instanceof Object) {
+            if (changeState instanceof Object && !uncontrolled) {
                 let addedData;
                 if (typeof changeState[name] == 'string') {
                     addedData = {[changeState[name]]: arg1};

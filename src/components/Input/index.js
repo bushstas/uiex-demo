@@ -10,21 +10,24 @@ export default class InputDemo extends Demo {
 	static handlers = ['onChange', 'onClear', 'onFocus', 'onBlur', 'onEnter', 'onChangeValidity', 'onDisabledClick'];
 	static args = {
 		onChange: ['value', 'name'],
+		onClear: ['name'],
 		onFocus: ['value', 'name'],
 		onBlur: ['value', 'name'],
 		onEnter: ['value', 'name'],
-		onChangeValidity: ['isValid', 'value', 'name'],
+		onChangeValidity: ['valid', 'value', 'name'],
 		onDisabledClick: ['name']
 	};
-	static stateProps = ['value'];
+	static stateProps = ['value', 'valid'];
 	static funcs = {
-		onChange: getSetState('value')
+		onChange: getSetState('value'),
+		onChangeValidity: getSetState('valid')
 	};
 	static consts = ['pattern'];
 	static data = {
 		width: 300,
 		placeholder: 'Input a value',
-		
+		uncontrolled: true,
+		required: true
 	};
 	static previewProps = {
 		unclosable: true
@@ -32,7 +35,8 @@ export default class InputDemo extends Demo {
 	static componentName = 'Input';
 	static component = Input;
 	static changeState = {
-		onChange: 'value'
+		onChange: 'value',
+		onChangeValidity: 'valid'
 	};
 
 	renderMapper() {

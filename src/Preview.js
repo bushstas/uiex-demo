@@ -83,7 +83,8 @@ export default class Preview extends React.Component {
 			contentAfterRenderer,
 			imports,
 			renderMethods,
-			componentRef
+			componentRef,
+			uncontrolled
 		} = this.props;
 		const bools = [];
 
@@ -111,7 +112,7 @@ export default class Preview extends React.Component {
 		}
 		code += N;
 		
-		// class
+		// consts
 		let constsAdded = 0;
 		if (consts instanceof Array) {
 			for (let c of consts) {
@@ -124,16 +125,33 @@ export default class Preview extends React.Component {
 					code += wrap('const ', 'keyword2') + this.getConstName(c) + wrap(' = ') + constValue + wrap(';') + N;
 				}
 			}
-			if (constsAdded) {
-				code += N;
+		}
+		if (uncontrolled && stateProps instanceof Array) {
+			for (let item of stateProps) {
+				constsAdded++;
+				let val = data[item];
+				if (val === undefined) {
+					val = null;
+				}
+				if (typeof val == 'string') {
+					val = wrap('"' + val + '"', 'string');
+				} else {
+					val = stringify(val);
+				}
+				code += wrap('const ', 'keyword2') + this.getConstName('initial_' + item) + wrap(' = ') + val + wrap(';') + N;
 			}
 		}
+		if (constsAdded) {
+			code += N;
+		}
+
+		// class
 		code += wrap('export default', 'keyword') + wrap(' class ', 'keyword2') + wrap(name + 'Demo', 'name') + wrap(' extends', 'keyword') + wrap(' React.Component', 'name') + wrap(' {') + N;
 		tabulation.add();
 		
 		
 		// constructor
-		if (stateProps instanceof Array) {
+		if (!uncontrolled && stateProps instanceof Array) {
 			code += tabulation.render(wrap('constructor', 'keyword2') + wrap('(') + wrap('props', 'args') + wrap(') {'), true);
 			tabulation.add();
 			code += tabulation.render(wrap('super', 'args') + wrap('(') + 'props' + wrap(');'), true);
@@ -146,12 +164,12 @@ export default class Preview extends React.Component {
 				if (consts instanceof Array && consts.indexOf(item) > -1) {
 					val = this.getConstName(item);
 				} else {
-					if (data[item] === undefined) {
+					if (val === undefined) {
 						val = null;
-					} else if (typeof data[item] == 'string') {
-						val = wrap('"' + data[item] + '"', 'string');
+					} else if (typeof val == 'string') {
+						val = wrap('"' + val + '"', 'string');
 					} else {
-						val = stringify(data[item]);
+						val = stringify(val);
 					}
 				}
 				if (val != null) {
@@ -172,7 +190,7 @@ export default class Preview extends React.Component {
 		// render
 		code += tabulation.render(wrap('render', 'function') + wrap('() {'), true);
 		tabulation.add();
-		if (stateProps instanceof Array) {
+		if (!uncontrolled && stateProps instanceof Array) {
 			code += tabulation.render(wrap('const', 'keyword2') + wrap(' {') + stateProps.join(', ') + wrap('} = ') + wrap('this', 'args') + wrap('.') + 'state' + wrap(';'), true);
 		}
 		code += tabulation.render(wrap('return', 'keyword') + wrap(' ('), true);
@@ -200,7 +218,8 @@ export default class Preview extends React.Component {
 		}
 		if (stateProps instanceof Array) {
 			for (let k of stateProps) {
-				code += tabulation.render(wrap(k, 'key') + wrap('={') + k + wrap('}'), true);
+				const k2 = uncontrolled ? this.getConstName('initial_' + k) : k;
+				code += tabulation.render(wrap(k, 'key') + wrap('={') + k2 + wrap('}'), true);
 			}
 		}
 		for (let item of priority) {
@@ -236,7 +255,7 @@ export default class Preview extends React.Component {
 				if (args instanceof Object && args[h] instanceof Array) {
 					a = args[h].join(', ');
 				}
-				if (funcs instanceof Object && funcs[h]) {
+				if (funcs instanceof Object && funcs[h] && !uncontrolled) {
 					if (funcs[h] instanceof Array) {
 						funcs[h] = funcs[h].join(N);
 					}

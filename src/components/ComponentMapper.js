@@ -26,7 +26,7 @@ export default class ComponentMapper extends DemoMapper {
 				description: 'vertical'
 			},
 			uncontrolled: {
-				description: 'The component will be uncontrolled, so all props such as "value" or "status" will be initial, and you can\'t change it'
+				description: 'The component will be uncontrolled, so all props such as "value" or "status" will be initial, and you can\'t change it passing a new prop'
 			}
 		},
 		inputs: [

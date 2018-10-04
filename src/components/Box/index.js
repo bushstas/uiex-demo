@@ -31,7 +31,6 @@ export default class BoxDemo extends Demo {
 		]
 	};
 	static data = {
-		uncontrolled: true,
 		isOpen: true,
 		buttonUnder: false,
 		speed: 'fast',

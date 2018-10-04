@@ -37,7 +37,6 @@ export default class App extends React.Component {
 			sidePanelOpen: false,
 			windowIsOpen: false
 		}
-		
 	}
 
 	render() {

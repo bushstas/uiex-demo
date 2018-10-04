@@ -26,6 +26,7 @@ import ArrowDemo from './components/Arrow';
 import ButtonDemo from './components/Button';
 import ScrollContainerDemo from './components/ScrollContainer';
 import TimeScaleDemo from './components/TimeScale';
+import CheckboxDemo from './components/Checkbox';
 
 import './style.scss';
 
@@ -33,7 +34,7 @@ export default class App extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			page: 'Input',
+			page: 'Checkbox',
 			sidePanelOpen: false,
 			windowIsOpen: false
 		}
@@ -69,6 +70,9 @@ export default class App extends React.Component {
 
 			case 'ButtonGroup':
 				return <ButtonGroupDemo/>
+
+			case 'Checkbox':
+				return <CheckboxDemo/>
 
 			case 'RateForm':
 				return <RateFormDemo/>

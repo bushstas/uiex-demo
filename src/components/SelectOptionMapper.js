@@ -31,7 +31,7 @@ export default class SelectOptionMapper extends DemoMapper {
 				iconType: {
 					description: 'An option icon type',
 					options: ICON_TYPE,
-					readOnly: true					
+					readOnly: true
 				}
 			}
 		]

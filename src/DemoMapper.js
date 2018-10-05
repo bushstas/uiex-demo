@@ -17,7 +17,7 @@ export default class DemoMapper extends React.PureComponent {
     }
 
 	render() {
-		let {isOpen, excluded, data, onChange, handlers, args, componentName} = this.props;
+		let {isOpen, excluded, data, onChange, handlers, args, componentName, reactChildren} = this.props;
 		if (!handlers) {
 			handlers = this.constructor.handlers;
 		}
@@ -40,6 +40,7 @@ export default class DemoMapper extends React.PureComponent {
 				args={args}
 				map={this.state.map} 
 				data={data}
+				reactChildren={reactChildren}
                 handlers={handlers}
                 onChange={onChange}
 			/>

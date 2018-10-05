@@ -80,7 +80,7 @@ export default class TimeScaleDemo extends Demo {
 					type: 'color'
 				},
 				timeStyle: {
-					description: 'Color of the indicator (String)',
+					description: 'Style of the indicator (Object)',
 					type: 'object',
 					options: TIME_STYLE_OPTIONS
 				}

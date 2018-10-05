@@ -141,7 +141,6 @@ export default class ScrollContainerDemo extends Demo {
 		]
 	};
 	static data = {
-		children: renderText(),
 		innerPadding: 20
 	};
 	static stateProps = ['scrollTop', 'scrollTopPercent'];
@@ -165,9 +164,7 @@ export default class ScrollContainerDemo extends Demo {
 	static component = ScrollContainer;
 	static imports = ['ButtonGroup', 'Button'];
 	static componentMapperProps = {
-		maxHeight: 5000,
-		childrenReadOnly: true,
-		react: true
+		maxHeight: 5000
 	};
 	static componentProps = {
 		className: 'scroll-container-preview'
@@ -210,6 +207,10 @@ export default class ScrollContainerDemo extends Demo {
 				</Button>
 			</ButtonGroup>
 		)
+	}
+
+	renderContent() {
+		return renderText();
 	}
 
 	renderPreviewContent = () => {

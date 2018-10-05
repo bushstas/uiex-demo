@@ -89,6 +89,10 @@ export default class Preview extends React.Component {
 		const bools = [];
 
 		const N = "\n";
+		if (!(consts instanceof Array)) {
+			consts = [];
+		}
+		consts.push('style');
 
 		// imports
 		let addImport = '';

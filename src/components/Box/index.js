@@ -36,8 +36,7 @@ export default class BoxDemo extends Demo {
 		speed: 'fast',
 		animation: 'fade-fall',
 		effect: 'ease-in-out',
-		button: 'Open the box/Close the box',
-		children: '...'
+		button: 'Open the box/Close the box'
 	};
 	static excluded = ['vertical', 'block', 'valign', 'height'];
 	static handlers = ['onToggle', 'onDisabledClick'];

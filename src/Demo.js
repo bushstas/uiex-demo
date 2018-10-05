@@ -16,6 +16,7 @@ export default class Demo extends React.Component {
     }
     
     render() {
+        this.content = this.renderContent();
 		return (
 			<div>
                 {this.renderComponentMapper()}
@@ -35,6 +36,7 @@ export default class Demo extends React.Component {
                 isOpen={false}
                 data={this.state.data}
                 excluded={excluded}
+                reactChildren={!!this.content}
                 {...componentMapperProps}
 				onChange={this.handleChangeData}
 			/>
@@ -117,8 +119,7 @@ export default class Demo extends React.Component {
                 {...this.state.data}
                 {...props}
             >
-                {this.renderContent()}
-                {this.state.data.children}
+                {this.content || this.state.data.children}
             </Component>
         )
     }

@@ -286,8 +286,9 @@ export default class Mapper extends React.Component {
 			break;
 
 			default:
-				if (react) {
+				if (name == 'children' && this.props.reactChildren) {
 					props.value = '<React.Children>';
+					props.readOnly = true;
 				}
 				input = <Input {...props}/>
 		}

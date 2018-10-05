@@ -10,6 +10,19 @@ const filterTagName = (value) => {
 	return value.replace(/[^a-z]/gi, '');
 };
 
+const STYLE_OPTIONS = [
+	{
+		border: '1px solid #AAAAAA',
+		padding: '10px'
+	},
+	{
+		fontWeight: 'bold',
+		fontSize: '32px',
+		lineHeight: '32px',
+	}
+];
+
+
 export default class ComponentMapper extends DemoMapper {
 	static map = {
 		checkboxes: {
@@ -75,6 +88,11 @@ export default class ComponentMapper extends DemoMapper {
 					description: 'Custom ClassName attribute (String)',
 					stretched: true
 				},
+				style: {
+					description: 'Components\'s main element style (Object)',
+					type: 'object',
+					options: STYLE_OPTIONS
+				},
 				children: {
 					description: 'Content (ReactElement | Array | String)',
 					stretched: true
@@ -86,12 +104,10 @@ export default class ComponentMapper extends DemoMapper {
 
 	initMap() {
 		const map = super.initMap();
-		const {maxWidth, maxHeight, childrenReadOnly, react} = this.props;
+		const {maxWidth, maxHeight} = this.props;
 		const [data] = map.inputs;
 		data.width.maxValue = maxWidth || MAX_WIDTH;
 		data.height.maxValue = maxHeight || MAX_HEIGHT;
-		data.children.readOnly = !!childrenReadOnly;
-		data.children.react = !!react;
 		return map;
 	}
 

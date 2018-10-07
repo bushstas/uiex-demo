@@ -88,6 +88,10 @@ export default class Preview extends React.Component {
 		} = this.props;
 		const bools = [];
 
+		if (typeof stateProps == 'function') {
+			stateProps = stateProps.call(owner);
+		}
+
 		const N = "\n";
 		if (!(consts instanceof Array)) {
 			consts = [];
@@ -260,10 +264,14 @@ export default class Preview extends React.Component {
 					a = args[h].join(', ');
 				}
 				if (funcs instanceof Object && funcs[h] && !uncontrolled) {
-					if (funcs[h] instanceof Array) {
-						funcs[h] = funcs[h].join(N);
+					let fn = funcs[h];
+					if (typeof fn == 'function') {
+						fn = fn.call(owner);
 					}
-					func = funcs[h];
+					if (fn instanceof Array) {
+						fn = fn.join(N);
+					}
+					func = fn;
 				}				
 				const ha = 'handle' + h.replace(/^on/, '');
 				const ha2 = wrap('handle' + h.replace(/^on/, ''), 'name');

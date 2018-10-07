@@ -1,6 +1,6 @@
 import React from 'react';
 import Demo from '../../Demo';
-import {getSetState, tabulation, wrap} from '../../utils';
+import {getSetState, tabulation, wrap, previewRenderer} from '../../utils';
 import {ScrollContainer} from 'uiex/ScrollContainer';
 import {ButtonGroup} from 'uiex/ButtonGroup';
 import {Button} from 'uiex/Button';
@@ -24,6 +24,10 @@ const renderText = () => {
 		</div>
 	)
 }
+
+const PREVIEW_DATA = {
+	onClick: 'handleButtonClick'
+};
 
 export default class ScrollContainerDemo extends Demo {
 	static map = {
@@ -180,6 +184,7 @@ export default class ScrollContainerDemo extends Demo {
 			<ButtonGroup 
 				className="scroll-container-preview-buttons"
 				onClick={this.handleButtonClick}
+				previewData={PREVIEW_DATA}
 			>
 				<Button value="1">
 					Scroll to #1
@@ -214,20 +219,7 @@ export default class ScrollContainerDemo extends Demo {
 	}
 
 	renderPreviewContent = () => {
-		let code = '';
-		for (let i = 1; i <= 8; i++) {
-			code += tabulation.render(wrap('&lt;') + wrap('div', 'tag') + wrap('&gt;'), true);
-			tabulation.add();
-			code += tabulation.render(wrap('&lt;') + wrap('big', 'tag') + wrap(' id', 'key') + wrap('=') + wrap('"element' + i + '"', 'string') + wrap('&gt;') + wrap('&lt;') + wrap('b', 'tag') + wrap('&gt;') + '#Element' + i + wrap('&lt;/') + wrap('b', 'tag') + wrap('&gt;') + wrap('&lt;/') + wrap('big', 'tag') + wrap('&gt;'), true);
-			code += tabulation.render(wrap('&lt;') + wrap('br', 'tag') + wrap('/&gt;'), true);
-			code += tabulation.render(TEXT, true);
-			tabulation.reduce();
-			code += tabulation.render(wrap('&lt;/') + wrap('div', 'tag') + wrap('&gt;'), i < 8);
-			if (i < 8) {
-				code += tabulation.render(wrap('&lt;') + wrap('br', 'tag') + wrap('/&gt;'), true);
-			}
-		}
-		return code;
+		return previewRenderer.render(this.renderContent());
 	}
 
 	handleButtonClick = (id) => {
@@ -243,20 +235,11 @@ export default class ScrollContainerDemo extends Demo {
 	}
 
 	renderPreviewCodeBefore = () => {
-		let code = '';
-		code += tabulation.render(wrap('&lt;') + wrap('ButtonGroup', 'keyword2') + ' ' + wrap('onClick', 'key') + wrap('={') + wrap('this', 'args') + wrap('.') + 'handleButtonClick' + wrap('}&gt;'), true);
-		tabulation.add();
-		for (let i = 1; i <= 8; i++) {
-			code += tabulation.render(wrap('&lt;') + wrap('Button', 'keyword2') + ' ' + wrap('value', 'key') + wrap('=') + wrap('"' + i + '"', 'string') + wrap('&gt;'), true);
-			tabulation.add();
-			code += tabulation.render('Scroll to #' + i, true);
-			tabulation.reduce();
-			code += tabulation.render(wrap('&lt;/') + wrap('Button', 'keyword2') + wrap('&gt;'), true);
-		}
-		tabulation.reduce();
-		code += tabulation.render(wrap('&lt;/') + wrap('ButtonGroup', 'keyword2') + wrap('&gt;'), true);
-		code += tabulation.render(wrap('&lt;') + wrap('br', 'tag') + wrap('/&gt;'));
-		return code;
+		const content = [
+			this.renderPreviewContentBefore(),
+			<br/>
+		];
+		return previewRenderer.render(content, ['className']);
 	}
 
 	renderMethods = () => {

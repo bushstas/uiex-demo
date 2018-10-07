@@ -2,7 +2,7 @@ import React from 'react';
 import Demo from '../../Demo';
 import {Checkbox} from 'uiex/Checkbox';
 import {CheckboxGroup} from 'uiex/CheckboxGroup';
-import {getSetState} from '../../utils';
+import {getSetState, previewRenderer} from '../../utils';
 import {ICON_TYPE} from 'uiex/consts';
 
 const OPTIONS = [true, false];
@@ -114,15 +114,20 @@ export default class CheckboxDemo extends Demo {
 		]
 	};
 	static data = {
+		name: 'aaa',
 		checked: true,
 		children: 'checkbox children (works as additional content)',
 		label: 'checkbox label'
 	};
 	static excluded = ['vertical', 'align', 'valign', 'height'];
 	static handlers = ['onChange', 'onDisabledClick'];
-	static stateProps = ['checked'];
+	static stateProps = function() {
+		return this.state.withCheckboxGroup ? ['checked', 'value'] : ['checked'];
+	}
 	static funcs = {
-		onChange: getSetState('checked')
+		onChange: function() {
+			return getSetState(this.state.withCheckboxGroup ? ['checked', 'value'] : 'checked');
+		}
 	};
 	static args = {
 		onChange: ['checked', 'name', 'value'],
@@ -131,7 +136,9 @@ export default class CheckboxDemo extends Demo {
 	static componentName = 'Checkbox';
 	static component = Checkbox;
 	static changeState = {
-		onChange: 'checked'
+		onChange: (checked, name, value) => {
+			return {checked, value};
+		}
 	}
 
 	renderPreviewNote = () => {
@@ -150,20 +157,26 @@ export default class CheckboxDemo extends Demo {
 		if (this.state.withCheckboxGroup) {
 			return (
 				<CheckboxGroup>
-					<Checkbox label="First">
+					<Checkbox label="First" value="1">
 						Some additional content
 					</Checkbox>
-					<Checkbox label="Second" />
-					<Checkbox label="Third" />
-					<Checkbox label="Fourth" />
-					<Checkbox label="Fifth" />
-					<Checkbox label="Sixth" />
-					<Checkbox label="Seventh" />
-					<Checkbox label="Eighth" />
-					<Checkbox label="Nineth" />
-					<Checkbox label="Tenth" />
+					<Checkbox label="Second" value="2" />
+					<Checkbox label="Third" value="3" />
+					<Checkbox label="Fourth" value="4" />
+					<Checkbox label="Fifth" value="5" />
+					<Checkbox label="Sixth" value="6" />
+					<Checkbox label="Seventh" value="7" />
+					<Checkbox label="Eighth" value="8" />
+					<Checkbox label="Nineth" value="9" />
+					<Checkbox label="Tenth" value="10" />
 				</CheckboxGroup>
 			)
+		}
+	}
+
+	renderPreviewContent() {
+		if (this.state.withCheckboxGroup) {
+			return previewRenderer.render(this.renderContent());
 		}
 	}
 }

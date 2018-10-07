@@ -4,7 +4,7 @@ import Mapper from '../../Mapper';
 import {CellGroup, Cell} from 'uiex/CellGroup';
 import {Select} from 'uiex/Select';
 import {CELL_ALIGN, ALIGN_SELF} from 'uiex/consts';
-import {stringify, wrap, tabulation} from '../../utils';
+import {previewRenderer} from '../../utils';
 
 const CELL_MAP = {
 	checkboxes: {
@@ -405,37 +405,6 @@ export default class CellGroupDemo extends Demo {
 	}
 
 	renderPreviewContent = () => {
-		const N = "\n";		
-		let content = '';
-		for (let i = 0; i < this.state.cellQuantity; i++) {
-			const props = this.getCellData(i);
-			const keys = Object.keys(props);
-			if (keys.length > 1) {
-				content += tabulation.render(wrap('&lt;') + wrap('Cell', 'keyword2'), true);
-				tabulation.add();
-				for (let k in props) {
-					if (props[k] === true) {
-						content += tabulation.render(wrap(k, 'key'), true);
-					} else {
-						content += tabulation.render(wrap(k, 'key') + wrap('=') + stringify(props[k], true), true);
-					}
-				}
-				tabulation.reduce();
-				content += tabulation.render(wrap('&gt;'), true);
-			} else if (keys.length > 0) {
-				if (props[keys[0]] === true) {
-					content += tabulation.render(wrap('&lt;') + wrap('Cell ', 'keyword2') + wrap(keys[0], 'key') + wrap('&gt;'), true);
-				} else {
-					content += tabulation.render(wrap('&lt;') + wrap('Cell ', 'keyword2') + wrap(keys[0], 'key') + wrap('=') + stringify(props[keys[0]], true) + wrap('&gt;'), true);
-				}
-			} else {
-				content += tabulation.render(wrap('&lt;') + wrap('Cell', 'keyword2') + wrap('&gt;'), true);
-			}
-			tabulation.add();
-			content += tabulation.render('Cell #' + (i + 1), true);
-			tabulation.reduce();
-			content += tabulation.render(wrap('&lt;/') + wrap('Cell', 'keyword2') + wrap('&gt;'), i < this.state.cellQuantity - 1);
-		}
-		return content;
+		return previewRenderer.render(this.renderContent(), ['className', 'onClick', 'style']);
 	}
 }

@@ -108,6 +108,9 @@ class Tabulation {
 		return this.tabs[this.level];	
 	}
 	render(str, withN = false) {
+		if (typeof str == 'number') {
+			str = str.toString();
+		}
 		if (typeof str != 'string') {
 			str = '';
 		}
@@ -129,3 +132,108 @@ class Tabulation {
 }
 
 export const tabulation = new Tabulation();
+
+class PreviewRenderer {
+	render(content, excluded = []) {
+		this.excluded = excluded;
+		this.code = '';
+		this.renderRectElement(content);
+		return this.code.replace(/^[\r\n]+|[\r\n]+$/g, '');
+	}
+
+	renderRectElement(content, next = null) {
+		if (content instanceof Array) {
+			for (let item of content) {
+				this.renderRectElement(item);
+			}
+			return;
+		}
+		if (content instanceof Object) {
+			const {type} = content;
+			if (type) {		
+				if (typeof type == 'function') {
+					this.renderComponent(content);
+				} else {
+					this.renderElement(content);
+				}
+			}
+			return;
+		}		
+		this.renderString(content, next);
+	}
+
+	renderString(content, next) {
+		if (!this.stringRendered) {
+			this.code += tabulation.render(content, next == null || next instanceof Object);
+		} else {
+			this.code += content + (next == null || next instanceof Object ? "\n" : '');
+		}
+		this.stringRendered = true;
+	}
+
+	renderElement(content) {
+		this.renderItem(content, content.type);
+	}
+
+	renderComponent(content) {
+		this.renderItem(content, content.type.name, true);
+	}
+
+	renderItem(content, name, isComponent = false) {
+		this.stringRendered = false;
+		const {props} = content;
+		this.code += tabulation.render(wrap('&lt;') + wrap(name, isComponent ? 'keyword2' : 'tag'));
+		let strProps = [];
+		const {previewData, children} = props;
+		for (let k in props) {
+			if (k !== 'previewData' && k !== 'children') {
+				if (props[k] != null && this.excluded.indexOf(k) == -1) {
+					let line = wrap(k, 'key') + wrap('=');			
+					if (typeof props[k] == 'function') {
+						if (previewData instanceof Object && previewData[k]) {
+							line += wrap('{') + wrap('this', 'args') + wrap('.') + previewData[k] + wrap('}');
+						} else {
+							line += wrap('{() ') + wrap('=>', 'keyword2') + wrap(' {}}}');
+						}
+					} else {
+						line += stringify(props[k], true);
+					}
+					strProps.push(line);
+				}
+			}
+		}
+		if (strProps.length > 0) {
+			if (strProps. length == 1) {
+				this.code += ' ' + strProps[0];
+			} else {
+				tabulation.add();
+				this.code += "\n";
+				for (let item of strProps) {
+					this.code += tabulation.render(item, true);
+				}
+				tabulation.reduce();
+			}
+		}
+		if (strProps.length > 1) {
+			this.code += tabulation.render(wrap((!children ? '/' : '') + '&gt;'), true);
+		} else {
+			this.code += (isComponent && !children ? ' ' : '') + wrap((!children ? '/' : '') + '&gt;') + "\n";
+		}
+		if (children) {
+			tabulation.add();
+			if (children instanceof Array) {
+				for (let i = 0; i < children.length; i++) {
+					const child = children[i];
+					this.renderRectElement(child, children[i + 1]);
+				}
+			} else {
+				this.renderRectElement(children);
+			}
+			tabulation.reduce();
+			this.code += tabulation.render(wrap('&lt;/') + wrap(name, isComponent ? 'keyword2' : 'tag') + wrap('&gt;'), true);
+		}
+		this.stringRendered = false;
+	}
+}
+
+export const previewRenderer = new PreviewRenderer();

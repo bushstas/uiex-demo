@@ -310,10 +310,15 @@ export default class Mapper extends React.Component {
 
 	renderSelectControl(name, item, value) {
 		let SelectComponent = Select;
+		let {options} = item;
+		let optionsFromFunc;
 		if (item.autoComplete) {
 			SelectComponent = AutoComplete;
 		} else if (item.type == 'object') {
 			SelectComponent = SelectObject;
+			if (typeof item.options == 'function') {
+				optionsFromFunc = item.options.call(this.props.owner);
+			}
 		}
 		return (
 			<FormControl 
@@ -329,7 +334,7 @@ export default class Mapper extends React.Component {
 					name={name}
 					value={value}
 					readOnly={item.readOnly}
-					options={item.options}
+					options={optionsFromFunc || options}
 					multiple={item.multiple}
 					placeholder={item.placeholder || 'Choose an option'}
 				/>

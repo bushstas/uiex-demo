@@ -47,7 +47,8 @@ export default class Demo extends React.Component {
         const {componentName, map, mapperProps, handlers, args, customEvents} = this.constructor;
         return (
             <Mapper 
-				ref="mapper"
+                ref="mapper"
+                owner={this}
 				name={componentName}
 				map={map} 
                 data={this.state.data}

@@ -5,7 +5,8 @@ import {CheckboxGroup} from 'uiex/CheckboxGroup';
 import {getSetState, previewRenderer} from '../../utils';
 import {ICON_TYPE} from 'uiex/consts';
 
-const OPTIONS = [true, false];
+const SIMPLE_OPTIONS = [true, false];
+const GROUP_OPTIONS = [true, false, "4", ["1", "3", "5"]];
 
 const CONTROL_STYLE_OPTIONS = [
 	{
@@ -70,13 +71,11 @@ export default class CheckboxDemo extends Demo {
 					example: 'option'
 				},
 				value: {
-					description: 'Checkbox value. Mostly for multileveled checkbox groups (String | Number)',
-					example: 25
-				},
-				checked: {
-					description: 'Checked flag. Null is for undetermined state of the checkbox (Boolean | null)',
+					description: 'A value of the control. Null is for undetermined state of the checkbox (Boolean | null | Array | String | Number)',
 					type: 'object',
-					options: OPTIONS
+					options: function() {
+						return !this.state.withCheckboxGroup ? SIMPLE_OPTIONS : GROUP_OPTIONS;
+					}
 				},
 				label: {
 					description: 'Label of the checkbox. When the label is empty, children will be rendered as a label (String)',
@@ -115,7 +114,7 @@ export default class CheckboxDemo extends Demo {
 	};
 	static data = {
 		name: 'aaa',
-		value: ["1", "3", "5"],
+		value: [],
 		children: 'checkbox children (works as additional content)',
 		label: 'checkbox label'
 	};
@@ -123,7 +122,7 @@ export default class CheckboxDemo extends Demo {
 	static handlers = ['onChange', 'onDisabledClick'];
 	static stateProps = ['value'];
 	static funcs = {
-		onChange: ['value']
+		onChange: getSetState('value')
 	};
 	static args = {
 		onChange: ['value', 'name'],
@@ -162,7 +161,16 @@ export default class CheckboxDemo extends Demo {
 					<Checkbox label="Seventh" name="7" />
 					<Checkbox label="Eighth" name="8" />
 					<Checkbox label="Nineth" name="9" />
-					<Checkbox label="Tenth" name="10" />
+					<Checkbox label="Tenth">
+						<CheckboxGroup>
+							<Checkbox label="10.1" name="10.1"/>
+							<Checkbox label="10.2" name="10.2"/>
+							<Checkbox label="10.3" name="10.3"/>
+							<Checkbox label="10.4" name="10.4"/>
+							<Checkbox label="10.5" name="10.5"/>
+						</CheckboxGroup>
+					</Checkbox>
+					<Checkbox label="Eleventh" name="11" />
 				</CheckboxGroup>
 			)
 		}

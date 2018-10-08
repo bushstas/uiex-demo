@@ -115,35 +115,29 @@ export default class CheckboxDemo extends Demo {
 	};
 	static data = {
 		name: 'aaa',
-		checked: true,
+		value: ["1", "3", "5"],
 		children: 'checkbox children (works as additional content)',
 		label: 'checkbox label'
 	};
 	static excluded = ['vertical', 'align', 'valign', 'height'];
 	static handlers = ['onChange', 'onDisabledClick'];
-	static stateProps = function() {
-		return this.state.withCheckboxGroup ? ['checked', 'value'] : ['checked'];
-	}
+	static stateProps = ['value'];
 	static funcs = {
-		onChange: function() {
-			return getSetState(this.state.withCheckboxGroup ? ['checked', 'value'] : 'checked');
-		}
+		onChange: ['value']
 	};
 	static args = {
-		onChange: ['checked', 'name', 'value'],
-		onDisabledClick: ['checked', 'name', 'value']
+		onChange: ['value', 'name'],
+		onDisabledClick: ['name']
 	};
 	static componentName = 'Checkbox';
 	static component = Checkbox;
 	static changeState = {
-		onChange: (checked, name, value) => {
-			return {checked, value};
-		}
-	}
+		onChange: 'value'
+	};
 
 	renderPreviewNote = () => {
 		return (
-			<Checkbox checked={this.state.withCheckboxGroup} onChange={this.handleCheckboxChange}>
+			<Checkbox value={this.state.withCheckboxGroup} onChange={this.handleCheckboxChange}>
 				With a child checkbox group
 			</Checkbox>
 		) 
@@ -157,18 +151,18 @@ export default class CheckboxDemo extends Demo {
 		if (this.state.withCheckboxGroup) {
 			return (
 				<CheckboxGroup>
-					<Checkbox label="First" value="1">
+					<Checkbox label="First" name="1">
 						Some additional content
 					</Checkbox>
-					<Checkbox label="Second" value="2" />
-					<Checkbox label="Third" value="3" />
-					<Checkbox label="Fourth" value="4" />
-					<Checkbox label="Fifth" value="5" />
-					<Checkbox label="Sixth" value="6" />
-					<Checkbox label="Seventh" value="7" />
-					<Checkbox label="Eighth" value="8" />
-					<Checkbox label="Nineth" value="9" />
-					<Checkbox label="Tenth" value="10" />
+					<Checkbox label="Second" name="2" />
+					<Checkbox label="Third" name="3" />
+					<Checkbox label="Fourth" name="4" />
+					<Checkbox label="Fifth" name="5" />
+					<Checkbox label="Sixth" name="6" />
+					<Checkbox label="Seventh" name="7" />
+					<Checkbox label="Eighth" name="8" />
+					<Checkbox label="Nineth" name="9" />
+					<Checkbox label="Tenth" name="10" />
 				</CheckboxGroup>
 			)
 		}

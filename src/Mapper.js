@@ -166,7 +166,7 @@ export default class Mapper extends React.Component {
 	renderExtraPropsCheckbox() {
 		return (
 			<Checkbox 
-				checked={this.state.extraPropsShown}
+				value={this.state.extraPropsShown}
 				onChange={this.handleExtraPropsCheckboxChange}
 			>
 				Show extra props
@@ -342,7 +342,7 @@ export default class Mapper extends React.Component {
 			<Checkbox
 				key={name}
 				name={name}
-				checked={value}
+				value={value}
 				readOnly={item.readOnly}
 				title={item.description + ' (Boolean)'}
 				onChange={this.handleChangeCheckbox}
@@ -352,8 +352,8 @@ export default class Mapper extends React.Component {
 		)
 	}
 
-	handleChangeCheckbox = (checked, name, value) => {
-		this.handleChange(name, checked);
+	handleChangeCheckbox = (value, name) => {
+		this.handleChange(name, value);
 	}
 
 	handleChangeInput = (name, value) => {

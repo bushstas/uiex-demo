@@ -83,11 +83,14 @@ export default class RateFormDemo extends Demo {
 	static stateProps = ['value'];
 	static funcs = {
 		onChange: getSetState('value')
-	}
+	};
 	static args = {
 		onChange: ['value'],
 		onSubmit: ['value']
 	}
+	static changeState = {
+		onChange: 'value'
+	};
 	static componentName = 'RateForm';
 	static component = RateForm;
 

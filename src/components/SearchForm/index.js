@@ -4,6 +4,7 @@ import {SearchForm} from 'uiex/SearchForm';
 import {ICON_TYPE} from 'uiex/consts';
 import FormMapper from '../FormMapper';
 import {MEASURES} from '../../consts';
+import {getSetState} from '../../utils';
 
 export default class SearchFormDemo extends Demo {
 	static map = {
@@ -56,6 +57,17 @@ export default class SearchFormDemo extends Demo {
 	};
 	static excluded = ['vertical'];
 	static handlers = ['onChange', 'onSubmit', 'onFocus', 'onBlur', 'onDisabledClick'];
+	static stateProps = ['value'];
+	static args = {
+		onChange: ['value'],
+		onSubmit: ['value']
+	}
+	static funcs = {
+		onChange: getSetState('value')
+	};
+	static changeState = {
+		onChange: 'value'
+	};
 	static componentName = 'SearchForm';
 	static component = SearchForm;
 

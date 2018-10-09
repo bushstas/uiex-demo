@@ -3,7 +3,7 @@ import ComponentMapper from './components/ComponentMapper';
 import Mapper from './Mapper';
 import Preview from './Preview';
 
-const LOG_EVENTS = 1;
+const LOG_EVENTS = 0;
 
 export default class Demo extends React.Component {
     constructor(props) {

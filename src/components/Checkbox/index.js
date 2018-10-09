@@ -161,7 +161,7 @@ export default class CheckboxDemo extends Demo {
 					<Checkbox label="Seventh" name="7" />
 					<Checkbox label="Eighth" name="8" />
 					<Checkbox label="Nineth" name="9" />
-					<Checkbox label="Tenth">
+					<Checkbox label="Tenth" name="10">
 						<CheckboxGroup>
 							<Checkbox label="10.1" name="10.1"/>
 							<Checkbox label="10.2" name="10.2"/>

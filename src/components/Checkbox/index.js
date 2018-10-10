@@ -114,7 +114,7 @@ export default class CheckboxDemo extends Demo {
 	};
 	static data = {
 		name: 'aaa',
-		value: [],
+		value: ["10.1", "10.5"],
 		children: 'checkbox children (works as additional content)',
 		label: 'checkbox label'
 	};
@@ -168,6 +168,15 @@ export default class CheckboxDemo extends Demo {
 							<Checkbox label="10.3" name="10.3"/>
 							<Checkbox label="10.4" name="10.4"/>
 							<Checkbox label="10.5" name="10.5"/>
+							<Checkbox label="10.6" name="10.6">
+								<CheckboxGroup>
+									<Checkbox label="10.6.1" name="10.6.1"/>
+									<Checkbox label="10.6.2" name="10.6.2"/>
+									<Checkbox label="10.6.3" name="10.6.3"/>
+									<Checkbox label="10.6.4" name="10.6.4"/>
+									<Checkbox label="10.6.5" name="10.6.5"/>
+								</CheckboxGroup>
+							</Checkbox>
 						</CheckboxGroup>
 					</Checkbox>
 					<Checkbox label="Eleventh" name="11" />

@@ -28,45 +28,51 @@ const CELL_MAP = {
 		{
 			_COLUMNS: 16,
 			size: {
-				description: 'Cell size',
+				description: 'Cell size in integer or decimal number (Number | Numeric String)',
 				type: 'number',
+				decimal: true,
+				toFixed: 1,
 				maxValue: 10,
 				positive: true,
 				example: 2
 			},
 			shift: {
-				description: 'Cell shift',
+				description: 'Cell shift in integer or decimal number (Number | Numeric String)',
 				type: 'number',
+				decimal: true,
+				toFixed: 1,
 				maxValue: 10,
 				positive: true,
 				example: 1
 			},
 			maxSize: {
-				description: 'Max size for stretched cells',
+				description: 'Max size for stretched cells in integer or decimal number (Number | Numeric String)',
 				type: 'number',
+				decimal: true,
+				toFixed: 1,
 				maxValue: 10,
 				positive: true,
 				example: 6
 			},
 			alignSelf: {
-				description: 'Cell vertical align instead of being stretched',
+				description: 'Cell vertical align instead of being stretched (String)',
 				type: 'select',
 				options: ALIGN_SELF
 			},
 			height: {
-				description: 'Cell height',
+				description: 'Cell height (Number | Numeric String)',
 				type: 'number',
 				maxValue: 1000,
 				positive: true,
 				example: 200
 			},
 			cellAlign: {
-				description: 'Cell align',
+				description: 'Cell align (String)',
 				options: CELL_ALIGN,
 				empty: 'Chose an option'
 			},
 			minHeight: {
-				description: 'Cell min height',
+				description: 'Cell min height (Number | Numeric String)',
 				type: 'number',
 				maxValue: 1000,
 				positive: true,
@@ -76,49 +82,49 @@ const CELL_MAP = {
 		},
 		{
 			sizeTiny: {
-				description: 'Cell size for window width <= 800px',
+				description: 'Cell size for window width <= 800px (Number | Numeric String)',
 				type: 'number',
 				maxValue: 10,
 				positive: true,
 				extra: true
 			},
 			sizeSmall: {
-				description: 'Cell size for window width <= 1000px',
+				description: 'Cell size for window width <= 1000px (Number | Numeric String)',
 				type: 'number',
 				maxValue: 10,
 				positive: true,
 				extra: true
 			},
 			sizeMiddle: {
-				description: 'Cell size for window width <= 1300px',
+				description: 'Cell size for window width <= 1300px (Number | Numeric String)',
 				type: 'number',
 				maxValue: 10,
 				positive: true,
 				extra: true
 			},
 			sizeLarger: {
-				description: 'Cell size for window width <= 1500px',
+				description: 'Cell size for window width <= 1500px (Number | Numeric String)',
 				type: 'number',
 				maxValue: 10,
 				positive: true,
 				extra: true
 			},
 			sizeLarge: {
-				description: 'Cell size for window width <= 2000px',
+				description: 'Cell size for window width <= 2000px (Number | Numeric String)',
 				type: 'number',
 				maxValue: 10,
 				positive: true,
 				extra: true
 			},
 			sizeHuge: {
-				description: 'Cell size for window width <= 2500px',
+				description: 'Cell size for window width <= 2500px (Number | Numeric String)',
 				type: 'number',
 				maxValue: 10,
 				positive: true,
 				extra: true
 			},
 			sizeGigantic: {
-				description: 'Cell size for window width > 2500px',
+				description: 'Cell size for window width > 2500px (Number | Numeric String)',
 				type: 'number',
 				maxValue: 10,
 				positive: true,
@@ -150,154 +156,158 @@ export default class CellGroupDemo extends Demo {
 			{
 				_COLUMNS: 16,
 				columns: {
-					description: 'Columns count',
+					description: 'Columns count (Number | Numeric String)',
 					type: 'number',
 					maxValue: 10,
 					positive: true,
 					example: 10
 				},
 				cellSize: {
-					description: 'Cell default size',
+					description: 'Cell default size in integer or decimal number (Number | Numeric String)',
 					type: 'number',
+					decimal: true,
+					toFixed: 1,
 					maxValue: 10,
 					positive: true,
 					example: 2
 				},
 				maxCellSize: {
-					description: 'Cell max default size',
+					description: 'Cell max default size in integer or decimal number (Number | Numeric String)',
 					type: 'number',
+					decimal: true,
+					toFixed: 1,
 					maxValue: 10,
 					positive: true,
 					example: 6
 				},
 				cellMargin: {
-					description: 'Space between columns in px',
+					description: 'Space between columns in px (Number | Numeric String)',
 					type: 'number',
 					maxValue: 30,
 					positive: true,
 					example: 10
 				},
 				rowMargin: {
-					description: 'Space between rows in px',
+					description: 'Space between rows in px (Number | Numeric String)',
 					type: 'number',
 					maxValue: 30,
 					positive: true,
 					example: 10
 				},
 				cellHeight: {
-					description: 'Height of cells',
+					description: 'Height of cells (Number | Numeric String)',
 					type: 'number',
 					maxValue: 500,
 					positive: true,
 					example: 100
 				},
 				cellMinHeight: {
-					description: 'Minimal height of cells',
+					description: 'Minimal height of cells (Number | Numeric String)',
 					type: 'number',
 					maxValue: 500,
 					positive: true,
 					example: 60
 				},
 				cellAlign: {
-					description: 'Align of cells',
+					description: 'Align of cells (String)',
 					type: 'select',
 					options: CELL_ALIGN
 				},
 			},
 			{
 				columnsTiny: {
-					description: 'Columns for window width <= 800px',
+					description: 'Columns for window width <= 800px (Number | Numeric String)',
 					type: 'number',
 					maxValue: 10,
 					positive: true,
 					extra: true
 				},
 				columnsSmall: {
-					description: 'Columns for window width <= 1000px',
+					description: 'Columns for window width <= 1000px (Number | Numeric String)',
 					type: 'number',
 					maxValue: 10,
 					positive: true,
 					extra: true
 				},
 				columnsMiddle: {
-					description: 'Columns for window width <= 1300px',
+					description: 'Columns for window width <= 1300px (Number | Numeric String)',
 					type: 'number',
 					maxValue: 10,
 					positive: true,
 					extra: true
 				},
 				columnsLarger: {
-					description: 'Columns for window width <= 1500px',
+					description: 'Columns for window width <= 1500px (Number | Numeric String)',
 					type: 'number',
 					maxValue: 10,
 					positive: true,
 					extra: true
 				},
 				columnsLarge: {
-					description: 'Columns for window width <= 2000px',
+					description: 'Columns for window width <= 2000px (Number | Numeric String)',
 					type: 'number',
 					maxValue: 10,
 					positive: true,
 					extra: true
 				},
 				columnsHuge: {
-					description: 'Columns for window width <= 2500px',
+					description: 'Columns for window width <= 2500px (Number | Numeric String)',
 					type: 'number',
 					maxValue: 10,
 					positive: true,
 					extra: true
 				},
 				columnsGigantic: {
-					description: 'Columns for window width > 2500px',
+					description: 'Columns for window width > 2500px (Number | Numeric String)',
 					type: 'number',
 					maxValue: 10,
 					positive: true,
 					extra: true
 				},
 				cellSizeTiny: {
-					description: 'Cell default size for window width <= 800px',
+					description: 'Cell default size for window width <= 800px (Number | Numeric String)',
 					type: 'number',
 					maxValue: 10,
 					positive: true,
 					extra: true
 				},
 				cellSizeSmall: {
-					description: 'Cell default size for window width <= 1000px',
+					description: 'Cell default size for window width <= 1000px (Number | Numeric String)',
 					type: 'number',
 					maxValue: 10,
 					positive: true,
 					extra: true
 				},
 				cellSizeMiddle: {
-					description: 'Cell default size for window width <= 1300px',
+					description: 'Cell default size for window width <= 1300px (Number | Numeric String)',
 					type: 'number',
 					maxValue: 10,
 					positive: true,
 					extra: true
 				},
 				cellSizeLarger: {
-					description: 'Cell default size for window width <= 1500px',
+					description: 'Cell default size for window width <= 1500px (Number | Numeric String)',
 					type: 'number',
 					maxValue: 10,
 					positive: true,
 					extra: true
 				},
 				cellSizeLarge: {
-					description: 'Cell default size for window width <= 2000px',
+					description: 'Cell default size for window width <= 2000px (Number | Numeric String)',
 					type: 'number',
 					maxValue: 10,
 					positive: true,
 					extra: true
 				},
 				cellSizeHuge: {
-					description: 'Cell default size for window width <= 2500px',
+					description: 'Cell default size for window width <= 2500px (Number | Numeric String)',
 					type: 'number',
 					maxValue: 10,
 					positive: true,
 					extra: true
 				},
 				cellSizeGigantic: {
-					description: 'Cell default size for window width > 2500px',
+					description: 'Cell default size for window width > 2500px (Number | Numeric String)',
 					type: 'number',
 					maxValue: 10,
 					positive: true,

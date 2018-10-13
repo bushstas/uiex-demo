@@ -27,6 +27,7 @@ import ButtonDemo from './components/Button';
 import ScrollContainerDemo from './components/ScrollContainer';
 import TimeScaleDemo from './components/TimeScale';
 import CheckboxDemo from './components/Checkbox';
+import CheckboxGroupDemo from './components/CheckboxGroup';
 
 import './style.scss';
 
@@ -34,7 +35,7 @@ export default class App extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			page: 'Checkbox',
+			page: 'CheckboxGroup',
 			sidePanelOpen: false,
 			windowIsOpen: false
 		}
@@ -73,6 +74,9 @@ export default class App extends React.Component {
 
 			case 'Checkbox':
 				return <CheckboxDemo/>
+
+			case 'CheckboxGroup':
+				return <CheckboxGroupDemo/>
 
 			case 'RateForm':
 				return <RateFormDemo/>

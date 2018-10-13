@@ -4,7 +4,9 @@ import {Checkbox} from 'uiex/Checkbox';
 import {CheckboxGroup} from 'uiex/CheckboxGroup';
 import {getSetState, previewRenderer} from '../../utils';
 import {ICON_TYPE} from 'uiex/consts';
-import {CHECKBOX_OPTIONS, CHECKBOX_GROUP_OPTIONS} from '../../consts';
+import {CHECKBOX_GROUP_OPTIONS} from '../../consts';
+
+const CHECK_ALL_OPTIONS = [true, 'Check all these pretty checkboxes'];
 
 const CONTROL_STYLE_OPTIONS = [
 	{
@@ -52,9 +54,12 @@ const CONTENT_STYLE_OPTIONS = [
 	}
 ];
 
-export default class CheckboxDemo extends Demo {
+export default class CheckboxGroupDemo extends Demo {
 	static map = {
 		checkboxes: {
+			radioMode: {
+				description: 'Works like RadioGroup'
+			},
 			multiline: {
 				description: 'Multilined label'
 			},
@@ -66,18 +71,17 @@ export default class CheckboxDemo extends Demo {
 			{
 				name: {
 					description: 'Checkbox name (String)',
-					example: 'option'
+					example: 'options'
 				},
 				value: {
 					description: 'A value of the control. Null is for undetermined state of the checkbox (Boolean | null | Array | String | Number)',
 					type: 'object',
-					options: function() {
-						return !this.state.withCheckboxGroup ? CHECKBOX_OPTIONS : CHECKBOX_GROUP_OPTIONS;
-					}
+					options: CHECKBOX_GROUP_OPTIONS
 				},
-				label: {
-					description: 'Label of the checkbox. When the label is empty, children will be rendered as a label (String)',
-					example: 'Check me',
+				checkAll: {
+					description: 'Check all checkbox label text or true for default text (Boolean | String)',
+					type: 'object',
+					options: CHECK_ALL_OPTIONS,
 				},
 				icon: {
 					description: 'Checkbox icon for "checked" state',
@@ -111,10 +115,7 @@ export default class CheckboxDemo extends Demo {
 		]
 	};
 	static data = {
-		name: 'aaa',
-		value: ["10.1", "10.5"],
-		children: 'checkbox children (works as additional content)',
-		label: 'checkbox label'
+		width: 300
 	};
 	static excluded = ['vertical', 'align', 'valign', 'height'];
 	static handlers = ['onChange', 'onDisabledClick'];
@@ -126,66 +127,48 @@ export default class CheckboxDemo extends Demo {
 		onChange: ['value', 'name'],
 		onDisabledClick: ['name']
 	};
-	static componentName = 'Checkbox';
-	static component = Checkbox;
+	static componentName = 'CheckboxGroup';
+	static component = CheckboxGroup;
 	static changeState = {
 		onChange: 'value'
 	};
 
-	renderPreviewNote = () => {
-		return (
-			<Checkbox value={this.state.withCheckboxGroup} onChange={this.handleCheckboxChange}>
-				With a child checkbox group
-			</Checkbox>
-		) 
-	}
-
-	handleCheckboxChange = (withCheckboxGroup) => {
-		this.setState({withCheckboxGroup});
-	}
-
-	renderContent() {
-		if (this.state.withCheckboxGroup) {
-			return (
+	renderContent() {	
+		return [
+			<Checkbox key="1" label="First" name="1">
+				Some additional content
+			</Checkbox>,
+			<Checkbox key="2" label="Second" name="2" />,
+			<Checkbox key="3" label="Third" name="3" />,
+			<Checkbox key="4" label="Fourth" name="4" />,
+			<Checkbox key="5" label="Fifth" name="5" />,
+			<Checkbox key="6" label="Sixth" name="6" />,
+			<Checkbox key="7" label="Seventh" name="7" />,
+			<Checkbox key="8" label="Eighth" name="8" />,
+			<Checkbox key="9" label="Nineth" name="9" />,
+			<Checkbox key="10" label="Tenth" name="10">
 				<CheckboxGroup>
-					<Checkbox label="First" name="1">
-						Some additional content
-					</Checkbox>
-					<Checkbox label="Second" name="2" />
-					<Checkbox label="Third" name="3" />
-					<Checkbox label="Fourth" name="4" />
-					<Checkbox label="Fifth" name="5" />
-					<Checkbox label="Sixth" name="6" />
-					<Checkbox label="Seventh" name="7" />
-					<Checkbox label="Eighth" name="8" />
-					<Checkbox label="Nineth" name="9" />
-					<Checkbox label="Tenth" name="10">
+					<Checkbox label="10.1" name="10.1"/>
+					<Checkbox label="10.2" name="10.2"/>
+					<Checkbox label="10.3" name="10.3"/>
+					<Checkbox label="10.4" name="10.4"/>
+					<Checkbox label="10.5" name="10.5"/>
+					<Checkbox label="10.6" name="10.6">
 						<CheckboxGroup>
-							<Checkbox label="10.1" name="10.1"/>
-							<Checkbox label="10.2" name="10.2"/>
-							<Checkbox label="10.3" name="10.3"/>
-							<Checkbox label="10.4" name="10.4"/>
-							<Checkbox label="10.5" name="10.5"/>
-							<Checkbox label="10.6" name="10.6">
-								<CheckboxGroup>
-									<Checkbox label="10.6.1" name="10.6.1"/>
-									<Checkbox label="10.6.2" name="10.6.2"/>
-									<Checkbox label="10.6.3" name="10.6.3"/>
-									<Checkbox label="10.6.4" name="10.6.4"/>
-									<Checkbox label="10.6.5" name="10.6.5"/>
-								</CheckboxGroup>
-							</Checkbox>
+							<Checkbox label="10.6.1" name="10.6.1"/>
+							<Checkbox label="10.6.2" name="10.6.2"/>
+							<Checkbox label="10.6.3" name="10.6.3"/>
+							<Checkbox label="10.6.4" name="10.6.4"/>
+							<Checkbox label="10.6.5" name="10.6.5"/>
 						</CheckboxGroup>
 					</Checkbox>
-					<Checkbox label="Eleventh" name="11" />
 				</CheckboxGroup>
-			)
-		}
+			</Checkbox>,
+			<Checkbox key="11" label="Eleventh" name="11" />
+		];
 	}
 
 	renderPreviewContent() {
-		if (this.state.withCheckboxGroup) {
-			return previewRenderer.render(this.renderContent());
-		}
+		return previewRenderer.render(this.renderContent());
 	}
 }

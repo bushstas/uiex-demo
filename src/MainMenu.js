@@ -9,6 +9,7 @@ const PAGES = [
 	'Button',
 	'ButtonGroup',
 	'Checkbox',
+	'CheckboxGroup',
 	'CellGroup',
 	'ColorPicker',
 	'Colors',

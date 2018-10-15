@@ -57,6 +57,12 @@ const CONTENT_STYLE_OPTIONS = [
 export default class CheckboxGroupDemo extends Demo {
 	static map = {
 		checkboxes: {
+			linked: {
+				description: 'With a connecting line'
+			},
+			noBorder: {
+				description: 'Without borders'
+			},
 			radioMode: {
 				description: 'Works like RadioGroup'
 			},
@@ -82,6 +88,15 @@ export default class CheckboxGroupDemo extends Demo {
 					description: 'Check all checkbox label text or true for default text (Boolean | String)',
 					type: 'object',
 					options: CHECK_ALL_OPTIONS,
+				},
+				maxHeight: {
+					type: 'number',
+					description: 'Max height style attribute (Number | Numeric String)',
+					example: '400',
+					minValue: 200,
+					maxValue: 1000,
+					positive: true,
+					correctionOnBlur: true
 				},
 				icon: {
 					description: 'Checkbox icon for "checked" state',
@@ -115,7 +130,8 @@ export default class CheckboxGroupDemo extends Demo {
 		]
 	};
 	static data = {
-		width: 300
+		width: 300,
+		maxHeight: 400
 	};
 	static excluded = ['vertical', 'align', 'valign', 'height'];
 	static handlers = ['onChange', 'onDisabledClick'];
@@ -154,7 +170,7 @@ export default class CheckboxGroupDemo extends Demo {
 					<Checkbox label="10.4" name="10.4"/>
 					<Checkbox label="10.5" name="10.5"/>
 					<Checkbox label="10.6" name="10.6">
-						<CheckboxGroup>
+						<CheckboxGroup radioMode>
 							<Checkbox label="10.6.1" name="10.6.1"/>
 							<Checkbox label="10.6.2" name="10.6.2"/>
 							<Checkbox label="10.6.3" name="10.6.3"/>

@@ -1,46 +1,30 @@
 import React from 'react';
 import {ScrollContainer} from 'uiex/ScrollContainer';
-
-const PAGES = [
-	'Arrow',
-	'AutoComplete',
-	'Box',
-	'BoxSection',
-	'Button',
-	'ButtonGroup',
-	'Checkbox',
-	'CheckboxGroup',
-	'CellGroup',
-	'ColorPicker',
-	'Colors',
-	'Draggable',
-	'Input',
-	'InputArray',
-	'InputColor',
-	'InputDate',
-	'InputNumber',
-	'InputPhone',
-	'InputRegexp',
-	'Modal',
-	'RateForm',
-	'ScrollContainer',
-	'SearchForm',
-	'Select',
-	'SidePanel',
-	'SliderScale',
-	'Tab',
-	'Tabs',
-	'TimeScale'
-]
+import {Button} from 'uiex/Button';
+import {MAP} from './map';
 
 export default class MainMenu extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {};
+		const keys = Object.keys(MAP);
+		this.state = {
+			active: keys[0]
+		};
+	}
+
+	componentDidMount() {
+		const {active} = this.state;
+		this.handleChange(active);
+	}
+
+	handleChange = (active) => {
+		this.setState({active});
+		this.props.onChange(MAP[active]);
 	}
 
 	render() {
-		const {onChange, active} = this.props;
+		const {onChange} = this.props;
+		const {active} = this.state;
 		return (
 			<ScrollContainer 
 				className="main-menu"
@@ -55,19 +39,21 @@ export default class MainMenu extends React.Component {
 				hiddenScrollbar
 				onWheel={this.handleWheel}
 			>
-				{PAGES.map(item => {
+				{Object.keys(MAP).map(item => {
 					let className = 'main-menu-button';
-					if (item == active) {
+					if (item === active) {
 						className += ' active';
 					}
 					return (
-						<div 
+						<Button 
 							key={item}
+							value={item}
 							className={className}
-							onClick={onChange.bind(null, item)}
+							align="left"
+							onClick={this.handleChange}
 						>
 							{item}
-						</div>
+						</Button>
 					)
 				})}
 			</ScrollContainer>

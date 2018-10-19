@@ -66,11 +66,13 @@ export default class ModalDemo extends Demo {
 					default: 'fade-fall'
 				},
 				maskOpacity: {
-					description: 'Mask opacity from 0 to 10',
+					description: 'Mask opacity from 0 to 10. Can be decimal',
 					type: 'number',
 					example: '5',
 					maxValue: 10,
-					positive: true
+					positive: true,
+					decimal: true,
+					toFixed: 1
 				},
 				maskColor: {
 					description: 'Mask background color',

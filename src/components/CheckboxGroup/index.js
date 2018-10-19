@@ -131,7 +131,9 @@ export default class CheckboxGroupDemo extends Demo {
 	};
 	static data = {
 		width: 300,
-		maxHeight: 400
+		maxHeight: 400,
+		value: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"],
+		checkAll: true
 	};
 	static excluded = ['vertical', 'align', 'valign', 'height'];
 	static handlers = ['onChange', 'onDisabledClick'];

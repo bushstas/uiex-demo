@@ -2,7 +2,7 @@ import React from 'react';
 import Demo from '../../Demo';
 import {BoxSection} from 'uiex/BoxSection';
 import AnimatedMapper from '../AnimatedMapper'; 
-import {getSetState} from '../../utils';
+import {getSetState, previewRenderer} from '../../utils';
 import {BOX_CONTENT} from '../../consts';
 import {BOX_SECTION_VIEWS} from 'uiex/consts';
 
@@ -72,5 +72,9 @@ export default class BoxSectionDemo extends Demo {
 
 	renderContent() {
 		return BOX_CONTENT;
+	}
+
+	renderPreviewContent = () => {
+		return previewRenderer.render(BOX_CONTENT);
 	}
 }

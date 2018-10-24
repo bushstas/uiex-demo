@@ -71,7 +71,7 @@ export default class ArrowDemo extends Demo {
 		onClick: ['value'],
 		onDisabledClick: ['value']
 	};
-	static excluded = ['width', 'height', 'align', 'valign', 'children', 'vertical'];
+	static excluded = ['width', 'height', 'align', 'valign', 'children', 'vertical', 'uncontrolled'];
 	static handlers = ['onClick', 'onDisabledClick'];
 	static componentName = 'Arrow';
 	static component = Arrow;

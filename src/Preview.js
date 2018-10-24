@@ -9,12 +9,18 @@ export default class Preview extends React.Component {
 		super(props);
 		this.state = {
 			padding: 10,
-			codeShown: false
+			codeShown: false,
+			customizationShown: false
 		}
 	}
 
 	render() {
-		const {codeShown, expanded} = this.state;
+		const {
+			codeShown,
+			customizationShown,
+			expanded,
+			customizationExpanded
+		} = this.state;
 		return (
 			<Section 
 				className="preview" 
@@ -34,6 +40,18 @@ export default class Preview extends React.Component {
 				>
 					{codeShown && this.renderCode()}
 				</Modal>
+				<Modal
+					className="preview-modal"
+					expanded={customizationExpanded}
+					header={'Customization example'}
+					width="900"
+					expandable
+					isOpen={customizationShown}
+					onClose={this.handleCustomizationModalClose}
+					onExpand={this.handleCustomizationModalExpand}
+				>
+					{customizationShown && this.renderCustomizationCode()}
+				</Modal>
 			</Section>
 		)
 	}
@@ -45,6 +63,9 @@ export default class Preview extends React.Component {
 				<Button onClick={this.handleGetCodeClick}>
 					Get demo code
 				</Button>
+				<Button onClick={this.handleCustomizationClick}>
+					Customizitation example
+				</Button>
 			</span>
 		)
 	}
@@ -53,12 +74,116 @@ export default class Preview extends React.Component {
 		this.setState({codeShown: true});
 	}
 
+	handleCustomizationClick = () => {
+		this.setState({customizationShown: true});
+	}
+
 	handleModalClose = () => {
 		this.setState({codeShown: false});
 	}
 
+	handleCustomizationModalClose = () => {
+		this.setState({customizationShown: false});
+	}
+
 	handleModalExpand = (expanded) => {
 		this.setState({expanded});
+	}
+
+	handleCustomizationModalExpand = (customizationExpanded) => {
+		this.setState({customizationExpanded});
+	}
+
+	renderObject(object) {
+		let code = wrap('{') + "\n";
+		tabulation.add();
+		const keys = Object.keys(object);
+		for (let i = 0; i < keys.length; i++) {
+			code += tabulation.render(wrap(keys[i], 'key') + wrap(': '));
+			if (object[keys[i]] instanceof Object) {
+				code += this.renderObject(object[keys[i]]);
+			} else {
+				code += stringify(object[keys[i]]);
+			}
+			code += (i < keys.length - 1 ? wrap(',') : '') + "\n";
+		}
+		tabulation.reduce();
+		code += tabulation.render(wrap('}'));
+		return code;
+	}
+
+	renderCustomizationCode() {
+		tabulation.init();
+		let {
+			name,
+			defaultProps = {
+				width: 100,
+				height: 100,
+				className: 'arrow'
+			},
+			defaultStyle = {
+				color: 'black',
+				fontSize: 16
+			},
+			defaultStyles = {
+				main: {
+					color: 'black',
+					fontSize: 16
+				},
+				mask: {
+					opacity: 0.5,
+					backgroundColor: '#FFF'
+				}
+			},
+			theme = {
+				color: 'black',
+				fontSize: 16
+			},
+			themes = {
+				main: {
+					color: 'black',
+					fontSize: 16
+				},
+				mask: {
+					opacity: 0.5,
+					backgroundColor: '#FFF'
+				}
+			} 
+		} = this.props;
+		let code = tabulation.render(wrap('import', 'keyword') + wrap(' {'), true);
+		tabulation.add();
+		code += tabulation.render('setDefaultProps' + wrap(', '), true);
+		code += tabulation.render('setDefaultStyle' + wrap(', '), true);
+		code += tabulation.render('setDefaultStyles' + wrap(', '), true);
+		code += tabulation.render('addTheme' + wrap(', '), true);
+		code += tabulation.render('addThemes', true);
+		tabulation.reduce();
+		code += tabulation.render(wrap('} ') + wrap('from', 'keyword') + wrap(' "uiex"', 'string') + wrap(';'), true);
+		code += tabulation.render(wrap('import', 'keyword') + wrap(' {') + name + wrap('} ') + wrap('from', 'keyword') + wrap(' "uiex/' + name + '"', 'string') + wrap(';'), 2);
+
+		code += tabulation.render(wrap('setDefaultProps', 'function') + wrap('(') + name + wrap(', '));
+		code += this.renderObject(defaultProps);
+		code += tabulation.render(wrap(');'), 2);
+
+		code += tabulation.render(wrap('setDefaultStyle', 'function') + wrap('(') + name + wrap(', '));
+		code += this.renderObject(defaultStyle);
+		code += tabulation.render(wrap(');'), 2);
+
+		code += tabulation.render(wrap('setDefaultStyles', 'function') + wrap('(') + name + wrap(', '));
+		code += this.renderObject(defaultStyles);
+		code += tabulation.render(wrap(');'), 2);
+
+		code += tabulation.render(wrap('// usage: &lt;' + name + ' theme="colored" /&gt;', 'comment'), true);
+		code += tabulation.render(wrap('addTheme', 'function') + wrap('(') + name + wrap(', ') + wrap('"colored"', 'string') + wrap(', '));
+		code += this.renderObject(theme);
+		code += tabulation.render(wrap(');'), 2);
+
+		code += tabulation.render(wrap('addThemes', 'function') + wrap('(') + name + wrap(', ') + wrap('"colored"', 'string') + wrap(', '));
+		code += this.renderObject(themes);
+		code += tabulation.render(wrap(');'), 2);
+		return (
+			<pre className="decorated" dangerouslySetInnerHTML={{__html: code}}/>
+		)
 	}
 
 	renderCode() {
@@ -202,8 +327,6 @@ export default class Preview extends React.Component {
 			code += tabulation.render(wrap('const', 'keyword2') + wrap(' {') + stateProps.join(', ') + wrap('} = ') + wrap('this', 'args') + wrap('.') + 'state' + wrap(';'), true);
 		}
 		code += tabulation.render(wrap('return', 'keyword') + wrap(' ('), true);
-		
-		
 		
 		// ================ start component
 		tabulation.add();

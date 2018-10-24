@@ -19,7 +19,8 @@ const STYLE_OPTIONS = [
 		fontWeight: 'bold',
 		fontSize: '32px',
 		lineHeight: '32px',
-	}
+	},
+	'background-color: black; color: white; border-radius: 10px;'
 ];
 
 
@@ -84,12 +85,15 @@ export default class ComponentMapper extends DemoMapper {
 					customFilter: filterTagName,
 					maxLength: 15
 				},
+				theme: {
+					description: 'Name of added customization theme. See customization example for more info (String)'
+				},
 				className: {
 					description: 'Custom ClassName attribute (String)',
 					stretched: true
 				},
 				style: {
-					description: 'Components\'s main element style (Object)',
+					description: 'Components\'s main element style (Object | String)',
 					type: 'object',
 					options: STYLE_OPTIONS
 				},

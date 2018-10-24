@@ -1,6 +1,19 @@
 import React from 'react';
 import Demo from '../../Demo';
 import {Loader} from 'uiex/Loader';
+import {SPINNER_TYPES} from 'uiex/consts';
+import {previewRenderer} from '../../utils';
+import {LOADER_CONTENT} from '../../consts';
+
+const MASK_STYLE_OPTIONS = [
+	{
+		left: 20,
+		top: 20,
+		right: 20,
+		bottom: 20
+	},
+	'opacity: 0.3; background-color: green'
+];
 
 export default class LoaderDemo extends Demo {
 	static map = {
@@ -10,10 +23,16 @@ export default class LoaderDemo extends Demo {
 			},
 			overlayed: {
 				description: ''
+			},
+			withoutMask: {
+				description: ''
 			}
 		},
 		inputs: [
 			{
+				loadingText: {
+					description: '',
+				},
 				maskColor: {
 					description: '',
 					type: 'color'
@@ -26,6 +45,10 @@ export default class LoaderDemo extends Demo {
 					decimal: true,
 					toFixed: 1,
 					positive: true
+				},
+				spinnerType: {
+					description: '',
+					options: SPINNER_TYPES
 				},
 				spinnerColor: {
 					description: '',
@@ -44,14 +67,31 @@ export default class LoaderDemo extends Demo {
 					positive: true,
 					maxValue: 40,
 					minValue: 1
+				},
+				spinnerSpeed: {
+					description: '',
+					type: 'number',
+					positive: true,
+					maxValue: 40,
+					minValue: 5
+				},
+				maskStyle: {
+					description: 'The mask style (Object | String)',
+					type: 'object',
+					options: MASK_STYLE_OPTIONS
 				}
 			}
 		]
 	};
 	static data = {
-		height: 400
+		spinnerSize: 64,
+		spinnerThickness: 8,
+		loading: true,
+		overlayed: true,
+		spinnerType: 'roller',
+		className: 'loader-preview'
 	};
-	static excluded = ['vertical', 'block', 'valign', 'height'];
+	static excluded = ['vertical', 'valign', 'align', 'block', 'disabled', 'uncontrolled'];
 	static handlers = [];
 	static stateProps = [];
 	static funcs = {
@@ -63,4 +103,11 @@ export default class LoaderDemo extends Demo {
 	static componentName = 'Loader';
 	static component = Loader;
 
+	renderContent() {
+		return LOADER_CONTENT;
+	}
+
+	renderPreviewContent = () => {
+		return previewRenderer.render(LOADER_CONTENT);
+	}
 }

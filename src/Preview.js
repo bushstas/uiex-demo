@@ -259,7 +259,7 @@ export default class Preview extends React.Component {
 				}
 			}
 		}
-		if (uncontrolled && stateProps instanceof Array) {
+		if (uncontrolled && stateProps instanceof Array && stateProps.length > 0) {
 			for (let item of stateProps) {
 				constsAdded++;
 				let val = data[item];
@@ -284,7 +284,7 @@ export default class Preview extends React.Component {
 		
 		
 		// constructor
-		if (!uncontrolled && stateProps instanceof Array) {
+		if (!uncontrolled && stateProps instanceof Array && stateProps.length > 0) {
 			code += tabulation.render(wrap('constructor', 'keyword2') + wrap('(') + wrap('props', 'args') + wrap(') {'), true);
 			tabulation.add();
 			code += tabulation.render(wrap('super', 'args') + wrap('(') + 'props' + wrap(');'), true);
@@ -323,7 +323,7 @@ export default class Preview extends React.Component {
 		// render
 		code += tabulation.render(wrap('render', 'function') + wrap('() {'), true);
 		tabulation.add();
-		if (!uncontrolled && stateProps instanceof Array) {
+		if (!uncontrolled && stateProps instanceof Array && stateProps.length > 0) {
 			code += tabulation.render(wrap('const', 'keyword2') + wrap(' {') + stateProps.join(', ') + wrap('} = ') + wrap('this', 'args') + wrap('.') + 'state' + wrap(';'), true);
 		}
 		code += tabulation.render(wrap('return', 'keyword') + wrap(' ('), true);

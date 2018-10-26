@@ -29,8 +29,11 @@ import CheckboxDemo from './components/Checkbox';
 import CheckboxGroupDemo from './components/CheckboxGroup';
 import LabelDemo from './components/Label';
 import LoaderDemo from './components/Loader';
+import AppDemo from './components/App';
+import TooltipDemo from './components/Tooltip';
 
 export const MAP = {
+	App: AppDemo,
 	Arrow: ArrowDemo,
 	AutoComplete: AutoCompleteDemo,
 	Box: BoxDemo,
@@ -61,5 +64,6 @@ export const MAP = {
 	SliderScale: SliderScaleDemo,
 	Tab: TabDemo,
 	Tabs: TabsDemo,
-	TimeScale: TimeScaleDemo
+	TimeScale: TimeScaleDemo,
+	Tooltip: TooltipDemo
 };

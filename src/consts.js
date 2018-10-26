@@ -68,5 +68,11 @@ export const LOADER_CONTENT = (
 	</div>
 );
 
+export const TOOLTIP_CONTENT = (
+	<div>
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+	</div>
+);
+
 export const CHECKBOX_GROUP_OPTIONS = [true, false, "4", ["1", "3", "5"], "10.6.2"];
 export const CHECKBOX_OPTIONS = [true, false];

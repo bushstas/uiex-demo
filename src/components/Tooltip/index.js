@@ -5,6 +5,20 @@ import {getSetState, previewRenderer} from '../../utils';
 import {TOOLTIP_TYPES, TOOLTIP_POSITIONS, MODAL_ANIMATION} from 'uiex/consts';
 import {TOOLTIP_CONTENT} from '../../consts';
 
+const POPUP_STYLE_OPTIONS = [
+	{
+		color: '#555',
+		backgroundColor: '#fff',
+		boxShadow: '3px 3px 10px #aaa'
+	},
+	{
+		backgroundColor: '#333',
+		fontSize: '14px',
+		textShadow: '1px 1px 1px #000'
+	},
+	'border-radius: 20px; font-style: italic; padding: 20px; font-size: 15px;'
+];
+
 export default class TooltipDemo extends Demo {
 	static map = {
 		checkboxes: {
@@ -61,16 +75,25 @@ export default class TooltipDemo extends Demo {
 				animation: {
 					description: '',
 					options: MODAL_ANIMATION 
+				},
+				popupStyle: {
+					description: 'Style of the popup (Object)',
+					type: 'object',
+					options: POPUP_STYLE_OPTIONS
 				}
 			}
 		]
 	};
 	static data = {
+		type: 'round',
+		size: 40,
+		popupShown: false,
 		popupWidth: 400
 	};
 	static excluded = ['vertical', 'block', 'valign', 'height'];
 	static handlers = ['onTogglePopup'];
 	static stateProps = ['popupShown'];
+	static consts = ['popupStyle'];
 	static funcs = {
 		onTogglePopup: getSetState('popupShown')
 	};

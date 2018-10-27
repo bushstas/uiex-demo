@@ -115,6 +115,7 @@ export default class Preview extends React.Component {
 	renderCustomizationCode() {
 		tabulation.init();
 		let {
+			component,
 			name,
 			defaultProps = {
 				width: 100,
@@ -129,10 +130,6 @@ export default class Preview extends React.Component {
 				main: {
 					color: 'black',
 					fontSize: 16
-				},
-				mask: {
-					opacity: 0.5,
-					backgroundColor: '#FFF'
 				}
 			},
 			theme = {
@@ -143,13 +140,24 @@ export default class Preview extends React.Component {
 				main: {
 					color: 'black',
 					fontSize: 16
-				},
-				mask: {
-					opacity: 0.5,
-					backgroundColor: '#FFF'
 				}
 			} 
 		} = this.props;
+
+		let hasStyleNames = false;
+		if (component.styleNames instanceof Array && component.styleNames.length > 0) {
+			hasStyleNames = true;
+			for (let i = 0; i < component.styleNames.length; i++) {
+				defaultStyles[component.styleNames[i]] = {
+					opacity: 0.5,
+					backgroundColor: '#FFF'
+				};
+				themes[component.styleNames[i]] = {
+					opacity: 0.5,
+					backgroundColor: '#FFF'
+				};
+			}
+		}
 		let code = tabulation.render(wrap('import', 'keyword') + wrap(' {'), true);
 		tabulation.add();
 		code += tabulation.render('setDefaultProps' + wrap(', '), true);
@@ -169,18 +177,22 @@ export default class Preview extends React.Component {
 		code += this.renderObject(defaultStyle);
 		code += tabulation.render(wrap(');'), 2);
 
-		code += tabulation.render(wrap('setDefaultStyles', 'function') + wrap('(') + name + wrap(', '));
-		code += this.renderObject(defaultStyles);
-		code += tabulation.render(wrap(');'), 2);
+		if (hasStyleNames) {
+			code += tabulation.render(wrap('setDefaultStyles', 'function') + wrap('(') + name + wrap(', '));
+			code += this.renderObject(defaultStyles);
+			code += tabulation.render(wrap(');'), 2);
+		}
 
 		code += tabulation.render(wrap('// usage: &lt;' + name + ' theme="colored" /&gt;', 'comment'), true);
 		code += tabulation.render(wrap('addTheme', 'function') + wrap('(') + name + wrap(', ') + wrap('"colored"', 'string') + wrap(', '));
 		code += this.renderObject(theme);
 		code += tabulation.render(wrap(');'), 2);
 
-		code += tabulation.render(wrap('addThemes', 'function') + wrap('(') + name + wrap(', ') + wrap('"colored"', 'string') + wrap(', '));
-		code += this.renderObject(themes);
-		code += tabulation.render(wrap(');'), 2);
+		if (hasStyleNames) {
+			code += tabulation.render(wrap('addThemes', 'function') + wrap('(') + name + wrap(', ') + wrap('"colored"', 'string') + wrap(', '));
+			code += this.renderObject(themes);
+			code += tabulation.render(wrap(');'), 2);
+		}
 		return (
 			<pre className="decorated" dangerouslySetInnerHTML={{__html: code}}/>
 		)
@@ -363,7 +375,9 @@ export default class Preview extends React.Component {
 				continue;
 			}
 			if (consts instanceof Array && consts.indexOf(k) > -1 && (!(stateProps instanceof Array) || stateProps.indexOf(k) == -1)) {
-				code += tabulation.render(wrap(k, 'key') + wrap('={') + this.getConstName(k) + wrap('}'), true);
+				if (data[k] != null) {
+					code += tabulation.render(wrap(k, 'key') + wrap('={') + this.getConstName(k) + wrap('}'), true);
+				}
 				continue;
 			}
 			if (k != 'children' && priority.indexOf(k) == -1 && (!(stateProps instanceof Array) || stateProps.indexOf(k) == -1)) {

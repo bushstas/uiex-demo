@@ -62,10 +62,11 @@ export default class Demo extends React.Component {
     }
 
     renderPreview() {
-        const {componentName, handlers, args, funcs, stateProps, consts, previewProps, additionalImport, imports, componentRef} = this.constructor;
+        const {componentName, component, handlers, args, funcs, stateProps, consts, previewProps, additionalImport, imports, componentRef} = this.constructor;
         return (
             <Preview
                 owner={this}
+                component={component}
                 name={componentName}
 				data={this.state.data}
 				handlers={handlers}

@@ -31,6 +31,7 @@ import LabelDemo from './components/Label';
 import LoaderDemo from './components/Loader';
 import AppDemo from './components/App';
 import TooltipDemo from './components/Tooltip';
+import RendererDemo from './components/Renderer';
 
 export const MAP = {
 	App: AppDemo,
@@ -57,6 +58,7 @@ export const MAP = {
 	Loader:LoaderDemo,
 	Modal: ModalDemo,
 	RateForm: RateFormDemo,
+	Renderer: RendererDemo,
 	ScrollContainer: ScrollContainerDemo,
 	SearchForm: SearchFormDemo,
 	Select: SelectDemo,

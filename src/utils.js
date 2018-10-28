@@ -1,4 +1,4 @@
-export const stringify = (value, addBraces = false) => {
+export const stringify = (value, addBraces = false, isJSXProp = false) => {
 	const type = typeof value;
 	if (value == null) {
 		if (value === undefined) {
@@ -14,15 +14,15 @@ export const stringify = (value, addBraces = false) => {
 		} else if (typeof value == 'number') {
 			value = wrap(value, 'number');
 		} else if (typeof value == 'string') {
-			value = wrap('"' + value + '"', 'string');
+			if (isJSXProp) {
+				value = wrap('"' + value + '"', 'string');	
+			} else {
+				value = wrap('\'' + value + '\'', 'string');
+			}
 		} else if (typeof value == 'boolean') {
 			value = wrap(value.toString(), 'number');
 		} else if (value instanceof Array) {
-			const items = [];
-			for (let item of value) {
-				items.push(stringify(item));
-			}
-			value = wrap('[') + items.join(wrap(', ')) + wrap(']');
+			value = stringifyArray(value);
 		} else if (typeof value == 'function') {
 			value = wrap('() ') + wrap('=>', 'keyword2') + wrap(' {}');
 		} else if (value instanceof RegExp) {		
@@ -57,11 +57,34 @@ export const stringify = (value, addBraces = false) => {
 }
 
 const stringifyObject = (obj) => {
-	const items = [];
-	for (let k in obj) {
-		items.push(wrap(k, 'key') + wrap(': ') + stringify(obj[k]));
+	let code = wrap('{') + "\n";
+	tabulation.add();
+	const keys = Object.keys(obj);
+	for (let i = 0; i < keys.length; i++) {
+		code += tabulation.render(wrap(keys[i], 'key') + wrap(': ') + stringify(obj[keys[i]]));
+		if (i < keys.length - 1) {
+			code += wrap(',');
+		}
+		code += "\n";
 	}
-	return wrap('{') + items.join(wrap(', '))  + wrap('}');
+	tabulation.reduce();
+	code += tabulation.render(wrap('}'));
+	return code;
+}
+
+const stringifyArray = (arr) => {
+	let code = wrap('[') + "\n";
+	tabulation.add();
+	for (let i = 0; i < arr.length; i++) {
+		code += tabulation.render(stringify(arr[i]));
+		if (i < arr.length - 1) {
+			code += wrap(',');
+		}
+		code += "\n";
+	}
+	tabulation.reduce();
+	code += tabulation.render(wrap(']'));
+	return code;
 }
 
 export const wrap = (text, className = 'symbol', tagName = 'span') => {
@@ -151,7 +174,7 @@ class PreviewRenderer {
 		if (content instanceof Object) {
 			const {type} = content;
 			if (type) {		
-				if (typeof type == 'function') {
+				if (typeof type == 'function' || (typeof type == 'string' && /^[A-Z]/.test(type[0]))) {
 					this.renderComponent(content);
 				} else {
 					this.renderElement(content);
@@ -196,7 +219,7 @@ class PreviewRenderer {
 							line += wrap('{() ') + wrap('=>', 'keyword2') + wrap(' {}}}');
 						}
 					} else {
-						line += stringify(props[k], true);
+						line += stringify(props[k], true, true);
 					}
 					strProps.push(line);
 				}

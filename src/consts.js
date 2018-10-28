@@ -76,3 +76,16 @@ export const TOOLTIP_CONTENT = (
 
 export const CHECKBOX_GROUP_OPTIONS = [true, false, "4", ["1", "3", "5"], "10.6.2"];
 export const CHECKBOX_OPTIONS = [true, false];
+
+export const RENDERER_CHILDREN = [
+	{type: 'Button', props: {value: 'submit'}, handlers: {onClick: 'onButtonClick'}, children: [{type: 'Icon', props: {name: 'check'}}, 'Click me']},
+	[
+		{type: 'a', props: {href: '#'}, children: 'I am a link', handlers: {onMouseOver: 'onLinkMouseOver', onClick: 'onLinkClick'}},
+		{type: 'br'},
+		{type: 'a', props: {href: '#'}, children: 'I am a link too', handlers: {onMouseOver: 'onLinkMouseOver', onClick: 'onLinkClick'}}
+	]
+];
+
+export const RENDERER_HANDLERS = [
+	'onButtonClick', 'onLinkMouseOver', 'onLinkClick'
+];

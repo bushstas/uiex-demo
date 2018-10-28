@@ -19,6 +19,7 @@ export default class Demo extends React.Component {
         this.content = this.renderContent();
 		return (
 			<div>
+                {this.renderInfo()}
                 {this.renderComponentMapper()}
                 {this.renderMapperBefore()}
                 {this.renderMapper()}
@@ -27,24 +28,39 @@ export default class Demo extends React.Component {
 			</div>
 		)
     }
+
+    renderInfo() {
+        const {info} = this.constructor;
+        if (info) {
+            return (
+                <div className="demo-info">
+                    {info}
+                </div>
+            )
+        }
+        return null;
+    }
     
     renderComponentMapper() {
-        const {componentMapperProps, excluded} = this.constructor;
-        return (
-            <ComponentMapper 
-                ref="componentMapper"    
-                isOpen={false}
-                data={this.state.data}
-                excluded={excluded}
-                reactChildren={!!this.content}
-                {...componentMapperProps}
-				onChange={this.handleChangeData}
-			/>
-        )
+        const {componentMapperProps, excluded, withoutComponentMapper} = this.constructor;
+        if (!withoutComponentMapper) {
+            return (
+                <ComponentMapper 
+                    ref="componentMapper"    
+                    isOpen={false}
+                    data={this.state.data}
+                    excluded={excluded}
+                    reactChildren={!!this.content}
+                    {...componentMapperProps}
+                    onChange={this.handleChangeData}
+                />
+            )
+        }
+        return null;
     }
     
     renderMapper() {
-        const {componentName, map, mapperProps, handlers, args, customEvents} = this.constructor;
+        const {componentName, map, mapperProps, handlers, args, customEvents, handlersNote} = this.constructor;
         return (
             <Mapper 
                 ref="mapper"
@@ -57,12 +73,27 @@ export default class Demo extends React.Component {
                 args={args}
                 customEvents={customEvents}
                 onChange={this.handleChangeData}
+                handlersNote={handlersNote}
 			/>
         )
     }
 
     renderPreview() {
-        const {componentName, component, handlers, args, funcs, stateProps, consts, previewProps, additionalImport, imports, componentRef} = this.constructor;
+        const {
+            componentName,
+            component,
+            handlers,
+            args,
+            funcs,
+            stateProps,
+            consts,
+            previewProps,
+            additionalImport,
+            imports,
+            componentRef,
+            commentBeforeRenderReturn,
+            withoutComponentMapper
+        } = this.constructor;
         return (
             <Preview
                 owner={this}
@@ -86,6 +117,9 @@ export default class Demo extends React.Component {
                 imports={imports}
                 uncontrolled={this.state.data.uncontrolled}
                 componentRef={componentRef}
+                commentBeforeRenderReturn={commentBeforeRenderReturn}
+                contentBeforeClassRenderer={this.renderContentBeforeClass}
+                withoutComponentMapper={withoutComponentMapper}
                 {...previewProps}
 			>
                 {this.renderPreviewContentBefore()}

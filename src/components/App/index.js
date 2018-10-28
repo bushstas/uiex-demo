@@ -1,13 +1,10 @@
 import React from 'react';
 import Demo from '../../Demo';
 import {App} from 'uiex/App';
-import {Button} from 'uiex/Button';
-import {Renderer, addComponent} from 'uiex/Renderer'; 
+import {Renderer} from 'uiex/Renderer'; 
 import {AppPage} from 'uiex/AppPage';
 import {AppLink} from 'uiex/AppLink';
 import {previewRenderer} from '../../utils';
-
-addComponent('Button', Button);
 
 export default class AppDemo extends Demo {
 	static map = {
@@ -39,6 +36,14 @@ export default class AppDemo extends Demo {
 	static componentName = 'App';
 	static component = App;
 
+	constructor(props) {
+		super(props);
+		this.state.objs = [
+			{type: 'a', props: {href: 'https://mail.ru'}, children: 'мыло', handlers: {onClick: 'onLinkClick'}},
+			{type: 'Button', props: {value: 'aaa'}, children: 'Click me', handlers: {onClick: 'onButtonClick'}}
+		];
+	}
+
 	renderContent() {
 		return [
 			<Renderer 
@@ -46,8 +51,7 @@ export default class AppDemo extends Demo {
 				onButtonClick={this.handleButtonClick}
 				onLinkClick={this.handleLinkClick}
 			>
-				{{type: 'a', props: {href: 'https://mail.ru'}, children: 'мыло', handlers: {onClick: 'onLinkClick'}}}
-				{{type: 'Button', props: {value: 'aaa'}, children: 'Click me', handlers: {onClick: 'onButtonClick'}}}
+				{this.state.objs}
 			</Renderer>,
 			<div key="0">
 				<AppLink page="home">
@@ -66,8 +70,9 @@ export default class AppDemo extends Demo {
 		];
 	}
 
-	handleButtonClick = (value) => {
-		alert('clicked on button')
+	handleButtonClick = (value, sourceObject) => {
+		sourceObject.children = 'Fuck it';
+		this.setState({objs: [...this.state.objs]});
 	}
 
 	handleLinkClick = () => {

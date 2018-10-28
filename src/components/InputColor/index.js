@@ -62,7 +62,7 @@ export default class InputColorDemo extends Demo {
 	static previewProps = {
 		unclosable: true
 	};
-	static consts = ['measures'];
+	static consts = ['measures', 'colors'];
 	static componentName = 'InputColor';
 	static component = InputColor;
 	static changeState = {

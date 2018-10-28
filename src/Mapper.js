@@ -32,7 +32,7 @@ export default class Mapper extends React.Component {
 	}
 
 	render() {
-		let {map: {checkboxes, inputs}, data, name, excluded, handlers, withExtraProps, customEvents} = this.props;
+		let {map: {checkboxes, inputs}, data, name, excluded, handlers, withExtraProps, customEvents, handlersNote} = this.props;
 		const {isOpen = true} = this.state;
 		let {columns} = this.props;
 		if (!getNumber(columns)) {
@@ -113,6 +113,11 @@ export default class Mapper extends React.Component {
 						}
 						{handlers instanceof Array && 
 							<div className={'mapper-handlers' +(withCustomEvents ? ' with-custom-events' : '')}>
+								{handlersNote && 
+									<div className="mapper-handlers-note">
+										{handlersNote}
+									</div>
+								}
 								{handlers.map((h) => {
 									return (
 										<div ref={h} className={this.getHandlerClassName()} key={h} title={this.getHandlerTitle(h)}>
@@ -310,7 +315,7 @@ export default class Mapper extends React.Component {
 
 	renderSelectControl(name, item, value) {
 		let SelectComponent = Select;
-		let {options} = item;
+		let {options, empty = true} = item;
 		let optionsFromFunc;
 		if (item.autoComplete) {
 			SelectComponent = AutoComplete;
@@ -330,7 +335,7 @@ export default class Mapper extends React.Component {
 				stretched={item.stretched}
 			>
 				<SelectComponent
-					empty
+					empty={empty}
 					name={name}
 					value={value}
 					readOnly={item.readOnly}

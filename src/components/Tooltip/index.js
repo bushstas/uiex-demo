@@ -2,7 +2,7 @@ import React from 'react';
 import Demo from '../../Demo';
 import {Tooltip} from 'uiex/Tooltip';
 import {getSetState, previewRenderer} from '../../utils';
-import {TOOLTIP_TYPES, TOOLTIP_POSITIONS, MODAL_ANIMATION} from 'uiex/consts';
+import {TOOLTIP_TYPES, TOOLTIP_POSITIONS, MODAL_ANIMATION, COLORS} from 'uiex/consts';
 import {TOOLTIP_CONTENT} from '../../consts';
 
 const POPUP_STYLE_OPTIONS = [
@@ -32,6 +32,9 @@ export default class TooltipDemo extends Demo {
 				description: 'Color of tab buttons'
 			},
 			withArrow: {
+				description: 'Color of tab buttons'
+			},
+			transparent: {
 				description: 'Color of tab buttons'
 			}
 		},
@@ -71,6 +74,10 @@ export default class TooltipDemo extends Demo {
 					positive: true,
 					maxValue: 1500,
 					example: '400'
+				},
+				popupColor: {
+					description: '',
+					options: COLORS 
 				},
 				animation: {
 					description: '',

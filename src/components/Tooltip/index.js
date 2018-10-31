@@ -34,7 +34,10 @@ export default class TooltipDemo extends Demo {
 			withArrow: {
 				description: 'Color of tab buttons'
 			},
-			transparent: {
+			withBorder: {
+				description: 'Color of tab buttons'
+			},
+			withShadow: {
 				description: 'Color of tab buttons'
 			}
 		},
@@ -61,6 +64,15 @@ export default class TooltipDemo extends Demo {
 					maxLength: 3,
 					example: '?'
 				},
+				transparency: {
+					description: '',
+					type: 'number',
+					example: '5',
+					maxValue: 10,
+					positive: true,
+					decimal: true,
+					toFixed: 1
+				},
 				delay: {
 					description: 'Color of tab buttons',
 					type: 'number',
@@ -75,9 +87,13 @@ export default class TooltipDemo extends Demo {
 					maxValue: 1500,
 					example: '400'
 				},
-				popupColor: {
+				popupColorTheme: {
 					description: '',
 					options: COLORS 
+				},
+				popupColor: {
+					description: '',
+					type: 'color'
 				},
 				animation: {
 					description: '',

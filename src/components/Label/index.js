@@ -2,6 +2,7 @@ import React from 'react';
 import Demo from '../../Demo';
 import {Label} from 'uiex/Label';
 import {BUTTONS_VIEW, COLORS, ICON_TYPE} from 'uiex/consts';
+import {previewRenderer} from '../../utils';
 
 export default class LabelDemo extends Demo {
 	static map = {

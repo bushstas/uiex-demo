@@ -28,19 +28,22 @@ export default class ComponentMapper extends DemoMapper {
 	static map = {
 		checkboxes: {
 			block: {
-				description: 'Display block'
+				description: 'Display "block"'
 			},
 			disabled: {
 				description: 'Disabled'
 			},
 			hidden: {
-				description: 'hidden'
+				description: 'Display "none"'
 			},
 			vertical: {
 				description: 'vertical'
 			},
 			uncontrolled: {
 				description: 'The component will be uncontrolled, so all props such as "value" or "status" will be initial, and you can\'t change it passing a new prop'
+			},
+			skipped: {
+				description: 'Component won\'t be rendered'
 			}
 		},
 		inputs: [
@@ -89,8 +92,7 @@ export default class ComponentMapper extends DemoMapper {
 					description: 'Name of added customization theme. See customization example for more info (String)'
 				},
 				className: {
-					description: 'Custom ClassName attribute (String)',
-					stretched: true
+					description: 'Custom ClassName attribute (String)'
 				},
 				style: {
 					description: 'Components\'s main element style (Object | String)',

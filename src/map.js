@@ -32,6 +32,7 @@ import LoaderDemo from './components/Loader';
 import AppDemo from './components/App';
 import TooltipDemo from './components/Tooltip';
 import RendererDemo from './components/Renderer';
+import TextBlockDemo from './components/TextBlock';
 
 export const MAP = {
 	App: AppDemo,
@@ -66,6 +67,7 @@ export const MAP = {
 	SliderScale: SliderScaleDemo,
 	Tab: TabDemo,
 	Tabs: TabsDemo,
+	TextBlock: TextBlockDemo,
 	TimeScale: TimeScaleDemo,
 	Tooltip: TooltipDemo
 };

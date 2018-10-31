@@ -8,7 +8,7 @@ export default class MainMenu extends React.Component {
 		super(props);
 		const keys = Object.keys(MAP);
 		this.state = {
-			active: keys[0]
+			active: 'TextBlock'
 		};
 	}
 

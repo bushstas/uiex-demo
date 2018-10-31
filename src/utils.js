@@ -88,7 +88,7 @@ const stringifyArray = (arr) => {
 }
 
 export const wrap = (text, className = 'symbol', tagName = 'span') => {
-	return '<' + tagName + ' class="' + className + '">' + text + '</' + tagName + '>';
+	return `<${tagName} class="${className}">${text}</${tagName}>`;
 }
 
 export const getSetState = (name, value = null) => {

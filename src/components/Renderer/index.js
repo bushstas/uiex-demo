@@ -30,6 +30,7 @@ export default class RendererDemo extends Demo {
 	static funcs = {
 		onButtonClick: function() {
 			let code = tabulation.renderWith(wrap('// here you have to modify source object to change something', 'comment'), 2, true);
+			code += tabulation.renderWith(wrap('// rendered component will have prop "sourceObject"', 'comment'), 2, true);
 			code += tabulation.renderWith('sourceObject' + wrap('.') + 'children' + wrap('[') + wrap('0', 'number') + wrap('].') + 'props' + wrap('.') + 'name' + wrap(' = ') + wrap("'some'", 'string') + wrap(';'), 2, true);
 			code += tabulation.renderWith('sourceObject' + wrap('.') + 'children' + wrap('[') + wrap('1', 'number') + wrap('] = ') + wrap("'I am clicked'", 'string') + wrap(';'), 2, true);
 			code += tabulation.renderWith(wrap('this', 'args') + wrap('.') + 'setState' + wrap('({') + wrap('children', 'key') + wrap(': {') + wrap('...', 'keyword') + wrap('this', 'args') + wrap('.') + 'state' + wrap('.') + 'children' + wrap('}});'), 2);

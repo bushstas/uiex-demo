@@ -57,7 +57,8 @@ export default class InputPhoneDemo extends Demo {
 	};
 	static stateProps = ['value'];
 	static funcs = {
-		onChange: getSetState('value')
+		onChange: getSetState('value'),
+		onChangeValidity: getSetState('valid')
 	};
 	static previewProps = {
 		unclosable: true
@@ -65,7 +66,8 @@ export default class InputPhoneDemo extends Demo {
 	static componentName = 'InputPhone';
 	static component = InputPhone;
 	static changeState = {
-		onChange: 'value'
+		onChange: 'value',
+		onChangeValidity: 'valid'
 	};	
 
 	renderMapperBefore() {
@@ -78,6 +80,7 @@ export default class InputPhoneDemo extends Demo {
 				nameExample="phone"
 				valueExample="9005002020"
 				defaultValueExample="9005002020"
+				valueDescription="Input value (String)"
 				valueReadOnly
 			/>
 		)

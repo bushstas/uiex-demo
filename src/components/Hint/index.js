@@ -1,31 +1,22 @@
 import React from 'react';
 import Demo from '../../Demo';
-import {Tooltip} from 'uiex/Tooltip';
+import {Hint} from 'uiex/Hint';
 import {getSetState, previewRenderer} from '../../utils';
-import {TOOLTIP_TYPES, TOOLTIP_POSITIONS, MODAL_ANIMATION, COLORS} from 'uiex/consts';
+import {TOOLTIP_POSITIONS, MODAL_ANIMATION, COLORS} from 'uiex/consts';
 import {TOOLTIP_CONTENT} from '../../consts';
 
-const POPUP_STYLE_OPTIONS = [
-	{
-		color: '#555',
-		backgroundColor: '#fff',
-		boxShadow: '3px 3px 10px #aaa'
-	},
-	{
-		backgroundColor: '#333',
-		fontSize: '14px',
-		textShadow: '1px 1px 1px #000'
-	},
-	'border-radius: 20px; font-style: italic; padding: 20px; font-size: 15px;'
-];
+const refs = {
+	first: React.createRef(),
+	second: React.createRef()
+};
 
-export default class TooltipDemo extends Demo {
+export default class HintDemo extends Demo {
 	static map = {
 		checkboxes: {
-			popupShown: {
+			isOpen: {
 				description: 'Tooltip hint shown status'
 			},
-			popupFrozen: {
+			isFrozen: {
 				description: 'Tooltip hint is always shown'
 			},
 			nowrap: {
@@ -37,26 +28,9 @@ export default class TooltipDemo extends Demo {
 		},
 		inputs: [
 			{
-				type: {
-					description: 'Tooltip appearance',
-					options: TOOLTIP_TYPES
-				},
 				position: {
 					description: 'Tooltip hint position',
 					options: TOOLTIP_POSITIONS
-				},
-				size: {
-					description: 'Tooltip size',
-					type: 'number',
-					positive: true,
-					minValue: 18,
-					maxValue: 60,
-					example: '30'
-				},
-				text: {
-					description: 'Tooltip text',
-					maxLength: 3,
-					example: '?'
 				},
 				transparency: {
 					description: 'Tooltip hint  background transparency from 0 to 10',
@@ -74,65 +48,51 @@ export default class TooltipDemo extends Demo {
 					maxValue: 2000,
 					example: '1000'
 				},
-				popupWidth: {
-					description: 'Color of tab buttons',
-					type: 'number',
-					positive: true,
-					maxValue: 1500,
-					example: '400'
-				},
 				textColor: {
 					description: '',
 					type: 'color'
 				},
-				popupColorTheme: {
+				colorTheme: {
 					description: '',
 					options: COLORS 
 				},
-				popupColor: {
+				color: {
 					description: '',
 					type: 'color'
 				},
-				popupBorder: {
+				border: {
 					description: '',
 					example: '1px solid #000'
 				},
-				popupShadow: {
+				boxShadow: {
 					description: '',
 					example: '5px 5px 20px #888'
 				},
 				animation: {
 					description: '',
 					options: MODAL_ANIMATION 
-				},
-				popupStyle: {
-					description: 'Style of the popup (Object)',
-					type: 'object',
-					options: POPUP_STYLE_OPTIONS
 				}
 			}
 		]
 	};
 	static data = {
-		type: 'round',
-		size: 40,
-		popupShown: false,
-		popupWidth: 400
+		isOpen: false,
+		width: 400,
+		target: refs.first
 	};
 	static excluded = ['vertical', 'block', 'valign', 'height'];
-	static handlers = ['onTogglePopup'];
-	static stateProps = ['popupShown'];
-	static consts = ['popupStyle'];
+	static handlers = ['onToggleShown'];
+	static stateProps = ['isOpen'];
 	static funcs = {
-		onTogglePopup: getSetState('popupShown')
+		onToggleShown: getSetState('isOpen')
 	};
 	static args = {
-		onTogglePopup: ['popupShown']
+		onToggleShown: ['isOpen']
 	};
-	static componentName = 'Tooltip';
-	static component = Tooltip;
+	static componentName = 'Hint';
+	static component = Hint;
 	static changeState = {
-		onTogglePopup: 'popupShown'
+		onToggleShown: 'isOpen'
 	}
 
 	renderContent() {
@@ -141,5 +101,18 @@ export default class TooltipDemo extends Demo {
 
 	renderPreviewContent = () => {
 		return previewRenderer.render(TOOLTIP_CONTENT);
+	}
+
+	renderPreviewContentBefore() {
+		return (
+			<div>
+				<div className="hint-target" ref={refs.first}>
+					First
+				</div>
+				<div className="hint-target" ref={refs.second}>
+					Second
+				</div>
+			</div>
+		)
 	}
 }

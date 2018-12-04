@@ -94,6 +94,7 @@ export default class InputNumberDemo extends Demo {
 	static funcs = {
 		onChange: getSetState('value'),
 		onChangeMeasure: getSetState('measure'),
+		onChangeValidity: getSetState('valid')
 	};
 	static previewProps = {
 		unclosable: true
@@ -103,7 +104,8 @@ export default class InputNumberDemo extends Demo {
 	static component = InputNumber;
 	static changeState = {
 		onChange: 'value',
-		onChangeMeasure: 'measure'
+		onChangeMeasure: 'measure',
+		onChangeValidity: 'valid'
 	};
 	static customEvents = {
 		Wheel: 'You can change value with mouse wheel on the Input',
@@ -117,11 +119,12 @@ export default class InputNumberDemo extends Demo {
 				excluded={EXCLUDED}
 				data={this.state.data} 
 				onChange={this.handleChangeData}
-				type="number"
 				defaultType="number"
 				nameExample="age"
 				valueExample="20"
 				defaultValueExample="100"
+				valueDescription="Input value (Number | Numeric String)"
+				valueReadOnly
 			/>
 		)
 	}

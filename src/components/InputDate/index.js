@@ -24,34 +24,47 @@ export default class InputDateDemo extends Demo {
 			},
 			withoutIcon: {
 				description: 'The date icon will not be displayed'
+			},
+			isTimestamp: {
+				description: 'The value will be numeric timestamp'
+			},
+			inSeconds: {
+				description: 'The value timestamp will be measured in seconds'
 			}
 		},
 		inputs: [
 			{
+				initialValue: {
+					description: 'Initial value keyword (String)',
+					example: 'today'
+				},
 				delimiter: {
-					description: 'Delimiter between numbers',
+					description: 'Delimiter between numbers (String)',
 					maxLength: 1,
 					example: '-'
 				},
 				minYear: {
-					description: 'Minimal allowed year',
+					description: 'Minimal allowed year (Number)',
 					type: 'number',
 					maxValue: 2050,
+					positive: true,
 					example: 2000
 				},
 				maxYear: {
-					description: 'Maximal allowed year',
+					description: 'Maximal allowed year (Number)',
 					type: 'number',
 					maxValue: 2050,
-					example: 2015
+					positive: true,
+					example: 2015,
+					lastInRow: true
 				},
 				periodFrom: {
-					description: 'Valid period start date',
+					description: 'Valid period start date (String)',
 					type: 'date',
 					example: '01.01.2010'
 				},
 				periodTo: {
-					description: 'Valid period end date',
+					description: 'Valid period end date (String)',
 					type: 'date',
 					example: '31.08.2010'
 				}
@@ -60,21 +73,25 @@ export default class InputDateDemo extends Demo {
 	};
 	static data = {
 		width: 300,
-		placeholder: 'Input a value'
+		placeholder: 'Input a value',
+		yearFirst: true,
+		initialValue: '-4day',
+		validating: true
 	};
 	static excluded = INPUT_COMPONENT_EXCLUDED;
-	static handlers = ['onChange', 'onClear', 'onFocus', 'onBlur', 'onEnter', 'onChangeValidity', 'onDisabledClick'];
+	static handlers = ['onChange', 'onChangeValidity', 'onClear', 'onFocus', 'onBlur', 'onEnter', 'onDisabledClick'];
 	static args = {
 		onChange: ['value', 'name'],
 		onFocus: ['value', 'name'],
 		onBlur: ['value', 'name'],
 		onEnter: ['value', 'name'],
-		onChangeValidity: ['isValid', 'value', 'name'],
+		onChangeValidity: ['valid', 'value', 'name'],
 		onDisabledClick: ['name']
 	};
-	static stateProps = ['value'];
+	static stateProps = ['value', 'valid'];
 	static funcs = {
-		onChange: getSetState('value')
+		onChange: getSetState('value'),
+		onChangeValidity: getSetState('valid')
 	};
 	static previewProps = {
 		unclosable: true
@@ -82,7 +99,8 @@ export default class InputDateDemo extends Demo {
 	static componentName = 'InputDate';
 	static component = InputDate;
 	static changeState = {
-		onChange: 'value'
+		onChange: 'value',
+		onChangeValidity: 'valid'
 	};	
 
 	renderMapperBefore() {
@@ -92,11 +110,11 @@ export default class InputDateDemo extends Demo {
 				excluded={EXCLUDED}
 				data={this.state.data} 
 				onChange={this.handleChangeData}
-				type="date"
-				defaultType="date"
 				nameExample="date"
 				valueExample="01.06.2015"
 				defaultValueExample="01.01.2015"
+				valueDescription="Input value as a date format string or a numeric timestamp (String | Number)"
+				valueReadOnly
 			/>
 		)
 	}

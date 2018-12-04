@@ -10,6 +10,7 @@ export default class Demo extends React.Component {
         super(props);
         const {data, customState} = this.constructor;
 		this.state = {
+            key: 0,
             data,
             ...customState
 		};
@@ -120,6 +121,7 @@ export default class Demo extends React.Component {
                 commentBeforeRenderReturn={commentBeforeRenderReturn}
                 contentBeforeClassRenderer={this.renderContentBeforeClass}
                 withoutComponentMapper={withoutComponentMapper}
+                onRerender={this.handleRerender}
                 {...previewProps}
 			>
                 {this.renderPreviewContentBefore()}
@@ -151,6 +153,7 @@ export default class Demo extends React.Component {
     renderComponent(Component, props) {
         return (
             <Component 
+                key={this.state.key}
                 ref="component"
                 {...this.state.data}
                 {...props}
@@ -202,7 +205,12 @@ export default class Demo extends React.Component {
     
     renderPreviewCodeAfter() {
 		return null;
-	}
+    }
+    
+    handleRerender = () => {
+        const key = this.state.key + 1;
+        this.setState({key});
+    }
     
     handleChangeData = (data) => {
 		this.setState({data});

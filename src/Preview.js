@@ -60,10 +60,16 @@ export default class Preview extends React.Component {
 	}
 
 	getNote() {
-		const {withoutComponentMapper} = this.props;
+		const {withoutComponentMapper, onRerender} = this.props;
 		return (
 			<span>
 				{this.props.renderPreviewNote()}
+				<Button
+					title="Unmount and then render again"
+					onClick={onRerender}
+				>
+					Rerender component
+				</Button>
 				<Button onClick={this.handleGetCodeClick}>
 					Get demo code
 				</Button>
@@ -325,7 +331,7 @@ export default class Preview extends React.Component {
 					val = this.getConstName(item);
 				} else {
 					if (val === undefined) {
-						val = null;
+						val = stringify(null);
 					} else if (typeof val == 'string') {
 						val = wrap('\'' + val + '\'', 'string');
 					} else {

@@ -4,6 +4,7 @@ import DemoMapper from '../DemoMapper';
 const NAME_EXAMPLE = 'email';
 const VALUE_EXAMPLE = 'Some value';
 const DEFAULT_VALUE_EXAMPLE = 'Initial value';
+const DEFAULT_VALUE_DESCRIPTION = 'Input value (String | Number)';
 
 const OPTIONS = [
 	{
@@ -49,7 +50,7 @@ export default class InputMapper extends DemoMapper {
 					example: NAME_EXAMPLE
 				},
 				value: {
-					description: 'Input value (String | Number)',
+					description: DEFAULT_VALUE_DESCRIPTION,
 					example: VALUE_EXAMPLE
 				},
 				placeholder: {
@@ -90,13 +91,22 @@ export default class InputMapper extends DemoMapper {
 
 	initMap() {
 		const map = super.initMap();
-		const {type, defaultType, nameExample, valueExample, defaultValueExample, valueReadOnly} = this.props;
+		const {
+			type,
+			defaultType,
+			nameExample,
+			valueExample,
+			defaultValueExample,
+			valueReadOnly,
+			valueDescription
+		} = this.props;
 		map.inputs[0].value.readOnly = valueReadOnly || false;
 		map.inputs[0].value.type = type || '';
 		map.inputs[0].defaultValue.type = defaultType || '';
 		map.inputs[0].name.example = nameExample || NAME_EXAMPLE;
 		map.inputs[0].value.example = valueExample || VALUE_EXAMPLE;
 		map.inputs[0].defaultValue.example = defaultValueExample || DEFAULT_VALUE_EXAMPLE;
+		map.inputs[0].value.description = valueDescription || DEFAULT_VALUE_DESCRIPTION;
         return map;
     }
 }

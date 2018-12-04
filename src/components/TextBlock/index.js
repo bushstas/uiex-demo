@@ -68,6 +68,19 @@ export default class TextBlockDemo extends Demo {
 					decimal: true,
 					toFixed: 1
 				},
+				border: {
+					description: '',
+					example: '1px solid #000'
+				},
+				borderOpacity: {
+					description: 'Border opacity from 0 to 10. Can be decimal',
+					type: 'number',
+					example: '5',
+					maxValue: 10,
+					positive: true,
+					decimal: true,
+					toFixed: 1
+				},
 				borderRadius: {
 					description: '',
 					type: 'number',

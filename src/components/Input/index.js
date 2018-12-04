@@ -25,9 +25,7 @@ export default class InputDemo extends Demo {
 	static consts = ['pattern'];
 	static data = {
 		width: 300,
-		placeholder: 'Input a value',
-		uncontrolled: true,
-		required: true
+		placeholder: 'Input a value'
 	};
 	static previewProps = {
 		unclosable: true

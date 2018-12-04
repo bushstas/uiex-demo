@@ -31,7 +31,8 @@ export default class InputRegexpDemo extends Demo {
 	};
 	static stateProps = ['value'];
 	static funcs = {
-		onChange: getSetState('value')
+		onChange: getSetState('value'),
+		onChangeValidity: getSetState('valid')
 	};
 	static previewProps = {
 		unclosable: true
@@ -39,7 +40,8 @@ export default class InputRegexpDemo extends Demo {
 	static componentName = 'InputRegexp';
 	static component = InputRegexp;
 	static changeState = {
-		onChange: 'value'
+		onChange: 'value',
+		onChangeValidity: 'valid'
 	};	
 
 	renderMapperBefore() {

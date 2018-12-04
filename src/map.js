@@ -33,10 +33,9 @@ import AppDemo from './components/App';
 import TooltipDemo from './components/Tooltip';
 import RendererDemo from './components/Renderer';
 import TextBlockDemo from './components/TextBlock';
-import TouchableDemo from './components/Touchable';
+import HintDemo from './components/Hint';
 
 export const MAP = {
-	App: AppDemo,
 	Arrow: ArrowDemo,
 	AutoComplete: AutoCompleteDemo,
 	Box: BoxDemo,
@@ -49,6 +48,7 @@ export const MAP = {
 	ColorPicker: ColorPickerDemo,
 	Colors: ColorsDemo,
 	Draggable: DraggableDemo,
+	Hint: HintDemo,
 	Input: InputDemo,
 	InputArray: InputArrayDemo,
 	InputColor: InputColorDemo,

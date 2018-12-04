@@ -57,7 +57,8 @@ export default class InputColorDemo extends Demo {
 	static stateProps = ['value', 'measure', 'pickerShown'];
 	static funcs = {
 		onChange: getSetState('value'),
-		onShowPicker: getSetState('pickerShown')
+		onShowPicker: getSetState('pickerShown'),
+		onChangeValidity: getSetState('valid')
 	};
 	static previewProps = {
 		unclosable: true
@@ -67,7 +68,8 @@ export default class InputColorDemo extends Demo {
 	static component = InputColor;
 	static changeState = {
 		onChange: 'value',
-		onShowPicker: 'pickerShown'
+		onShowPicker: 'pickerShown',
+		onChangeValidity: 'valid'
 	};
 
 	renderMapperBefore() {
@@ -76,14 +78,14 @@ export default class InputColorDemo extends Demo {
 				isOpen={true}
 				excluded={EXCLUDED}
 				data={this.state.data} 
-				onChange={this.handleChangeData}
-				type="color"
-				withoutPicker={true}
+				onChange={this.handleChangeData}				
 				defaultType="color"
 				defaultWithoutPicker={true}
 				nameExample="color"
 				valueExample="A1A1A1"
 				defaultValueExample="FFF"
+				valueDescription="Input value for example FFFFFF (String)"
+				valueReadOnly
 			/>
 		)
 	}

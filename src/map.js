@@ -33,6 +33,7 @@ import AppDemo from './components/App';
 import TooltipDemo from './components/Tooltip';
 import RendererDemo from './components/Renderer';
 import TextBlockDemo from './components/TextBlock';
+import TouchableDemo from './components/Touchable';
 
 export const MAP = {
 	App: AppDemo,
@@ -69,5 +70,6 @@ export const MAP = {
 	Tabs: TabsDemo,
 	TextBlock: TextBlockDemo,
 	TimeScale: TimeScaleDemo,
-	Tooltip: TooltipDemo
+	Tooltip: TooltipDemo,
+	Touchable: TouchableDemo
 };

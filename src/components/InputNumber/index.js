@@ -2,8 +2,9 @@ import React from 'react';
 import Demo from '../../Demo';
 import {InputNumber} from 'uiex/InputNumber';
 import InputMapper from '../InputMapper';
-import {getSetState} from '../../utils';
+import {getSetState, insertItems} from '../../utils';
 import {INPUT_COMPONENT_EXCLUDED} from '../../consts';
+import {INPUT_HANDLERS, INPUT_ARGS, INPUT_FUNCS, INPUT_CHANGE_STATE, INPUT_STATE_PROPS} from '../Input';
 
 const EXCLUDED = ['type', 'pattern', 'textarea'];
 
@@ -74,27 +75,18 @@ export default class InputNumberDemo extends Demo {
 	};
 	static data = {
 		width: 300,
-		placeholder: 'Input a value',
-		value: '0.665',
-		decimal: true,
-		name: 'fuck'
+		placeholder: 'Input a value'
 	};
 	static excluded = INPUT_COMPONENT_EXCLUDED;
-	static handlers = ['onChange', 'onClear', 'onFocus', 'onBlur', 'onEnter', 'onChangeValidity', 'onChangeMeasure', 'onDisabledClick'];
+	static handlers = insertItems(INPUT_HANDLERS, 'onChangeMeasure', 2);
 	static args = {
-		onChange: ['value', 'name'],
-		onFocus: ['value', 'name'],
-		onBlur: ['value', 'name'],
-		onEnter: ['value', 'name'],
-		onChangeValidity: ['isValid', 'value', 'name'],
-		onDisabledClick: ['name'],
-		onChangeMeasure: ['measure', 'index', 'name']
+		...INPUT_ARGS,
+		onChangeMeasure: ['measure', 'measureIndex', 'name']
 	};
-	static stateProps = ['value', 'measure'];
+	static stateProps = [...INPUT_STATE_PROPS, 'measure'];
 	static funcs = {
-		onChange: getSetState('value'),
-		onChangeMeasure: getSetState('measure'),
-		onChangeValidity: getSetState('valid')
+		...INPUT_FUNCS,
+		onChangeMeasure: getSetState('measure')
 	};
 	static previewProps = {
 		unclosable: true
@@ -103,9 +95,8 @@ export default class InputNumberDemo extends Demo {
 	static componentName = 'InputNumber';
 	static component = InputNumber;
 	static changeState = {
-		onChange: 'value',
-		onChangeMeasure: 'measure',
-		onChangeValidity: 'valid'
+		...INPUT_CHANGE_STATE,
+		onChangeMeasure: 'measure'
 	};
 	static customEvents = {
 		Wheel: 'You can change value with mouse wheel on the Input',

@@ -5,23 +5,34 @@ import InputMapper from '../InputMapper';
 import {getSetState} from '../../utils';
 import {INPUT_COMPONENT_EXCLUDED} from '../../consts';
 
+export const INPUT_HANDLERS = ['onChange', 'onChangeValidity', 'onClear', 'onFocus', 'onBlur', 'onEnter', 'onDisabledClick'];
+export const INPUT_ARGS = {
+	onChange: ['value', 'name'],
+	onClear: ['name'],
+	onFocus: ['value', 'name'],
+	onBlur: ['value', 'name'],
+	onEnter: ['value', 'name'],
+	onChangeValidity: ['valid', 'value', 'name'],
+	onDisabledClick: ['name']
+};
+export const INPUT_FUNCS = {
+	onChange: getSetState('value'),
+	onChangeValidity: getSetState('valid')
+};
+
+export const INPUT_CHANGE_STATE = {
+	onChange: 'value',
+	onChangeValidity: 'valid'
+};
+
+export const INPUT_STATE_PROPS = ['value', 'valid'];
+
 export default class InputDemo extends Demo {
 	static excluded = INPUT_COMPONENT_EXCLUDED;
-	static handlers = ['onChange', 'onClear', 'onFocus', 'onBlur', 'onEnter', 'onChangeValidity', 'onDisabledClick'];
-	static args = {
-		onChange: ['value', 'name'],
-		onClear: ['name'],
-		onFocus: ['value', 'name'],
-		onBlur: ['value', 'name'],
-		onEnter: ['value', 'name'],
-		onChangeValidity: ['valid', 'value', 'name'],
-		onDisabledClick: ['name']
-	};
-	static stateProps = ['value', 'valid'];
-	static funcs = {
-		onChange: getSetState('value'),
-		onChangeValidity: getSetState('valid')
-	};
+	static handlers = INPUT_HANDLERS;
+	static args = INPUT_ARGS;
+	static stateProps = INPUT_STATE_PROPS;
+	static funcs = INPUT_FUNCS;
 	static consts = ['pattern'];
 	static data = {
 		width: 300,
@@ -32,10 +43,7 @@ export default class InputDemo extends Demo {
 	};
 	static componentName = 'Input';
 	static component = Input;
-	static changeState = {
-		onChange: 'value',
-		onChangeValidity: 'valid'
-	};
+	static changeState = INPUT_CHANGE_STATE;
 
 	renderMapper() {
 		return (

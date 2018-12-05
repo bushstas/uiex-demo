@@ -36,7 +36,7 @@ export default class InputDateDemo extends Demo {
 			{
 				initialValue: {
 					description: 'Initial value keyword (String)',
-					example: 'today'
+					options: ['now', 'today', 'yesterday', 'tomorrow', '-10d', '+2day', '-20days', '+2m', '-5month', '+8months', '-2y', '+5year', '-20years', '+1h', '-3hour', '+20hours', '-10min', '+30minute', '-50minutes']
 				},
 				delimiter: {
 					description: 'Delimiter between numbers (String)',
@@ -73,10 +73,7 @@ export default class InputDateDemo extends Demo {
 	};
 	static data = {
 		width: 300,
-		placeholder: 'Input a value',
-		yearFirst: true,
-		initialValue: '-4day',
-		validating: true
+		placeholder: 'Input a value'
 	};
 	static excluded = INPUT_COMPONENT_EXCLUDED;
 	static handlers = ['onChange', 'onChangeValidity', 'onClear', 'onFocus', 'onBlur', 'onEnter', 'onDisabledClick'];

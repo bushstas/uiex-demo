@@ -1,3 +1,12 @@
+export const insertItems = (arr, items, index) => {
+	if (!(items instanceof Array)) {
+		items = [items];
+	}
+	const arr1 = arr.slice(0, index);
+	const arr2 = arr.slice(index);
+	return [...arr1, ...items, ...arr2];
+};
+
 export const stringify = (value, addBraces = false, isJSXProp = false) => {
 	const type = typeof value;
 	if (value == null) {

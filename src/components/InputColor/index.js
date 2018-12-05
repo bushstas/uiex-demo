@@ -2,8 +2,9 @@ import React from 'react';
 import Demo from '../../Demo';
 import {InputColor} from 'uiex/InputColor';
 import InputMapper from '../InputMapper';
-import {getSetState} from '../../utils';
+import {getSetState, insertItems} from '../../utils';
 import {INPUT_COMPONENT_EXCLUDED, COLORS, COLORS2} from '../../consts';
+import {INPUT_HANDLERS, INPUT_ARGS, INPUT_FUNCS, INPUT_CHANGE_STATE, INPUT_STATE_PROPS} from '../Input';
 
 const EXCLUDED = ['type', 'pattern', 'textarea', 'withIndicator', 'minLength', 'maxLength'];
 
@@ -42,23 +43,17 @@ export default class InputColorDemo extends Demo {
 		colors: COLORS
 	};
 	static excluded = INPUT_COMPONENT_EXCLUDED;
-	static handlers = ['onChange', 'onClear', 'onChangePicker', 'onShowPicker', 'onInput', 'onFocus', 'onBlur', 'onEnter', 'onChangeValidity', 'onDisabledClick'];
+	static handlers = insertItems(INPUT_HANDLERS, ['onChangePicker', 'onShowPicker', 'onInput'], 2);
 	static args = {
-		onChange: ['value', 'name'],
+		...INPUT_ARGS,		
 		onChangePicker: ['value', 'colorData', 'name'],
 		onInput: ['value', 'name'],
-		onShowPicker: ['pickerShown'],
-		onFocus: ['value', 'name'],
-		onBlur: ['value', 'name'],
-		onEnter: ['value', 'name'],
-		onChangeValidity: ['isValid', 'value', 'name'],
-		onDisabledClick: ['name']
+		onShowPicker: ['pickerShown']		
 	};
-	static stateProps = ['value', 'measure', 'pickerShown'];
+	static stateProps = [...INPUT_STATE_PROPS, 'pickerShown'];
 	static funcs = {
-		onChange: getSetState('value'),
-		onShowPicker: getSetState('pickerShown'),
-		onChangeValidity: getSetState('valid')
+		...INPUT_FUNCS,
+		onShowPicker: getSetState('pickerShown')
 	};
 	static previewProps = {
 		unclosable: true
@@ -67,9 +62,8 @@ export default class InputColorDemo extends Demo {
 	static componentName = 'InputColor';
 	static component = InputColor;
 	static changeState = {
-		onChange: 'value',
-		onShowPicker: 'pickerShown',
-		onChangeValidity: 'valid'
+		...INPUT_CHANGE_STATE,
+		onShowPicker: 'pickerShown'
 	};
 
 	renderMapperBefore() {

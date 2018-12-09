@@ -2,14 +2,21 @@ import React from 'react';
 import Demo from '../../Demo';
 import {InputDate} from 'uiex/InputDate';
 import InputMapper from '../InputMapper';
-import {getSetState} from '../../utils';
+import {getSetState, insertItems} from '../../utils';
 import {INPUT_COMPONENT_EXCLUDED} from '../../consts';
+import {INPUT_HANDLERS, INPUT_ARGS, INPUT_FUNCS, INPUT_CHANGE_STATE, INPUT_STATE_PROPS} from '../Input';
 
 const EXCLUDED = ['type', 'pattern', 'textarea', 'minLength', 'maxLength', 'withIndicator'];
 
 export default class InputDateDemo extends Demo {
 	static map = {
 		checkboxes: {
+			withPicker: {
+				description: 'With a date picker'
+			},
+			pickerShown: {
+				description: 'Date picker will be shown'
+			},
 			yearFirst: {
 				description: 'Format 0000-00-00 instead of 00-00-0000'
 			},
@@ -30,13 +37,19 @@ export default class InputDateDemo extends Demo {
 			},
 			inSeconds: {
 				description: 'The value timestamp will be measured in seconds'
+			},
+			pickerFromSunday: {
+				description: 'Date picker days will start from sunday'
+			},
+			pickerYearFirst: {
+				description: 'Date picker year will be displayed at left'
 			}
 		},
 		inputs: [
 			{
 				initialValue: {
 					description: 'Initial value keyword (String)',
-					options: ['now', 'today', 'yesterday', 'tomorrow', '-10d', '+2day', '-20days', '+2m', '-5month', '+8months', '-2y', '+5year', '-20years', '+1h', '-3hour', '+20hours', '-10min', '+30minute', '-50minutes']
+					options: ['now', 'today', 'yesterday', 'tomorrow', '-10d', '+2day', '-20days', '+2w', '-3week', '+5weeks', '-2m', '+5month', '-8months', '+2y', '-5year', '+20years', '-1h', '+3hour', '-20hours', '+10min', '-30minute', '+50minutes']
 				},
 				delimiter: {
 					description: 'Delimiter between numbers (String)',
@@ -76,19 +89,16 @@ export default class InputDateDemo extends Demo {
 		placeholder: 'Input a value'
 	};
 	static excluded = INPUT_COMPONENT_EXCLUDED;
-	static handlers = ['onChange', 'onChangeValidity', 'onClear', 'onFocus', 'onBlur', 'onEnter', 'onDisabledClick'];
+	static handlers = insertItems(INPUT_HANDLERS, ['onShowPicker', 'onChangePicker'], 2);
 	static args = {
-		onChange: ['value', 'name'],
-		onFocus: ['value', 'name'],
-		onBlur: ['value', 'name'],
-		onEnter: ['value', 'name'],
-		onChangeValidity: ['valid', 'value', 'name'],
-		onDisabledClick: ['name']
+		...INPUT_ARGS,
+		onChangePicker: ['value', 'dateData', 'name'],
+		onShowPicker: ['pickerShown', 'name']
 	};
-	static stateProps = ['value', 'valid'];
+	static stateProps = [...INPUT_STATE_PROPS, 'pickerShown'];
 	static funcs = {
-		onChange: getSetState('value'),
-		onChangeValidity: getSetState('valid')
+		...INPUT_FUNCS,
+		onShowPicker: getSetState('pickerShown')
 	};
 	static previewProps = {
 		unclosable: true
@@ -96,8 +106,8 @@ export default class InputDateDemo extends Demo {
 	static componentName = 'InputDate';
 	static component = InputDate;
 	static changeState = {
-		onChange: 'value',
-		onChangeValidity: 'valid'
+		...INPUT_CHANGE_STATE,
+		onShowPicker: 'pickerShown'
 	};	
 
 	renderMapperBefore() {

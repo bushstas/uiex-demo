@@ -8,7 +8,7 @@ export default class MainMenu extends React.Component {
 		super(props);
 		const keys = Object.keys(MAP);
 		this.state = {
-			active: 'InputDate'
+			active: 'InputPhone'
 		};
 	}
 

@@ -76,7 +76,7 @@ export default class InputMapper extends DemoMapper {
 					positive: true
 				},
 				defaultValue: {
-					description: 'Input initial value,  (String | Number)',
+					description: 'Input value when the input is empty (String | Number)',
 					example: DEFAULT_VALUE_EXAMPLE
 				},
 				pattern: {

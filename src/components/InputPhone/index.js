@@ -21,6 +21,7 @@ export default class InputPhoneDemo extends Demo {
 			{
 				code: {
 					description: 'The code of a phone number',
+					maxLength: 4,
 					example: '+7'
 				},
 				mask: {
@@ -41,9 +42,9 @@ export default class InputPhoneDemo extends Demo {
 		placeholder: 'Input a value',
 		code: '+7 ',
 		mask: '(XXX) XXX-XX-XX',
-		numericCode: 8,
 		withCode: true,
-		numeric: true
+		numeric: true,
+		value: '+79375767335'
 	};
 	static excluded = INPUT_COMPONENT_EXCLUDED;
 	static handlers = ['onChange', 'onClear', 'onFocus', 'onBlur', 'onEnter', 'onChangeValidity', 'onDisabledClick'];

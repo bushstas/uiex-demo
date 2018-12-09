@@ -3,7 +3,7 @@ import Demo from '../../Demo';
 import Mapper from '../../Mapper';
 import {CellGroup, Cell} from 'uiex/CellGroup';
 import {Select} from 'uiex/Select';
-import {CELL_ALIGN, ALIGN_SELF} from 'uiex/consts';
+import {CELL_ALIGN, ALIGN_SELF, VALIGN} from 'uiex/consts';
 import {previewRenderer} from '../../utils';
 
 const CELL_MAP = {
@@ -66,8 +66,8 @@ const CELL_MAP = {
 				positive: true,
 				example: 200
 			},
-			cellAlign: {
-				description: 'Cell align (String)',
+			align: {
+				description: 'Cell text align (String)',
 				options: CELL_ALIGN,
 				empty: 'Chose an option'
 			},
@@ -213,6 +213,16 @@ export default class CellGroupDemo extends Demo {
 					type: 'select',
 					options: CELL_ALIGN
 				},
+				cellTextAlign: {
+					description: 'Cells text align (String)',
+					options: CELL_ALIGN,
+					empty: 'Chose an option'
+				},
+				cellTextValign: {
+					description: 'Cells text vertical align (String)',
+					options: VALIGN,
+					empty: 'Chose an option'
+				}
 			},
 			{
 				columnsTiny: {

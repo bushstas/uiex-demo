@@ -50,10 +50,10 @@ export default class InputColorDemo extends Demo {
 		presetColors: COLORS
 	};
 	static excluded = INPUT_COMPONENT_EXCLUDED;
-	static handlers = insertItems(INPUT_HANDLERS, ['onShowPicker', 'onChangePicker', 'onInput'], 2);
+	static handlers = insertItems(INPUT_HANDLERS, ['onShowPicker', 'onPick', 'onInput'], 2);
 	static args = {
 		...INPUT_ARGS,
-		onChangePicker: ['value', 'colorData', 'name'],
+		onPick: ['value', 'colorData', 'name'],
 		onShowPicker: ['pickerShown', 'name'],
 		onInput: ['value', 'name']
 	};

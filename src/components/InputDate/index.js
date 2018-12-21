@@ -89,11 +89,12 @@ export default class InputDateDemo extends Demo {
 		placeholder: 'Input a value'
 	};
 	static excluded = INPUT_COMPONENT_EXCLUDED;
-	static handlers = insertItems(INPUT_HANDLERS, ['onShowPicker', 'onChangePicker'], 2);
+	static handlers = insertItems(INPUT_HANDLERS, ['onShowPicker', 'onPick', 'onInput'], 2);
 	static args = {
 		...INPUT_ARGS,
-		onChangePicker: ['value', 'dateData', 'name'],
-		onShowPicker: ['pickerShown', 'name']
+		onPick: ['value', 'dateData', 'name'],
+		onShowPicker: ['pickerShown', 'name'],
+		onInput: ['value', 'name']
 	};
 	static stateProps = [...INPUT_STATE_PROPS, 'pickerShown'];
 	static funcs = {

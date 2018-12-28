@@ -31,6 +31,10 @@ export default class ButtonGroupDemo extends Demo {
 	static data = {
 		iconSize: 18
 	};
+	static args = {
+		onClick: ['buttonValue'],
+		onDisabledClick: ['buttonValue']
+	};
 	
 	renderMapper() {
 		return (

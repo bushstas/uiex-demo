@@ -1,12 +1,28 @@
 import React from 'react';
 import Demo from '../../Demo';
 import {InputDate} from 'uiex/InputDate';
+import {DatePicker} from 'uiex/DatePicker';
 import InputMapper from '../InputMapper';
 import {getSetState, insertItems} from '../../utils';
 import {INPUT_COMPONENT_EXCLUDED} from '../../consts';
 import {INPUT_HANDLERS, INPUT_ARGS, INPUT_FUNCS, INPUT_CHANGE_STATE, INPUT_STATE_PROPS} from '../Input';
 
 const EXCLUDED = ['type', 'pattern', 'textarea', 'minLength', 'maxLength', 'withIndicator'];
+
+const datePicker1 = (
+	<DatePicker
+		dayNames={['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']}
+		monthNames={['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь']}
+		markedDays={[5, 6]}
+		markedDaysDisabled
+	/>
+);
+
+const datePicker2 = (
+	<DatePicker
+		
+	/>
+);
 
 export default class InputDateDemo extends Demo {
 	static map = {
@@ -37,12 +53,6 @@ export default class InputDateDemo extends Demo {
 			},
 			inSeconds: {
 				description: 'The value timestamp will be measured in seconds'
-			},
-			pickerFromSunday: {
-				description: 'Date picker days will start from sunday'
-			},
-			pickerYearFirst: {
-				description: 'Date picker year will be displayed at left'
 			}
 		},
 		inputs: [
@@ -80,6 +90,11 @@ export default class InputDateDemo extends Demo {
 					description: 'Valid period end date (String)',
 					type: 'date',
 					example: '31.08.2010'
+				},
+				datePicker: {
+					description: 'Date picker component (React element)',
+					type: 'object',
+					options: [datePicker1, datePicker2]
 				}
 			}
 		]
@@ -109,7 +124,8 @@ export default class InputDateDemo extends Demo {
 	static changeState = {
 		...INPUT_CHANGE_STATE,
 		onShowPicker: 'pickerShown'
-	};	
+	};
+	static propsToRender = ['datePicker'];
 
 	renderMapperBefore() {
 		return (

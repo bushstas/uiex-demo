@@ -8,7 +8,7 @@ export default class MainMenu extends React.Component {
 		super(props);
 		const keys = Object.keys(MAP);
 		this.state = {
-			active: 'InputPhone'
+			active: 'InputDate'
 		};
 	}
 
@@ -23,7 +23,6 @@ export default class MainMenu extends React.Component {
 	}
 
 	render() {
-		const {onChange} = this.props;
 		const {active} = this.state;
 		return (
 			<ScrollContainer 

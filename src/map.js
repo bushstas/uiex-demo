@@ -35,6 +35,7 @@ import RendererDemo from './components/Renderer';
 import TextBlockDemo from './components/TextBlock';
 import HintDemo from './components/Hint';
 import TouchableDemo from './components/Touchable';
+import FormDemo from './components/Form';
 
 export const MAP = {
 	Arrow: ArrowDemo,
@@ -43,12 +44,13 @@ export const MAP = {
 	BoxSection: BoxSectionDemo,
 	Button: ButtonDemo,
 	ButtonGroup: ButtonGroupDemo,
+	CellGroup: CellGroupDemo,
 	Checkbox: CheckboxDemo,
 	CheckboxGroup: CheckboxGroupDemo,
-	CellGroup: CellGroupDemo,
 	ColorPicker: ColorPickerDemo,
 	Colors: ColorsDemo,
 	Draggable: DraggableDemo,
+	Form: FormDemo,
 	Hint: HintDemo,
 	Input: InputDemo,
 	InputArray: InputArrayDemo,

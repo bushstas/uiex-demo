@@ -43,13 +43,13 @@ export default class Demo extends React.Component {
     }
     
     renderComponentMapper() {
-        const {componentMapperProps, excluded, withoutComponentMapper} = this.constructor;
+        const {componentMapperProps, excluded, withoutComponentMapper, data} = this.constructor;
         if (!withoutComponentMapper) {
             return (
                 <ComponentMapper 
                     ref="componentMapper"    
                     isOpen={false}
-                    data={this.state.data}
+                    data={data}
                     excluded={excluded}
                     reactChildren={!!this.content}
                     {...componentMapperProps}
@@ -61,14 +61,14 @@ export default class Demo extends React.Component {
     }
     
     renderMapper() {
-        const {componentName, map, mapperProps, handlers, args, customEvents, handlersNote} = this.constructor;
+        const {componentName, map, mapperProps, handlers, args, customEvents, handlersNote, data} = this.constructor;
         return (
             <Mapper 
                 ref="mapper"
                 owner={this}
 				name={componentName}
 				map={map} 
-                data={this.state.data}
+                data={data}
                 {...mapperProps}
                 handlers={handlers}
                 args={args}

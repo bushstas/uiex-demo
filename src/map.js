@@ -7,6 +7,7 @@ import SearchFormDemo from './components/SearchForm';
 import RateFormDemo from './components/RateForm';
 import ModalDemo from './components/Modal';
 import SidePanelDemo from './components/SidePanel';
+import DelimiterDemo from './components/Delimiter';
 import InputDemo from './components/Input';
 import InputRegexpDemo from './components/InputRegexp';
 import ColorPickerDemo from './components/ColorPicker';
@@ -48,6 +49,7 @@ export const MAP = {
 	CellGroup: CellGroupDemo,
 	ColorPicker: ColorPickerDemo,
 	Colors: ColorsDemo,
+	Delimiter: DelimiterDemo,
 	Draggable: DraggableDemo,
 	Hint: HintDemo,
 	Input: InputDemo,

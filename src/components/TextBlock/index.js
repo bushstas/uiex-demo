@@ -44,12 +44,14 @@ export default class TextBlockDemo extends Demo {
 				bgColor: {
 					description: '',
 					type: 'color',
-					example: '555555'
+					example: '555555',
+					uncontrolled: true
 				},
 				textColor: {
 					description: '',
 					type: 'color',
-					example: 'FFFFFF'
+					example: 'FFFFFF',
+					uncontrolled: true
 				},
 				padding: {
 					description: '',

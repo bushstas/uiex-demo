@@ -38,6 +38,7 @@ import HintDemo from './components/Hint';
 import TouchableDemo from './components/Touchable';
 
 export const MAP = {
+	App: AppDemo,
 	Arrow: ArrowDemo,
 	AutoComplete: AutoCompleteDemo,
 	Box: BoxDemo,

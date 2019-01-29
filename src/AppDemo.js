@@ -6,9 +6,9 @@ import {MAP} from './map';
 
 import './style.scss';
 
-const INDEX_PAGE = 'Button';
+const INDEX_PAGE = 'ScrollContainer';
 
-export default class App extends React.Component {
+export default class AppDemo extends React.Component {
 	render() {
 		return (
 			<div>

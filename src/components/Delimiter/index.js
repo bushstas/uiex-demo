@@ -28,7 +28,8 @@ export default class DelimiterDemo extends Demo {
 				},
 				lineColor: {
 					description: 'Color on delimiter line',
-					type: 'color'
+					type: 'color',
+					uncontrolled: true
 				}
 			}
 		]

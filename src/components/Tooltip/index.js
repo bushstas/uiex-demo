@@ -83,7 +83,8 @@ export default class TooltipDemo extends Demo {
 				},
 				textColor: {
 					description: '',
-					type: 'color'
+					type: 'color',
+					uncontrolled: true
 				},
 				popupColorTheme: {
 					description: '',
@@ -91,7 +92,8 @@ export default class TooltipDemo extends Demo {
 				},
 				popupColor: {
 					description: '',
-					type: 'color'
+					type: 'color',
+					uncontrolled: true
 				},
 				popupBorder: {
 					description: '',

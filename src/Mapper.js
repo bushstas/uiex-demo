@@ -228,7 +228,7 @@ export default class Mapper extends React.Component {
 			valueWithMeasure,
 			customFilter,
 			onChangeMeasure,
-			react
+			uncontrolled
 		} = item;
 
 		if (extra && !this.state.extraPropsShown) {
@@ -244,7 +244,8 @@ export default class Mapper extends React.Component {
 			defaultValue,
 			clearable: true,
 			readOnly,
-			customFilter
+			customFilter,
+			uncontrolled
 		};
 		switch (item.type) {
 			case 'array':

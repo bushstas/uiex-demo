@@ -76,7 +76,8 @@ export default class ModalDemo extends Demo {
 				},
 				maskColor: {
 					description: 'Mask background color',
-					type: 'color'
+					type: 'color',
+					uncontrolled: true
 				},
 				x: {
 					type: 'number',

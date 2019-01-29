@@ -132,15 +132,18 @@ export default class ScrollContainerDemo extends Demo {
 				},
 				trackColor: {
 					description: 'Background color of the track (String)',
-					type: 'color'
+					type: 'color',
+					uncontrolled: true
 				},
 				sliderColor: {
 					description: 'Background color of the slider (String)',
-					type: 'color'
+					type: 'color',
+					uncontrolled: true
 				},
 				overflowMaskColor: {
 					description: 'Color of top/bottom overflow gradient masks (String)',
-					type: 'color'
+					type: 'color',
+					uncontrolled: true
 				}
 			}
 		]

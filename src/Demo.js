@@ -93,7 +93,8 @@ export default class Demo extends React.Component {
             imports,
             componentRef,
             commentBeforeRenderReturn,
-            withoutComponentMapper
+            withoutComponentMapper,
+            propsToRender
         } = this.constructor;
         return (
             <Preview
@@ -116,6 +117,7 @@ export default class Demo extends React.Component {
                 renderPreviewConst={this.renderPreviewConst}
                 renderMethods={this.renderMethods}
                 imports={imports}
+                propsToRender={propsToRender}
                 uncontrolled={this.state.data.uncontrolled}
                 componentRef={componentRef}
                 commentBeforeRenderReturn={commentBeforeRenderReturn}

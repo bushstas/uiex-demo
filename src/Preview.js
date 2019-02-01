@@ -2,7 +2,7 @@ import React from 'react';
 import {Section} from 'uiex/Section';
 import {Button} from 'uiex/Button';
 import {Modal} from 'uiex/Modal';
-import {stringify, wrap, tabulation} from './utils';
+import {stringify, wrap, tabulation, previewRenderer, getConstName, getRenderName} from './utils';
 
 export default class Preview extends React.Component {
 	constructor(props) {
@@ -235,7 +235,8 @@ export default class Preview extends React.Component {
 			componentRef,
 			uncontrolled,
 			commentBeforeRenderReturn,
-			contentBeforeClassRenderer
+			contentBeforeClassRenderer,
+			propsToRender
 		} = this.props;
 		const bools = [];
 		let childrenFromConst = false;
@@ -251,6 +252,31 @@ export default class Preview extends React.Component {
 		}
 		consts.push('style');
 
+		let renderCode = '';
+		const addToImport = [];
+		let constsFromRenderer = [];
+		tabulation.add();
+		// render componentlike props
+		if (propsToRender instanceof Array && propsToRender.length > 0) {
+			propsToRender.forEach((p) => {
+				if (data[p] != null && data[p].type instanceof Function && React.isValidElement(data[p])) {
+					addToImport.push(data[p].type.name);
+					renderCode += tabulation.render(wrap(getRenderName(p), 'name') + wrap('() {'), true);
+					tabulation.add();
+					renderCode += tabulation.render(wrap('return', 'keyword') + wrap(' ('), true);
+					tabulation.add();
+					renderCode += previewRenderer.render(data[p], [], true);
+					constsFromRenderer = constsFromRenderer.concat(previewRenderer.getConsts());
+					tabulation.reduce();
+					renderCode += N + tabulation.render(wrap(');'), true);
+					tabulation.reduce();
+					renderCode += tabulation.render(wrap('}'), 2);
+				}
+			});
+		}
+		constsFromRenderer = constsFromRenderer.join(N + N);
+		tabulation.reduce();
+
 		// imports
 		let addImport = '';
 		if (typeof additionalImport == 'string') {
@@ -260,9 +286,15 @@ export default class Preview extends React.Component {
 		}
 		let code = wrap('import', 'keyword') + ' React ' + wrap('from', 'keyword') + wrap(' "react"', 'string') + wrap(';') + N;
 		code += wrap('import', 'keyword') + wrap(' {') + name + addImport + wrap('} ') + wrap('from', 'keyword') + wrap(' "uiex/' + name + '"', 'string') + wrap(';') + N;
-		if (imports) {
+		if (imports || addToImport.length > 0) {
 			if (typeof imports == 'string') {
 				imports = [imports];
+			}
+			if (addToImport.length > 0) {
+				if (!(imports instanceof Array)) {
+					imports = [];
+				}
+				imports = imports.concat(addToImport);
 			}
 			if (imports instanceof Array) {
 				for (let i = 0; i < imports.length; i++) {
@@ -275,7 +307,9 @@ export default class Preview extends React.Component {
 		
 		// consts
 		let constsAdded = 0;
+		let constList = '';
 		if (consts instanceof Array) {
+			constList = [];
 			for (let c of consts) {
 				if (!isPropAvailable(c)) {
 					continue;
@@ -283,9 +317,13 @@ export default class Preview extends React.Component {
 				if (data[c] != null) {
 					constsAdded++;
 					const constValue = renderPreviewConst(c, data[c]) || stringify(data[c]);
-					code += wrap('const ', 'keyword2') + this.getConstName(c) + wrap(' = ') + constValue + wrap(';') + N;
+					constList.push(wrap('const ', 'keyword2') + getConstName(c) + wrap(' = ') + constValue + wrap(';'));
 				}
 			}
+			constList = constList.join(N + N);
+		}
+		if (constList || constsFromRenderer) {
+			code += constList + constsFromRenderer + N + N;
 		}
 		if (uncontrolled && stateProps instanceof Array && stateProps.length > 0) {
 			for (let item of stateProps) {
@@ -299,7 +337,7 @@ export default class Preview extends React.Component {
 				} else {
 					val = stringify(val);
 				}
-				code += wrap('const ', 'keyword2') + this.getConstName('initial_' + item) + wrap(' = ') + val + wrap(';') + N;
+				code += wrap('const ', 'keyword2') + getConstName('initial_' + item) + wrap(' = ') + val + wrap(';') + N;
 			}
 		}
 		if (constsAdded) {
@@ -312,13 +350,12 @@ export default class Preview extends React.Component {
 		}
 
 		// class
-		code += wrap('export default', 'keyword') + wrap(' class ', 'keyword2') + wrap(name + 'Demo', 'name') + wrap(' extends', 'keyword') + wrap(' React.Component', 'name') + wrap(' {') + N;
+		code += wrap('export default', 'keyword') + wrap(' class ', 'keyword2') + wrap(name + 'Demo', 'name') + wrap(' extends', 'keyword') + wrap(' React.Component', 'name') + wrap(' {');
 		tabulation.add();
-		
 		
 		// constructor
 		if (!uncontrolled && stateProps instanceof Array && stateProps.length > 0) {
-			code += tabulation.render(wrap('constructor', 'keyword2') + wrap('(') + wrap('props', 'args') + wrap(') {'), true);
+			code += N + tabulation.render(wrap('constructor', 'keyword2') + wrap('(') + wrap('props', 'args') + wrap(') {'), true);
 			tabulation.add();
 			code += tabulation.render(wrap('super', 'args') + wrap('(') + 'props' + wrap(');'), true);
 			code += tabulation.render(wrap('this', 'args') + wrap('.') + 'state' + wrap(' = {'));
@@ -328,7 +365,7 @@ export default class Preview extends React.Component {
 			for (let item of stateProps) {
 				let val = data[item];
 				if (consts instanceof Array && consts.indexOf(item) > -1) {
-					val = this.getConstName(item);
+					val = getConstName(item);
 				} else {
 					if (val === undefined) {
 						val = stringify(null);
@@ -350,55 +387,61 @@ export default class Preview extends React.Component {
 				code += wrap('};') + N;
 			}
 			tabulation.reduce();
-			code += tabulation.render(wrap('}'), 2);
+			code += tabulation.render(wrap('}'), 1);
 		}
 
 		// render
-		code += tabulation.render(wrap('render', 'function') + wrap('() {'), true);
+		renderCode += tabulation.render(wrap('render', 'function') + wrap('() {'), true);
 		tabulation.add();
 		if (!uncontrolled && stateProps instanceof Array && stateProps.length > 0) {
-			code += tabulation.render(wrap('const', 'keyword2') + wrap(' {') + stateProps.join(', ') + wrap('} = ') + wrap('this', 'args') + wrap('.') + 'state' + wrap(';'), true);
+			renderCode += tabulation.render(wrap('const', 'keyword2') + wrap(' {') + stateProps.join(', ') + wrap('} = ') + wrap('this', 'args') + wrap('.') + 'state' + wrap(';'), true);
 		}
 		if (commentBeforeRenderReturn) {
-			code += tabulation.render(wrap('// ' + commentBeforeRenderReturn, 'comment'), true);	
+			renderCode += tabulation.render(wrap('// ' + commentBeforeRenderReturn, 'comment'), true);	
 		}
-		code += tabulation.render(wrap('return', 'keyword') + wrap(' ('), true);
+		renderCode += tabulation.render(wrap('return', 'keyword') + wrap(' ('), true);
 		
 		// ================ start component
 		tabulation.add();
 		if (wrapper) {
 			if (typeof wrapper == 'string') {
-				code += tabulation.render(wrap('&lt;') + wrap(wrapper, 'tag') + wrap('&gt;'), true);
+				renderCode += tabulation.render(wrap('&lt;') + wrap(wrapper, 'tag') + wrap('&gt;'), true);
 			}
 			tabulation.add();
 			if (typeof contentBeforeRenderer == 'function') {
 				const contentBefore = contentBeforeRenderer();
 				if (contentBefore) {
-					code += contentBefore + N;
+					renderCode += contentBefore + N;
 				}
 			}
 		}
-		code += tabulation.render(wrap('&lt;') + wrap(name, 'keyword2'), true);
+		renderCode += tabulation.render(wrap('&lt;') + wrap(name, 'keyword2'), true);
 		tabulation.add();
 		if (componentRef && typeof componentRef == 'string') {
-			code += tabulation.render(wrap('ref', 'key') + wrap('=') + wrap('"' + componentRef + '"', 'string'), true);
+			renderCode += tabulation.render(wrap('ref', 'key') + wrap('=') + wrap('"' + componentRef + '"', 'string'), true);
 		}
 		if (stateProps instanceof Array) {
 			for (let k of stateProps) {
 				if (k == 'children') {
 					continue;
 				}
-				const k2 = uncontrolled ? this.getConstName('initial_' + k) : k;
-				code += tabulation.render(wrap(k, 'key') + wrap('={') + k2 + wrap('}'), true);
+				const k2 = uncontrolled ? getConstName('initial_' + k) : k;
+				renderCode += tabulation.render(wrap(k, 'key') + wrap('={') + k2 + wrap('}'), true);
 			}
 		}
 		for (let item of priority) {
 			if (data[item] !== undefined && data[item] !== '') {
-				code += tabulation.render(wrap(item, 'key') + wrap('=') + (typeof data[item] == 'string' ? wrap('"' + data[item] + '"', 'string') : wrap('{') + stringify(data[item]) + wrap('}')), true);
+				renderCode += tabulation.render(wrap(item, 'key') + wrap('=') + (typeof data[item] == 'string' ? wrap('"' + data[item] + '"', 'string') : wrap('{') + stringify(data[item]) + wrap('}')), true);
 			}
 		}
 		for (let k in data) {
 			if (!isPropAvailable(k)) {
+				continue;
+			}
+			if (propsToRender instanceof Array && propsToRender.indexOf(k) > -1) {
+				if (data[k] != null) {
+					renderCode += tabulation.render(wrap(k, 'key') + wrap('={') + wrap('this', 'args') + wrap('.') + getRenderName(k) + wrap('()}'), true);
+				}
 				continue;
 			}
 			if (consts instanceof Array && consts.indexOf(k) > -1 && (!(stateProps instanceof Array) || stateProps.indexOf(k) == -1)) {
@@ -406,7 +449,7 @@ export default class Preview extends React.Component {
 					childrenFromConst = true;
 				}
 				if (data[k] != null && k != 'children') {
-					code += tabulation.render(wrap(k, 'key') + wrap('={') + this.getConstName(k) + wrap('}'), true);
+					renderCode += tabulation.render(wrap(k, 'key') + wrap('={') + getConstName(k) + wrap('}'), true);
 				}
 				continue;
 			}
@@ -414,16 +457,15 @@ export default class Preview extends React.Component {
 				if (data[k] === true) {
 					bools.push(k);
 				} else if (data[k] || k == 'valid') {
-					code += tabulation.render(wrap(k, 'key') + wrap('=') + (typeof data[k] == 'string' ? wrap('"' + data[k] + '"', 'string') : wrap('{') + stringify(data[k]) + wrap('}')), true);
+					renderCode += tabulation.render(wrap(k, 'key') + wrap('=') + (typeof data[k] == 'string' ? wrap('"' + data[k] + '"', 'string') : wrap('{') + stringify(data[k]) + wrap('}')), true);
 				}
 			}
 		}
 		for (let item of bools) {
-			code += tabulation.render(wrap(item, 'key'), true);
+			renderCode += tabulation.render(wrap(item, 'key'), true);
 		}
-		let funcsContent;
+		let funcsContent = '';
 		if (handlers instanceof Array) {
-			funcsContent = '';
 			for (let h of handlers) {
 				let shift = 2;
 				let a = '';
@@ -447,11 +489,15 @@ export default class Preview extends React.Component {
 				}				
 				const ha = 'handle' + h.replace(/^on/, '');
 				const ha2 = wrap('handle' + h.replace(/^on/, ''), 'name');
-				code += tabulation.render(wrap(h, 'key') + wrap('={') + wrap('this', 'args') + wrap('.') + ha + wrap('}'), true);
-				funcsContent += N + N;
+				renderCode += tabulation.render(wrap(h, 'key') + wrap('={') + wrap('this', 'args') + wrap('.') + ha + wrap('}'), true);
+				funcsContent += N;
 				funcsContent += tabulation.renderWith(ha2 + wrap(' = (') + wrap(a, 'args') + wrap(') ') + wrap('=>', 'keyword2') + wrap(' {'), 1, true);
 				funcsContent += tabulation.renderWith(func, shift, true);
 				funcsContent += tabulation.renderWith(wrap('}'), 1);
+				funcsContent += N;
+			}
+			if (funcsContent) {
+				funcsContent += N;
 			}
 		}
 		let content = contentRenderer.call(owner);
@@ -461,54 +507,56 @@ export default class Preview extends React.Component {
 			content += N;
 		}
 		if (hasContent && !unclosable) {
-			code += tabulation.render(wrap('&gt;'), true);
+			renderCode += tabulation.render(wrap('&gt;'), true);
 			tabulation.add();
 			if (childrenFromState) {
-				code += tabulation.render(wrap('{') + 'children' + wrap('}'), true);
+				renderCode += tabulation.render(wrap('{') + 'children' + wrap('}'), true);
 			} else if (childrenFromConst) {
-				code += tabulation.render(wrap('{') + this.getConstName('children') + wrap('}'), true);
+				renderCode += tabulation.render(wrap('{') + getConstName('children') + wrap('}'), true);
 			} else if (content) {
-				code += content;
+				renderCode += content;
 			} else {
-				code += tabulation.render(data.children, true);
+				renderCode += tabulation.render(data.children, true);
 			}
 			tabulation.reduce();
-			code += tabulation.render(wrap('&lt;/') + wrap(name, 'keyword2') + wrap('&gt;'), true);
+			renderCode += tabulation.render(wrap('&lt;/') + wrap(name, 'keyword2') + wrap('&gt;'), true);
 		} else {
-			code += tabulation.render(wrap('/&gt;'), true);
+			renderCode += tabulation.render(wrap('/&gt;'), true);
 		}
 		if (wrapper) {
 			if (typeof contentAfterRenderer == 'function') {
 				const contentAfter = contentAfterRenderer();
 				if (contentAfter) {
-					code += contentAfter + N;
+					renderCode += contentAfter + N;
 				}
 			}
 			tabulation.reduce();
 			if (typeof wrapper == 'string') {
-				code += tabulation.render(wrap('&lt;/') + wrap(wrapper, 'tag') + wrap('&gt;'), true);
+				renderCode += tabulation.render(wrap('&lt;/') + wrap(wrapper, 'tag') + wrap('&gt;'), true);
 			}
 		}
 		// ======================= end component
 
 
 		tabulation.reduce();
-		code += tabulation.render(wrap(')'), true);
+		renderCode += tabulation.render(wrap(');'), true);
 		tabulation.reduce();
-		code += tabulation.render(wrap('}'));
+		renderCode += tabulation.render(wrap('}'));
+
+		let methodsCode = '';
 		if (typeof renderMethods == 'function') {
 			const methods = renderMethods();
 			if (methods) {
-				code += methods;
+				methodsCode += methods;
 			}
 		}
-		code += (funcsContent || '') + N + wrap('}');
+		if (!funcsContent) {
+			renderCode = N + renderCode;
+		}
+		code += funcsContent + renderCode + methodsCode + N + wrap('}');
+		code = code.replace(/\n{3,}/g, "\n\n");
 		return (
 			<pre className="decorated" dangerouslySetInnerHTML={{__html: code}}/>
 		)
-	}
-
-	getConstName(name) {
-		return name.split(/(?=[A-Z])/).join('_').toUpperCase();
 	}
 }

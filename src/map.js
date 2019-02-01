@@ -38,6 +38,7 @@ import TouchableDemo from './components/Touchable';
 import FormDemo from './components/Form';
 
 export const MAP = {
+	App: AppDemo,
 	Arrow: ArrowDemo,
 	AutoComplete: AutoCompleteDemo,
 	Box: BoxDemo,

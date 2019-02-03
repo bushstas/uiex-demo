@@ -1,29 +1,15 @@
 import React from 'react';
 import {ScrollContainer} from 'uiex/ScrollContainer';
-import {Button} from 'uiex/Button';
+import {AppLink} from 'uiex/AppLink';
 import {MAP} from './map';
 
 export default class MainMenu extends React.Component {
 	constructor(props) {
 		super(props);
-		const keys = Object.keys(MAP);
-		this.state = {
-			active: 'App'
-		};
-	}
-
-	componentDidMount() {
-		const {active} = this.state;
-		this.handleChange(active);
-	}
-
-	handleChange = (active) => {
-		this.setState({active});
-		this.props.onChange(MAP[active]);
+		this.state = {};
 	}
 
 	render() {
-		const {active} = this.state;
 		return (
 			<ScrollContainer 
 				className="main-menu"
@@ -39,20 +25,16 @@ export default class MainMenu extends React.Component {
 				onWheel={this.handleWheel}
 			>
 				{Object.keys(MAP).map(item => {
-					let className = 'main-menu-button';
-					if (item === active) {
-						className += ' active';
-					}
 					return (
-						<Button 
+						<AppLink
 							key={item}
-							value={item}
-							className={className}
+							page={item}
+							className="main-menu-button"
 							align="left"
-							onClick={this.handleChange}
+							isButton
 						>
 							{item}
-						</Button>
+						</AppLink>
 					)
 				})}
 			</ScrollContainer>

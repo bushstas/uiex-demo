@@ -7,6 +7,7 @@ import SearchFormDemo from './components/SearchForm';
 import RateFormDemo from './components/RateForm';
 import ModalDemo from './components/Modal';
 import SidePanelDemo from './components/SidePanel';
+import DelimiterDemo from './components/Delimiter';
 import InputDemo from './components/Input';
 import InputRegexpDemo from './components/InputRegexp';
 import ColorPickerDemo from './components/ColorPicker';
@@ -33,6 +34,7 @@ import AppDemo from './components/App';
 import TooltipDemo from './components/Tooltip';
 import RendererDemo from './components/Renderer';
 import TextBlockDemo from './components/TextBlock';
+import TextCutDemo from './components/TextCut';
 import HintDemo from './components/Hint';
 import TouchableDemo from './components/Touchable';
 import FormDemo from './components/Form';
@@ -50,6 +52,7 @@ export const MAP = {
 	CheckboxGroup: CheckboxGroupDemo,
 	ColorPicker: ColorPickerDemo,
 	Colors: ColorsDemo,
+	Delimiter: DelimiterDemo,
 	Draggable: DraggableDemo,
 	Form: FormDemo,
 	Hint: HintDemo,
@@ -73,6 +76,7 @@ export const MAP = {
 	Tab: TabDemo,
 	Tabs: TabsDemo,
 	TextBlock: TextBlockDemo,
+	TextCut: TextCutDemo,
 	TimeScale: TimeScaleDemo,
 	Tooltip: TooltipDemo,
 	Touchable: TouchableDemo

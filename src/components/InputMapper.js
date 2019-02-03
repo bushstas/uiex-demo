@@ -83,6 +83,11 @@ export default class InputMapper extends DemoMapper {
 					type: 'regexp',
 					description: 'Regexp pattern to validate control (RegExp | Function | String)',
 					example: '^[a-z]'
+				},
+				customFilter: {
+					type: 'object',
+					description: 'Custom filter function (Function)',
+					options: [1, 2]
 				}
 			}
 		]

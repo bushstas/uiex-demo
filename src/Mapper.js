@@ -10,7 +10,7 @@ import {InputDate} from 'uiex/InputDate';
 import {InputPhone} from 'uiex/InputPhone';
 import {Select} from 'uiex/Select';
 import {SelectObject} from 'uiex/SelectObject';
-import {Form} from 'uiex/Form';
+import {Form, change} from 'uiex/Form';
 import {FormControl} from 'uiex/FormControl';
 import {FormControlGroup} from 'uiex/FormControlGroup';
 import {BoxSection} from 'uiex/BoxSection';
@@ -52,6 +52,7 @@ export default class Mapper extends React.Component {
 					onToggle={this.handleBoxSectionToggle}
 				>
 					<Form 
+						name="mapper"
 						data={data}
 						columns={columns}
 						columnsTiny="2"
@@ -220,7 +221,8 @@ export default class Mapper extends React.Component {
 			readOnly,
 			valueWithMeasure,
 			customFilter,
-			onChangeMeasure
+			onChangeMeasure,
+			uncontrolled
 		} = item;
 
 		if (extra && !this.state.extraPropsShown) {
@@ -236,7 +238,8 @@ export default class Mapper extends React.Component {
 			defaultValue,
 			clearable: true,
 			readOnly,
-			customFilter
+			customFilter,
+			uncontrolled
 		};
 		switch (item.type) {
 			case 'array':
@@ -342,12 +345,18 @@ export default class Mapper extends React.Component {
 			<Checkbox
 				key={name}
 				name={name}
+				value={this.props.data[name]}
 				readOnly={item.readOnly}
 				title={item.description + ' (Boolean)'}
+				onChange={this.handleCheckboxChange}
 			>
 				{name}
 			</Checkbox>
 		)
+	}
+
+	handleCheckboxChange = (value, name) => {
+		change('mapper', {[name]: value});
 	}
 
 	handleChange = (data) => {

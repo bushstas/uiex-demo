@@ -35,7 +35,8 @@ export default class LoaderDemo extends Demo {
 				},
 				maskColor: {
 					description: '',
-					type: 'color'
+					type: 'color',
+					uncontrolled: true
 				},
 				maskOpacity: {
 					description: 'Mask opacity from 0 to 10. Can be decimal',
@@ -52,7 +53,8 @@ export default class LoaderDemo extends Demo {
 				},
 				spinnerColor: {
 					description: '',
-					type: 'color'
+					type: 'color',
+					uncontrolled: true
 				},
 				spinnerSize: {
 					description: '',

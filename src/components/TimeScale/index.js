@@ -73,11 +73,13 @@ export default class TimeScaleDemo extends Demo {
 				},
 				trackColor: {
 					description: 'Color of the track (String)',
-					type: 'color'
+					type: 'color',
+					uncontrolled: true
 				},
 				indicatorColor: {
 					description: 'Color of the indicator (String)',
-					type: 'color'
+					type: 'color',
+					uncontrolled: true
 				},
 				timeStyle: {
 					description: 'Style of the indicator (Object)',

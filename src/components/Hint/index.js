@@ -50,7 +50,8 @@ export default class HintDemo extends Demo {
 				},
 				textColor: {
 					description: '',
-					type: 'color'
+					type: 'color',
+					uncontrolled: true
 				},
 				colorTheme: {
 					description: '',
@@ -58,7 +59,8 @@ export default class HintDemo extends Demo {
 				},
 				color: {
 					description: '',
-					type: 'color'
+					type: 'color',
+					uncontrolled: true
 				},
 				border: {
 					description: '',

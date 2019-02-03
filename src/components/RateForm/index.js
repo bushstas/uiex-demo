@@ -26,15 +26,18 @@ export default class RateFormDemo extends Demo {
 				},
 				normalColor:{
 					type: 'color',
-					description: 'Normal color of icons'
+					description: 'Normal color of icons',
+					uncontrolled: true
 				},
 				activeColor:{
 					type: 'color',
-					description: 'Color of active icons'
+					description: 'Color of active icons',
+					uncontrolled: true
 				},
 				hoverColor:{
 					type: 'color',
-					description: 'Color of hover icons'
+					description: 'Color of hover icons',
+					uncontrolled: true
 				},
 				submit:{
 					description: 'Color of hover icons',

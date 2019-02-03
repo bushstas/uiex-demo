@@ -59,7 +59,8 @@ export default class ArrowDemo extends Demo {
 				},
 				color: {
 					description: 'An arrow\'s color (String)',
-					type: 'color'
+					type: 'color',
+					uncontrolled: true
 				}
 			}
 		]

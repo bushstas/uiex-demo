@@ -1,6 +1,5 @@
 import React from 'react';
 import {ScrollContainer} from 'uiex/ScrollContainer';
-import {Button} from 'uiex/Button';
 import {AppLink} from 'uiex/AppLink';
 import {MAP} from './map';
 

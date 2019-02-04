@@ -73,6 +73,7 @@ export default class AppDemo extends Demo {
 
 	constructor(props) {
 		super(props);
+		this.state.formData = {email: 'bushstas@mail.ru'};
 		this.state.objs = [
 			{type: 'a', props: {href: 'https://mail.ru'}, children: 'мыло', handlers: {onClick: 'onLinkClick'}},
 			{type: 'Button', props: {value: 'aaa'}, children: 'Click me', handlers: {onClick: 'onButtonClick'}}
@@ -83,9 +84,18 @@ export default class AppDemo extends Demo {
 		return 1111111111;
 	}
 
+	handleEmailChange = () => {
+		alert(56)
+	}
+
+	handleFormChange = (formData) => {
+		this.setState({formData});
+	}
+
 	handleButtonClick = (value, sourceObject) => {
-		sourceObject.children = 'Fuck it';
-		this.setState({objs: [...this.state.objs]});
+		this.setState({formData: {name: 'name', email: 'email'}})
+		// sourceObject.children = 'Fuck it';
+		// this.setState({objs: [...this.state.objs]});
 	}
 
 	handleLinkClick = () => {
@@ -160,4 +170,12 @@ export default class AppDemo extends Demo {
 		return previewRenderer.render(content);
 	}
 
+}
+
+class FuckThisCrap extends React.PureComponent {
+	render() {
+		return (			
+			<Input name="address" />				
+		);
+	}
 }

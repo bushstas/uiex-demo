@@ -84,10 +84,6 @@ export default class AppDemo extends Demo {
 		return 1111111111;
 	}
 
-	handleEmailChange = () => {
-		alert(56)
-	}
-
 	handleFormChange = (formData) => {
 		this.setState({formData});
 	}

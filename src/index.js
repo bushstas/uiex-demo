@@ -9,7 +9,7 @@ import {addThemes, setDefaultStyles, setDefaultProps} from 'uiex';
 // setDefaultProps(Loader, {theme: 'colored'});
 // setDefaultStyles(Loader, {mask: 'border: 10px solid #000'});
 const loc = window.location.toString();
-if (/\/appdemo\.html$/.test(loc)) {
+if (/\/appdemo\.html$/.test(loc.split('#')[0])) {
     render(<AppDemo/>, document.getElementById('root'));
 } else {
     render(<App/>, document.getElementById('root'));

@@ -1,6 +1,5 @@
 import React from 'react';
 import Demo from '../../Demo';
-import {App} from 'uiex/App';
 import {Renderer} from 'uiex/Renderer'; 
 import {AppPage} from 'uiex/AppPage';
 import {AppLink} from 'uiex/AppLink';
@@ -12,6 +11,17 @@ class NotFound extends React.Component {
 	}
 }
 
+function App() {
+	return (
+		<iframe
+			src="./appdemo.html"
+			width="100%"
+			height="500"
+			frameborder="no"
+		/>
+	)
+}
+
 export default class AppDemo extends Demo {
 	static map = {
 		checkboxes: {
@@ -19,7 +29,7 @@ export default class AppDemo extends Demo {
 				description: 'Routing gets page names from the location hash'
 			},
 			hashPaths: {
-				description: 'Routing gets page paths but not page names from the location hash'
+				description: 'Routing gets page paths but not page names from the location hash. Needs "hashRouting" to be true'
 			}
 		},
 		inputs: [
@@ -29,14 +39,14 @@ export default class AppDemo extends Demo {
 					example: 'news'
 				},
 				indexPageName: {
-					description: 'The name of an index page. The same as indexPage prop of a AppPage (String)',
+					description: 'The name of an index page. An alternative to "indexPage" prop of a AppPage (String)',
 					example: 'home'
 				},
 				loaderView: {
 					description: 'The component that renders loader before app is mounted (Function)',
 				},
 				pageNotFoundView: {
-					description: 'The component that renders 404 error page (Function)',
+					description: 'The component that renders 404 error page. An alternative to "notFoundPage" prop of a AppPage (Function)',
 				},
 				criticalErrorView: {
 					description: 'The component that renders critical error page (Function)',
@@ -48,7 +58,7 @@ export default class AppDemo extends Demo {
 		hashRouting: false,
 		indexPageName: 'home'
 	};
-	static excluded = ['vertical', 'block', 'valign', 'disabled', 'hidden', 'uncontrolled', 'skipped'];
+	static excluded = ['vertical', 'block', 'valign', 'disabled', 'hidden', 'uncontrolled', 'skipped', 'width', 'height', 'float', 'align', 'theme', 'style'];
 	static handlers = ['onChangePage'];
 	static stateProps = [];
 	static funcs = {
@@ -59,6 +69,7 @@ export default class AppDemo extends Demo {
 	};
 	static componentName = 'App';
 	static component = App;
+	static info = 'App is a container for pages (routes), gives you a routing system';
 
 	constructor(props) {
 		super(props);
@@ -71,10 +82,6 @@ export default class AppDemo extends Demo {
 
 	renderContent() {
 		return 1111111111;
-	}
-
-	handleEmailChange = () => {
-		alert(56)
 	}
 
 	handleFormChange = (formData) => {

@@ -24,9 +24,9 @@ export const stringify = (value, addBraces = false, isJSXProp = false, nowrapArr
 			value = wrap(value, 'number');
 		} else if (typeof value == 'string') {
 			if (isJSXProp) {
-				value = wrap('"' + value + '"', 'string');	
+				value = wrapString(value);
 			} else {
-				value = wrap('\'' + value + '\'', 'string');
+				value = wrapString(value, true);
 			}
 		} else if (typeof value == 'boolean') {
 			value = wrap(value.toString(), 'number');
@@ -115,6 +115,11 @@ const stringifyArray = (arr, nowrap = false) => {
 
 export const wrap = (text, className = 'symbol', tagName = 'span') => {
 	return `<${tagName} class="${className}">${text}</${tagName}>`;
+}
+
+export const wrapString = (text, singleQuotes = false) => {
+	const quote = singleQuotes ? "'" : '"';
+	return wrap(quote) + wrap(text, 'string') + wrap(quote);
 }
 
 export const getSetState = (name, value = null) => {
@@ -220,8 +225,10 @@ class PreviewRenderer {
 		}
 		if (content instanceof Object) {
 			const {type} = content;
-			if (type) {		
-				if (typeof type == 'function' || (typeof type == 'string' && /^[A-Z]/.test(type[0]))) {
+			if (type) {
+				if (typeof type == 'symbol' && type.toString() === 'Symbol(react.fragment)') {
+					this.renderFragment(content);
+				} else if (typeof type == 'function' || (typeof type == 'string' && /^[A-Z]/.test(type[0]))) {
 					this.renderComponent(content);
 				} else {
 					this.renderElement(content);
@@ -247,6 +254,10 @@ class PreviewRenderer {
 
 	renderComponent(content) {
 		this.renderItem(content, content.type.name, true);
+	}
+
+	renderFragment(content) {
+		this.renderItem(content, 'Fragment', true);
 	}
 
 	renderItem(content, name, isComponent = false) {

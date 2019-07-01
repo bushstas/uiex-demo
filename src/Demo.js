@@ -84,6 +84,7 @@ export default class Demo extends React.Component {
             componentName,
             component,
             handlers,
+            additionalHandlers,
             args,
             funcs,
             stateProps,
@@ -103,6 +104,7 @@ export default class Demo extends React.Component {
                 name={componentName}
 				data={this.state.data}
 				handlers={handlers}
+                additionalHandlers={additionalHandlers}
 				args={args}
 				funcs={funcs}
 				stateProps={stateProps}

@@ -35,6 +35,7 @@ import TooltipDemo from './components/Tooltip';
 import RendererDemo from './components/Renderer';
 import TextBlockDemo from './components/TextBlock';
 import HintDemo from './components/Hint';
+import FormDemo from './components/Form';
 import TouchableDemo from './components/Touchable';
 
 export const MAP = {
@@ -52,6 +53,7 @@ export const MAP = {
 	Colors: ColorsDemo,
 	Delimiter: DelimiterDemo,
 	Draggable: DraggableDemo,
+	Form: FormDemo,
 	Hint: HintDemo,
 	Input: InputDemo,
 	InputArray: InputArrayDemo,

@@ -2,7 +2,6 @@ import React from 'react';
 import ComponentMapper from './components/ComponentMapper';
 import Mapper from './Mapper';
 import Preview from './Preview';
-import {subscribe} from 'uiex/Form';
 
 const LOG_EVENTS = 0;
 
@@ -15,10 +14,6 @@ export default class Demo extends React.Component {
             data,
             ...customState
 		};
-    }
-
-    componentDidMount() {
-        subscribe('mapper', this, 'mapperData');
     }
     
     render() {
@@ -48,13 +43,13 @@ export default class Demo extends React.Component {
     }
     
     renderComponentMapper() {
-        const {componentMapperProps, excluded, withoutComponentMapper, data} = this.constructor;
+        const {componentMapperProps, excluded, withoutComponentMapper} = this.constructor;
         if (!withoutComponentMapper) {
             return (
                 <ComponentMapper 
                     ref="componentMapper"    
                     isOpen={false}
-                    data={data}
+                    data={this.state.data}
                     excluded={excluded}
                     reactChildren={!!this.content}
                     {...componentMapperProps}
@@ -66,7 +61,6 @@ export default class Demo extends React.Component {
     }
     
     renderMapper() {
-        const {data} = this.state;
         const {componentName, map, mapperProps, handlers, args, customEvents, handlersNote} = this.constructor;
         return (
             <Mapper 
@@ -74,7 +68,7 @@ export default class Demo extends React.Component {
                 owner={this}
 				name={componentName}
 				map={map} 
-                data={data}
+                data={this.state.data}
                 {...mapperProps}
                 handlers={handlers}
                 args={args}

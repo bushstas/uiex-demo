@@ -10,7 +10,7 @@ import {InputDate} from 'uiex/InputDate';
 import {InputPhone} from 'uiex/InputPhone';
 import {Select} from 'uiex/Select';
 import {SelectObject} from 'uiex/SelectObject';
-import {Form, change} from 'uiex/Form';
+import {Form} from 'uiex/Form';
 import {FormControl} from 'uiex/FormControl';
 import {FormControlGroup} from 'uiex/FormControlGroup';
 import {BoxSection} from 'uiex/BoxSection';
@@ -38,6 +38,9 @@ export default class Mapper extends React.Component {
 		if (!getNumber(columns)) {
 			columns = COLUMNS;
 		}
+		if (!(data instanceof Object)) {
+			data = {};
+		}
 		const withCustomEvents = customEvents instanceof Object;
 		return (
 			<div className="mapper">
@@ -52,8 +55,7 @@ export default class Mapper extends React.Component {
 					onToggle={this.handleBoxSectionToggle}
 				>
 					<Form 
-						name="mapper"
-						data={data}
+						onChange={this.handleChangeInput}
 						columns={columns}
 						columnsTiny="2"
 						columnsSmall="4"
@@ -63,8 +65,6 @@ export default class Mapper extends React.Component {
 						columnsGigantic="24"
 						cellSize="2"
 						rowMargin="10"
-						uncontrolled
-						onChange={this.handleChange}
 					>
 						<div className="mapper-checkboxes">
 							{checkboxes instanceof Object && Object.keys(checkboxes).map(key => {
@@ -72,7 +72,8 @@ export default class Mapper extends React.Component {
 									return null;
 								}
 								const item = checkboxes[key];
-								return this.renderCheckboxControl(key, item);
+								const value = data[key];
+								return this.renderCheckboxControl(key, item, value);
 							})}
 						</div>
 						{inputs instanceof Array && 
@@ -92,14 +93,18 @@ export default class Mapper extends React.Component {
 													return null;
 												}
 												const item = inps[key];
+												let value = data[key];
+												if (typeof value == 'undefined') {
+													value = item.value;
+												}
 												const {options, checkboxes} = item;
 												if (options) {
-													return this.renderSelectControl(key, item);	
+													return this.renderSelectControl(key, item, value);	
 												}
 												if (checkboxes) {
-													return this.renderCheckboxesGroupControl(key, item);	
+													return this.renderCheckboxesGroupControl(key, item, value);	
 												}
-												return this.renderInputControl(key, item);
+												return this.renderInputControl(key, item, value);
 											})}
 										</FormControlGroup>
 									)
@@ -178,7 +183,7 @@ export default class Mapper extends React.Component {
 		this.setState({extraPropsShown});
 	}
 
-	renderCheckboxesGroupControl(name, item) {
+	renderCheckboxesGroupControl(name, item, value) {
 		return (
 			<FormControl 
 				key={name}
@@ -188,6 +193,7 @@ export default class Mapper extends React.Component {
 			>
 				<CheckboxGroup 
 					name={name}
+					value={value}
 					options={item.checkboxes}
 					icon
 					checkAll={false}
@@ -243,7 +249,8 @@ export default class Mapper extends React.Component {
 		};
 		switch (item.type) {
 			case 'array':
-				input = <Input {...props} readOnly value="Array"/>
+				const arrayValue = 'Array (' + (value instanceof Array ? value.length : (!!value ? 1 : 0)) + ')';
+				input = <Input {...props} readOnly value={arrayValue}/>
 			break;
 
 			case 'number':
@@ -307,7 +314,7 @@ export default class Mapper extends React.Component {
 		)
 	}
 
-	renderSelectControl(name, item) {
+	renderSelectControl(name, item, value) {
 		let SelectComponent = Select;
 		let {options, empty = true} = item;
 		let optionsFromFunc;
@@ -331,6 +338,7 @@ export default class Mapper extends React.Component {
 				<SelectComponent
 					empty={empty}
 					name={name}
+					value={value}
 					readOnly={item.readOnly}
 					options={optionsFromFunc || options}
 					multiple={item.multiple}
@@ -340,29 +348,34 @@ export default class Mapper extends React.Component {
 		)
 	}
 
-	renderCheckboxControl(name, item) {
+	renderCheckboxControl(name, item, value) {
 		return (
 			<Checkbox
 				key={name}
 				name={name}
-				value={this.props.data[name]}
+				value={value}
 				readOnly={item.readOnly}
 				title={item.description + ' (Boolean)'}
-				onChange={this.handleCheckboxChange}
+				onChange={this.handleChangeCheckbox}
 			>
 				{name}
 			</Checkbox>
 		)
 	}
 
-	handleCheckboxChange = (value, name) => {
-		change('mapper', {[name]: value});
+	handleChangeCheckbox = (value, name) => {
+		this.handleChange(name, value);
 	}
 
-	handleChange = (data) => {
-		const {onChange} = this.props;
+	handleChangeInput = (name, value) => {
+		this.handleChange(name, value);
+	}
+
+	handleChange(name, value) {
+		const {onChange, data} = this.props;
 		if (typeof onChange == 'function') {
-			onChange(data);
+			data[name] = value;
+			onChange({...data});
 		}
 	}
 

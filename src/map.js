@@ -34,10 +34,8 @@ import AppDemo from './components/App';
 import TooltipDemo from './components/Tooltip';
 import RendererDemo from './components/Renderer';
 import TextBlockDemo from './components/TextBlock';
-import TextCutDemo from './components/TextCut';
 import HintDemo from './components/Hint';
 import TouchableDemo from './components/Touchable';
-import FormDemo from './components/Form';
 
 export const MAP = {
 	App: AppDemo,
@@ -47,14 +45,13 @@ export const MAP = {
 	BoxSection: BoxSectionDemo,
 	Button: ButtonDemo,
 	ButtonGroup: ButtonGroupDemo,
-	CellGroup: CellGroupDemo,
 	Checkbox: CheckboxDemo,
 	CheckboxGroup: CheckboxGroupDemo,
+	CellGroup: CellGroupDemo,
 	ColorPicker: ColorPickerDemo,
 	Colors: ColorsDemo,
 	Delimiter: DelimiterDemo,
 	Draggable: DraggableDemo,
-	Form: FormDemo,
 	Hint: HintDemo,
 	Input: InputDemo,
 	InputArray: InputArrayDemo,
@@ -76,7 +73,6 @@ export const MAP = {
 	Tab: TabDemo,
 	Tabs: TabsDemo,
 	TextBlock: TextBlockDemo,
-	TextCut: TextCutDemo,
 	TimeScale: TimeScaleDemo,
 	Tooltip: TooltipDemo,
 	Touchable: TouchableDemo

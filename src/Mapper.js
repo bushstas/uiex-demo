@@ -63,7 +63,6 @@ export default class Mapper extends React.Component {
 						columnsGigantic="24"
 						cellSize="2"
 						rowMargin="10"
-						uncontrolled
 						onChange={this.handleChange}
 					>
 						<div className="mapper-checkboxes">
@@ -221,8 +220,7 @@ export default class Mapper extends React.Component {
 			readOnly,
 			valueWithMeasure,
 			customFilter,
-			onChangeMeasure,
-			uncontrolled
+			onChangeMeasure
 		} = item;
 
 		if (extra && !this.state.extraPropsShown) {
@@ -238,8 +236,7 @@ export default class Mapper extends React.Component {
 			defaultValue,
 			clearable: true,
 			readOnly,
-			customFilter,
-			uncontrolled
+			customFilter
 		};
 		switch (item.type) {
 			case 'array':

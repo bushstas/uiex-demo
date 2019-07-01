@@ -13,7 +13,8 @@ const CONTROL_STYLE_OPTIONS = [
 	{
 		width: '32px',
 		height: '32px',
-	}
+	},
+	'background-color: blue'
 ];
 
 const MARKER_STYLE_OPTIONS = [
@@ -29,7 +30,8 @@ const MARKER_STYLE_OPTIONS = [
 		top: '5px',
 		right: '5px',
 		bottom: '5px'
-	}
+	},
+	'background-color: orange'
 ];
 
 const LABEL_STYLE_OPTIONS = [
@@ -40,7 +42,8 @@ const LABEL_STYLE_OPTIONS = [
 		fontWeight: 'bold',
 		fontSize: '32px',
 		lineHeight: '32px',
-	}
+	},
+	'font-style: italic'
 ];
 
 const CONTENT_STYLE_OPTIONS = [
@@ -49,7 +52,8 @@ const CONTENT_STYLE_OPTIONS = [
 	},
 	{
 		fontStyle: 'italic'
-	}
+	},
+	'padding: 30px'
 ];
 
 export default class CheckboxDemo extends Demo {
@@ -88,22 +92,22 @@ export default class CheckboxDemo extends Demo {
 					options: ICON_TYPE
 				},
 				controlStyle: {
-					description: 'Style of the checkbox control (Object)',
+					description: 'Style of the checkbox control (Object | String)',
 					type: 'object',
 					options: CONTROL_STYLE_OPTIONS
 				},
 				markerStyle: {
-					description: 'Style of the checkbox marker (Object)',
+					description: 'Style of the checkbox marker (Object | String)',
 					type: 'object',
 					options: MARKER_STYLE_OPTIONS
 				},
 				labelStyle: {
-					description: 'Style of the checkbox label (Object)',
+					description: 'Style of the checkbox label (Object | String)',
 					type: 'object',
 					options: LABEL_STYLE_OPTIONS
 				},
 				contentStyle: {
-					description: 'Style of the checkbox additional content (children) (Object)',
+					description: 'Style of the checkbox additional content (children) (Object | String)',
 					type: 'object',
 					options: CONTENT_STYLE_OPTIONS
 				}

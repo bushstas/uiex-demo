@@ -24,9 +24,9 @@ export const stringify = (value, addBraces = false, isJSXProp = false, nowrapArr
 			value = wrap(value, 'number');
 		} else if (typeof value == 'string') {
 			if (isJSXProp) {
-				value = wrap('"' + value + '"', 'string');	
+				value = wrapString(value);
 			} else {
-				value = wrap('\'' + value + '\'', 'string');
+				value = wrapString(value, true);
 			}
 		} else if (typeof value == 'boolean') {
 			value = wrap(value.toString(), 'number');
@@ -115,6 +115,11 @@ const stringifyArray = (arr, nowrap = false) => {
 
 export const wrap = (text, className = 'symbol', tagName = 'span') => {
 	return `<${tagName} class="${className}">${text}</${tagName}>`;
+}
+
+export const wrapString = (text, singleQuotes = false) => {
+	const quote = singleQuotes ? "'" : '"';
+	return wrap(quote) + wrap(text, 'string') + wrap(quote);
 }
 
 export const getSetState = (name, value = null) => {

@@ -389,7 +389,7 @@ export default class CellGroupDemo extends Demo {
 
 	renderContentBefore() {		
 		return (
-			<div className="mb20">
+			<div>
 				Choose cell quantity
 				<Select 
 					value={this.state.cellQuantity} 

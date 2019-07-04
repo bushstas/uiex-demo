@@ -17,7 +17,7 @@ function App() {
 			src="./appdemo.html"
 			width="100%"
 			height="500"
-			frameborder="no"
+			frameBorder="no"
 		/>
 	)
 }

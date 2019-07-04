@@ -3,7 +3,7 @@ import ComponentMapper from './components/ComponentMapper';
 import Mapper from './Mapper';
 import Preview from './Preview';
 
-const LOG_EVENTS = 0;
+const LOG_EVENTS = 1;
 
 export default class Demo extends React.Component {
     constructor(props) {
@@ -95,7 +95,8 @@ export default class Demo extends React.Component {
             componentRef,
             commentBeforeRenderReturn,
             withoutComponentMapper,
-            propsToRender
+            propsToRender,
+            withFragment
         } = this.constructor;
         return (
             <Preview
@@ -126,6 +127,7 @@ export default class Demo extends React.Component {
                 contentBeforeClassRenderer={this.renderContentBeforeClass}
                 withoutComponentMapper={withoutComponentMapper}
                 onRerender={this.handleRerender}
+                withFragment={withFragment}
                 {...previewProps}
 			>
                 {this.renderPreviewContentBefore()}
@@ -143,11 +145,15 @@ export default class Demo extends React.Component {
                     restProps[h] = this.getHandler(h);
                 }
             }
+            const contentBefore = this.renderContentBefore();
+            const contentAfter = this.renderContentAfter();
             return (
                 <div>
-                    {this.renderContentBefore()}
+                    {contentBefore}
+                    {Boolean(contentBefore) && <br />}
                     {this.renderComponent(Component, restProps)}
-                    {this.renderContentAfter()}
+                    {Boolean(contentAfter) && <br />}
+                    {contentAfter}
                 </div>
             )
         }

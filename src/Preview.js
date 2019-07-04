@@ -2,6 +2,7 @@ import React from 'react';
 import {Section} from 'uiex/Section';
 import {Button} from 'uiex/Button';
 import {Modal} from 'uiex/Modal';
+import {JsonPreview} from 'uiex/JsonPreview';
 import {stringify, wrap, tabulation, previewRenderer, getConstName, getRenderName, wrapString} from './utils';
 
 export default class Preview extends React.Component {
@@ -10,6 +11,7 @@ export default class Preview extends React.Component {
 		this.state = {
 			padding: 10,
 			codeShown: false,
+			infoShown: false,
 			customizationShown: false
 		}
 	}
@@ -18,6 +20,7 @@ export default class Preview extends React.Component {
 		const {withoutComponentMapper} = this.props;
 		const {
 			codeShown,
+			infoShown,
 			customizationShown,
 			expanded,
 			customizationExpanded
@@ -40,6 +43,14 @@ export default class Preview extends React.Component {
 					onExpand={this.handleModalExpand}
 				>
 					{codeShown && this.renderCode()}
+				</Modal>
+				<Modal
+					header={'Information about ' + this.props.name}
+					width="400"
+					isOpen={infoShown}
+					onClose={this.handleInfoModalClose}
+				>
+					{infoShown && this.renderInfo()}
 				</Modal>
 				{!withoutComponentMapper &&
 					<Modal
@@ -65,21 +76,31 @@ export default class Preview extends React.Component {
 			<span>
 				{this.props.renderPreviewNote()}
 				<Button
+					title="See more info"
+					onClick={this.handleShowInfo}
+				>
+					More info
+				</Button>
+				<Button
 					title="Unmount and then render again"
 					onClick={onRerender}
 				>
-					Rerender component
+					Rerender
 				</Button>
 				<Button onClick={this.handleGetCodeClick}>
-					Get demo code
+					Demo code
 				</Button>
 				{!withoutComponentMapper &&
 					<Button onClick={this.handleCustomizationClick}>
-						Customizitation example
+						Customizitation
 					</Button>
 				}
 			</span>
 		)
+	}
+
+	handleShowInfo = () => {
+		this.setState({infoShown: true});
 	}
 
 	handleGetCodeClick = () => {
@@ -122,6 +143,21 @@ export default class Preview extends React.Component {
 		tabulation.reduce();
 		code += tabulation.render(wrap('}'));
 		return code;
+	}
+
+	renderInfo() {
+		const {component} = this.props.owner.constructor;
+		const data = {
+			displayName: component.displayName,
+			properChildren: component.properChildren || null,
+			onlyProperChildren: Boolean(component.onlyProperChildren)
+		};
+		return (
+			<JsonPreview
+				data={data}
+				noUndefined
+			/>
+		);
 	}
 
 	renderCustomizationCode() {
@@ -237,7 +273,8 @@ export default class Preview extends React.Component {
 			uncontrolled,
 			commentBeforeRenderReturn,
 			contentBeforeClassRenderer,
-			propsToRender
+			propsToRender,
+			withFragment
 		} = this.props;
 		const bools = [];
 		let childrenFromConst = false;
@@ -285,7 +322,8 @@ export default class Preview extends React.Component {
 		} else if (additionalImport instanceof Array) {
 			addImport = wrap(', ') + additionalImport.join(wrap(', '));
 		}
-		let code = wrap('import', 'keyword') + ' React ' + wrap('from', 'keyword') + ' ' + wrapString('react') + wrap(';') + N;
+		const frag = withFragment ? wrap(', {') + 'Fragment' + wrap('} ') : ' ';
+		let code = wrap('import', 'keyword') + ' React' + frag + wrap('from', 'keyword') + ' ' + wrapString('react') + wrap(';') + N;
 		code += wrap('import', 'keyword') + wrap(' {') + name + addImport + wrap('} ') + wrap('from', 'keyword') + ' ' + wrapString('uiex/' + name) + wrap(';') + N;
 		if (imports || addToImport.length > 0) {
 			if (typeof imports == 'string') {
@@ -406,13 +444,13 @@ export default class Preview extends React.Component {
 		tabulation.add();
 		if (wrapper) {
 			if (typeof wrapper == 'string') {
-				renderCode += tabulation.render(wrap('&lt;') + wrap(wrapper, 'tag') + wrap('&gt;'), true);
+				renderCode += tabulation.render(wrap('&lt;') + wrap(wrapper, wrapper === 'Fragment' ? 'fragment' : 'tag') + wrap('&gt;'), true);
 			}
 			tabulation.add();
 			if (typeof contentBeforeRenderer == 'function') {
 				const contentBefore = contentBeforeRenderer();
 				if (contentBefore) {
-					renderCode += contentBefore + N;
+					renderCode += contentBefore + N + N;
 				}
 			}
 		}
@@ -538,7 +576,7 @@ export default class Preview extends React.Component {
 			}
 			tabulation.reduce();
 			if (typeof wrapper == 'string') {
-				renderCode += tabulation.render(wrap('&lt;/') + wrap(wrapper, 'tag') + wrap('&gt;'), true);
+				renderCode += tabulation.render(wrap('&lt;/') + wrap(wrapper, wrapper === 'Fragment' ? 'fragment' : 'tag') + wrap('&gt;'), true);
 			}
 		}
 		// ======================= end component

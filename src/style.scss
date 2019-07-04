@@ -57,6 +57,9 @@ pre {
 		.number {
 			color: #a080ff;
 		}
+		.fragment {
+			color: #aaa;
+		}
 	}
 }
 .flex {
@@ -247,9 +250,6 @@ pre {
 			align-items: center;
 		}
 	}
-}
-.scroll-container-preview-buttons {
-	margin-bottom: 20px;
 }
 .loader-preview {
 	padding: 20px;

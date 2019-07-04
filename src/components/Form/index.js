@@ -1,11 +1,14 @@
 import React from 'react';
 import Demo from '../../Demo';
-import {Form, change, reset, clear} from 'uiex/Form';
+import {Form, change, reset, clear, fixate, alter, set, replace} from 'uiex/Form';
 import {FormControl} from 'uiex/FormControl';
 import {FormControlGroup} from 'uiex/FormControlGroup';
+import {FormSection} from 'uiex/FormSection';
 import {Input} from 'uiex/Input';
 import {Button} from 'uiex/Button';
+import {ButtonGroup} from 'uiex/ButtonGroup';
 import {InputNumber} from 'uiex/InputNumber';
+import {Checkbox} from 'uiex/Checkbox';
 import {getSetState, previewRenderer, wrap, tabulation, wrapString, stringify} from '../../utils';
 
 const CAPTION_STYLE_OPTIONS = [
@@ -17,6 +20,14 @@ const CAPTION_STYLE_OPTIONS = [
 		fontStyle: 'italic'
 	},
 	'font-weight: 500; font-size: 32px; color: #555;'
+];
+
+const ITEM_STYLE_OPTIONS = [
+	{
+		padding: '10px',
+		backgroundColor: '#f1f1f1'
+	},
+	'background-color: #ddd; padding: 20px'
 ];
 
 const changeButtonPreviewData = {
@@ -31,14 +42,61 @@ const clearButtonPreviewData = {
 	onClick: 'handleClearClick'
 };
 
+const fixateButtonPreviewData  = {
+	onClick: 'handleFixateClick'
+};
+
+const alterButtonPreviewData  = {
+	onClick: 'handleAlterClick'
+};
+
+const setButtonPreviewData = {
+	onClick: 'handleSetClick'
+};
+
+const replaceButtonPreviewData = {
+	onClick: 'handleReplaceClick'
+};
+
 const changeData = {
-	address: 'some new address',
-	age: 55
+	name: 'John',
+	age: 55,
+	address: {
+		city: 'Berlin',
+		education: {
+			city: 'New York'
+		}
+	}
+};
+
+const alterData = {
+	address: {
+		country: 'Russia'
+	}
 };
 
 const resetData = {
-	address: 'initial',
-	age: 10
+	name: 'Ann',
+	age: 10,
+};
+
+const setData = {
+	name: 'Andrew',
+	age: 34,
+	address: {
+		country: 'Great Britain',
+		city: 'Manchester',
+		index: '010203'
+	}
+};
+
+const replaceData = {
+	address: {
+		education: [{
+			city: 'Amsterdam',
+			place: 'School'
+		}]
+	}
 };
 
 export default class FormDemo extends Demo {
@@ -64,7 +122,7 @@ export default class FormDemo extends Demo {
 				data: {
 					description: 'Form data (Object)',					
 					type: 'object',
-					options: [{address: 'Kazan', age: 16}]
+					options: [{name: 'Victor', age: 16, address: {country: 'USA', city: 'Denver'}}]
 				},
 				caption: {
 					description: 'Form caption (String | React.Node)',
@@ -74,6 +132,16 @@ export default class FormDemo extends Demo {
 					description: 'Style of the form caption (Object | String)',
 					type: 'object',
 					options: CAPTION_STYLE_OPTIONS
+				},
+				sectionCaptionStyle: {
+					description: 'Style of the form section caption (Object | String)',
+					type: 'object',
+					options: CAPTION_STYLE_OPTIONS
+				},
+				sectionItemStyle: {
+					description: 'Style of the section array field item (Object | String)',
+					type: 'object',
+					options: ITEM_STYLE_OPTIONS
 				}
 			}
 		]
@@ -83,20 +151,32 @@ export default class FormDemo extends Demo {
 		width: 600,
 		columns: 1,
 		cellSize: 1,
-		data: {age: 22},
+		data: resetData,
 		initialData: resetData,
 		caption: 'My test form',
 		captionStyle: 'font-weight:bold;color:#aaa;'
 	};
 	static excluded = ['vertical', 'block', 'valign'];
-	static handlers = ['onChange', 'onReset', 'onClear'];
-	static additionalHandlers = ['onChangeClick', 'onResetClick', 'onClearClick'];
+	static handlers = ['onChange', 'onReset', 'onClear', 'onDataChange'];
+	static additionalHandlers = ['onChangeClick', 'onAlterClick', 'onResetClick', 'onClearClick', 'onFixateClick', 'onSetClick', 'onReplaceClick'];
 	static stateProps = ['data'];
 	static funcs = {
 		onChange: getSetState('data'),
+		onReset: () => {
+			return tabulation.renderWith(wrap('// optional, no need to setState here', 'comment'), 2);
+		},
+		onClear: () => {
+			return tabulation.renderWith(wrap('// optional, no need to setState here', 'comment'), 2);
+		},
 		onChangeClick: (data) => {
 			tabulation.set(2);
 			const str = tabulation.render(wrap('change', 'function') + wrap('(') + wrapString(data.name, 1) + wrap(', ' + stringify(changeData)) + wrap(');'));
+			tabulation.reset();
+			return str;
+		},
+		onAlterClick: (data) => {
+			tabulation.set(2);
+			const str = tabulation.render(wrap('alter', 'function') + wrap('(') + wrapString(data.name, 1) + wrap(', ' + stringify(alterData)) + wrap(');'));
 			tabulation.reset();
 			return str;
 		},
@@ -105,23 +185,47 @@ export default class FormDemo extends Demo {
 		},
 		onClearClick: (data) => {
 			return tabulation.renderWith(wrap('clear', 'function') + wrap('(') + wrapString(data.name, 1) + wrap(');'), 2);
+		},
+		onFixateClick: (data) => {
+			return tabulation.renderWith(wrap('fixate', 'function') + wrap('(') + wrapString(data.name, 1) + wrap(');'), 2);
+		},
+		onSetClick: (data) => {
+			tabulation.set(2);
+			const str = tabulation.render(wrap('set', 'function') + wrap('(') + wrapString(data.name, 1) + wrap(', ' + stringify(setData)) + wrap(');'));
+			tabulation.reset();
+			return str;
+		},
+		onReplaceClick: (data) => {
+			tabulation.set(2);
+			const str = tabulation.render(wrap('replace', 'function') + wrap('(') + wrapString(data.name, 1) + wrap(', ' + stringify(replaceData)) + wrap(');'));
+			tabulation.reset();
+			return str;
+		},
+		onDataChange: () => {
+			return tabulation.renderWith(wrap('// indicates that data was altered compared with initial data', 'comment'), 2);
 		}
 	};
 	static args = {
 		onChange: ['data', 'fieldName', 'value'],
-		onReset: ['data']
+		onReset: ['data'],
+		onDataChange: ['isDataChanged', 'changedFields']
 	};
 	static changeState = {
 		onChange: 'data'
 	};
-	static consts = ['initialData'];
+	static consts = ['data', 'initialData', 'captionStyle', 'sectionCaptionStyle'];
 	static componentName = 'Form';
 	static component = Form;
-	static imports = ['FormControlGroup', 'FormControl', 'Input', 'InputNumber', 'Button'];
-	static additionalImport = ['change', 'reset', 'clear'];
+	static imports = ['FormControlGroup', 'FormControl', 'Input', 'InputNumber', 'Button', 'ButtonGroup'];
+	static additionalImport = ['change', 'alter', 'reset', 'clear', 'fixate', 'set', 'replace'];
+	static withFragment = true
 
 	handleChangeClick = () => {
 		change(this.state.data.name, changeData);
+	}
+
+	handleAlterClick = () => {
+		alter(this.state.data.name, alterData);
 	}
 
 	handleResetClick = () => {
@@ -132,32 +236,79 @@ export default class FormDemo extends Demo {
 		clear(this.state.data.name);
 	}
 
+	handleFixateClick = () => {
+		fixate(this.state.data.name);
+	}
+
+	handleSetClick = () => {
+		set(this.state.data.name, setData);	
+	}
+
+	handleReplaceClick = () => {
+		replace(this.state.data.name, replaceData);		
+	}
+
+	renderContentBefore() {
+		return (
+			<ButtonGroup buttonWidth="80">
+				<Button
+					title="Changes form data with a given object. This action will cause dataChange event"
+					previewData={changeButtonPreviewData}
+					onClick={this.handleChangeClick}
+				>
+					Change
+				</Button>
+				<Button
+					title="Changes form data with a given object. This action will not cause dataChange event. The initial data will be changed also"
+					previewData={alterButtonPreviewData}
+					onClick={this.handleAlterClick}
+				>
+					Alter
+				</Button>
+				<Button
+					title="Resets form data to initial data"
+					previewData={resetButtonPreviewData}
+					onClick={this.handleResetClick}
+				>
+					Reset
+				</Button>
+				<Button
+					title="Clears all fields"
+					previewData={clearButtonPreviewData}
+					onClick={this.handleClearClick}
+				>
+					Clear
+				</Button>
+				<Button
+					title="Fixate current form data as initial data"
+					previewData={fixateButtonPreviewData}
+					onClick={this.handleFixateClick}
+				>
+					Fixate
+				</Button>
+				<Button
+					title="Set new form data. This action will cause dataChange event"
+					previewData={setButtonPreviewData}
+					onClick={this.handleSetClick}
+				>
+					Set
+				</Button>
+				<Button
+					title="Set new form data. The initial data will be reset also. isDataChanged flag will get false"
+					previewData={replaceButtonPreviewData}
+					onClick={this.handleReplaceClick}
+				>
+					Replace
+				</Button>
+			</ButtonGroup>
+		);
+	}
+
 	renderContent() {	
 		return [
-			<Button
-				key="0"
-				previewData={changeButtonPreviewData}
-				onClick={this.handleChangeClick}
-			>
-				Change
-			</Button>,
-			<Button
-				key="1"
-				previewData={resetButtonPreviewData}
-				onClick={this.handleResetClick}
-			>
-				Reset
-			</Button>,
-			<Button
-				key="2"
-				previewData={clearButtonPreviewData}
-				onClick={this.handleClearClick}
-			>
-				Clear
-			</Button>,
-			<FormControlGroup key="3">
-				<FormControl caption="Address">
-					<Input name="address" />
+			<FormControlGroup key="1">
+				<FormControl caption="Name">
+					<Input name="name" />
 				</FormControl>
 				<FormControl caption="Age">
 					<InputNumber
@@ -166,11 +317,56 @@ export default class FormDemo extends Demo {
 						positive
 					/>
 				</FormControl>
-			</FormControlGroup>
+				<FormControl caption="Gender">
+					<Input name="gender" />
+				</FormControl>
+			</FormControlGroup>,
+			
+			<FormSection
+				key="2"
+				name="address"
+				caption="Address"
+			>
+				<FormControlGroup columns="2">
+					<FormControl caption="Country">
+						<Input name="country" />
+					</FormControl>
+					<FormControl caption="City">
+						<Input name="city" />
+					</FormControl>
+					<FormControl caption="Index" stretched>
+						<Input name="index" />
+					</FormControl>
+				</FormControlGroup>
+				
+				<FormSection
+					name="education"
+					caption="Education"
+					minCount="3"
+					fieldArray
+				>
+					<FormControlGroup columns="3">
+						<FormControl caption="City">
+							<Input name="city" />
+						</FormControl>
+						<FormControl caption="Place">
+							<Input name="place" />
+						</FormControl>
+					</FormControlGroup>
+				</FormSection>
+			</FormSection>
 		];
 	}
 
-	renderPreviewContent() {
+	getPreviewWrap = () => {
+        return 'Fragment';
+    }
+
+	renderPreviewCodeBefore = () => {
+		return previewRenderer.render(this.renderContentBefore(), ['title']);
+	}
+
+	renderPreviewContent = () => {
 		return previewRenderer.render(this.renderContent());
 	}
 }

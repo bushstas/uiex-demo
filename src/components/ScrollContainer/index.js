@@ -186,7 +186,6 @@ export default class ScrollContainerDemo extends Demo {
 	renderPreviewContentBefore() {
 		return (
 			<ButtonGroup 
-				className="scroll-container-preview-buttons"
 				onClick={this.handleButtonClick}
 				previewData={PREVIEW_DATA}
 			>

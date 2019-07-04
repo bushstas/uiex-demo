@@ -216,6 +216,11 @@ class PreviewRenderer {
 		return this.code.replace(/^[\r\n]+|[\r\n]+$/g, '');
 	}
 
+	renderFew(...contents) {
+		const content = contents.map(c => this.render(c));
+		return content.join("\n");
+	}
+
 	renderRectElement(content, next = null) {
 		if (content instanceof Array) {
 			for (let item of content) {

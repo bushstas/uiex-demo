@@ -358,6 +358,7 @@ export default class CellGroupDemo extends Demo {
 		return (
 			<Mapper 
 				ref="cellMapper"
+				formName="cellMapper"
 				name="Cell"
 				map={CELL_MAP}
 				columns="14"

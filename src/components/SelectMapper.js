@@ -81,4 +81,5 @@ export default class SelectMapper extends DemoMapper {
 		]
 	};
 	static componentName = 'Select';
+	static formName = 'selectMapper';
 }

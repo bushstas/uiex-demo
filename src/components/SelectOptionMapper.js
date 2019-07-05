@@ -41,6 +41,7 @@ export default class SelectOptionMapper extends DemoMapper {
 		onSelect: ['value']
 	}
 	static componentName = 'SelectOption';
+	static formName = 'selectOptionMapper';
 
 	fireSelect() {
 		this.fire('onSelect');

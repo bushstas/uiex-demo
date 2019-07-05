@@ -9,6 +9,9 @@ import {Button} from 'uiex/Button';
 import {ButtonGroup} from 'uiex/ButtonGroup';
 import {InputNumber} from 'uiex/InputNumber';
 import {Checkbox} from 'uiex/Checkbox';
+import {FormButtons} from 'uiex/FormButtons';
+import {JsonPreview} from 'uiex/JsonPreview';
+import {DataProvider, createStore, resetChangeStore, setStore, saveStore, loadStore} from 'uiex/DataProvider';
 import {getSetState, previewRenderer, wrap, tabulation, wrapString, stringify} from '../../utils';
 
 const CAPTION_STYLE_OPTIONS = [
@@ -99,6 +102,16 @@ const replaceData = {
 	}
 };
 
+class FormDataPreview extends React.PureComponent {
+	render() {
+		const {forms} = this.props;
+		return (
+			<JsonPreview data={forms.testform} />
+		);
+	}
+}
+
+
 export default class FormDemo extends Demo {
 	static map = {
 		inputs: [
@@ -159,7 +172,7 @@ export default class FormDemo extends Demo {
 	static excluded = ['vertical', 'block', 'valign'];
 	static handlers = ['onChange', 'onReset', 'onClear', 'onDataChange'];
 	static additionalHandlers = ['onChangeClick', 'onAlterClick', 'onResetClick', 'onClearClick', 'onFixateClick', 'onSetClick', 'onReplaceClick'];
-	static stateProps = ['data'];
+	static stateProps = ['data', 'isDataChanged'];
 	static funcs = {
 		onChange: getSetState('data'),
 		onReset: () => {
@@ -202,7 +215,8 @@ export default class FormDemo extends Demo {
 			return str;
 		},
 		onDataChange: () => {
-			return tabulation.renderWith(wrap('// indicates that data was altered compared with initial data', 'comment'), 2);
+			const code = tabulation.renderWith(getSetState('isDataChanged'), 2);
+			return tabulation.renderWith(wrap('// indicates that data was altered compared with initial data\n', 'comment'), 2) + code;
 		}
 	};
 	static args = {
@@ -211,7 +225,8 @@ export default class FormDemo extends Demo {
 		onDataChange: ['isDataChanged', 'changedFields']
 	};
 	static changeState = {
-		onChange: 'data'
+		onChange: 'data',
+		onChangeData: 'isDataChanged'
 	};
 	static consts = ['data', 'initialData', 'captionStyle', 'sectionCaptionStyle'];
 	static componentName = 'Form';
@@ -219,6 +234,24 @@ export default class FormDemo extends Demo {
 	static imports = ['FormControlGroup', 'FormControl', 'Input', 'InputNumber', 'Button', 'ButtonGroup'];
 	static additionalImport = ['change', 'alter', 'reset', 'clear', 'fixate', 'set', 'replace'];
 	static withFragment = true
+
+	constructor(props) {
+		super(props);
+		createStore('lalala', {'new': 222, 'thing': true});
+
+		setTimeout(() => {
+			setStore('lalala', {aaa: 3, bbb: 34, fff: 4});
+			saveStore('lalala', 'fuck');
+
+			setTimeout(() => {
+				resetChangeStore('lalala', {new: '1', appeared: '!!!!'});
+				setTimeout(() => {
+					loadStore('lalala', 'fuck');
+				}, 5000);
+
+			}, 5000);
+		}, 12000);
+	}
 
 	handleChangeClick = () => {
 		change(this.state.data.name, changeData);
@@ -280,7 +313,7 @@ export default class FormDemo extends Demo {
 					Clear
 				</Button>
 				<Button
-					title="Fixate current form data as initial data"
+					title="Fixate current form data as initial data. isDataChanged flag will get false"
 					previewData={fixateButtonPreviewData}
 					onClick={this.handleFixateClick}
 				>
@@ -301,6 +334,18 @@ export default class FormDemo extends Demo {
 					Replace
 				</Button>
 			</ButtonGroup>
+		);
+	}
+
+	renderContentAfter() {
+		return (
+			<DataProvider
+				formName={['testform', 'mapper']}
+				storeName="lalala"
+				component={FormDataPreview}
+			>
+				FormDataPreview
+			</DataProvider>
 		);
 	}
 
@@ -354,7 +399,26 @@ export default class FormDemo extends Demo {
 						</FormControl>
 					</FormControlGroup>
 				</FormSection>
-			</FormSection>
+			</FormSection>,
+			<FormButtons
+				key="fb"
+			>
+				<Button role="submit">
+					Submit
+				</Button>
+				<Button role="reset">
+					Reset
+				</Button>
+				<Button role="clear">
+					Clear
+				</Button>
+				<Button role="view">
+					View
+				</Button>
+				<Button onClick="...">
+					Custom action
+				</Button>
+			</FormButtons>
 		];
 	}
 

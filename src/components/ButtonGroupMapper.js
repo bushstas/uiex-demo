@@ -75,6 +75,7 @@ export default class ButtonGroupMapper extends DemoMapper {
 		]
 	};
 	static componentName = 'ButtonGroup';
+	static formName = 'buttonGroupMapper';
 
 	handleChangeMeasure(id, idx, name) {
 		const map = super.handleChangeMeasure(id, idx, name);

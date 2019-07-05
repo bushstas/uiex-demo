@@ -105,7 +105,8 @@ export default class ComponentMapper extends DemoMapper {
 				}
 			}
 		]
-	}
+	};
+	static formName = 'componentMapper';
 	static componentName = 'UIEXComponent';
 
 	initMap() {

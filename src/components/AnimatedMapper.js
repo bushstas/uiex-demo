@@ -42,6 +42,7 @@ export default class AnimatedMapper extends React.Component {
 		return (
 			<Mapper 
 				isOpen={this.props.isOpen}
+				formName="animatedMapper"
 				name="UIEXAnimated"
 				excluded={this.props.excluded}
 				map={this.state.map} 

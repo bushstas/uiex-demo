@@ -93,6 +93,7 @@ export default class InputMapper extends DemoMapper {
 		]
 	};
 	static componentName = 'Input';
+	static formName = 'inputMapper';
 
 	initMap() {
 		const map = super.initMap();

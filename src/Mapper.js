@@ -32,7 +32,7 @@ export default class Mapper extends React.Component {
 	}
 
 	render() {
-		let {map: {checkboxes, inputs}, data, name, excluded, handlers, withExtraProps, customEvents, handlersNote} = this.props;
+		let {map: {checkboxes, inputs}, data, name, excluded, handlers, withExtraProps, customEvents, handlersNote, formName} = this.props;
 		const {isOpen = true} = this.state;
 		let {columns} = this.props;
 		if (!getNumber(columns)) {
@@ -52,7 +52,7 @@ export default class Mapper extends React.Component {
 					onToggle={this.handleBoxSectionToggle}
 				>
 					<Form 
-						name="mapper"
+						name={formName || 'mapper'}
 						data={data}
 						columns={columns}
 						columnsTiny="2"

@@ -63,4 +63,5 @@ export default class FormMapper extends DemoMapper {
 		]
 	};
 	static componentName = 'UIEXForm';
+	static formName = 'formMapper';
 }

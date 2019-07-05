@@ -30,6 +30,7 @@ export default class DemoMapper extends React.PureComponent {
 		if (!componentName) {
 			componentName = this.constructor.componentName;
 		}
+		const {formName} = this.constructor;
 		return (
 			<Mapper 
 				ref="mapper"
@@ -42,6 +43,7 @@ export default class DemoMapper extends React.PureComponent {
 				data={data}
 				reactChildren={reactChildren}
                 handlers={handlers}
+                formName={formName}
                 onChange={onChange}
 			/>
 		)

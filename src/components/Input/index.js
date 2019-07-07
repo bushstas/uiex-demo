@@ -12,7 +12,7 @@ export const INPUT_ARGS = {
 	onFocus: ['value', 'name'],
 	onBlur: ['value', 'name'],
 	onEnter: ['value', 'name'],
-	onChangeValidity: ['valid', 'value', 'name'],
+	onChangeValidity: ['valid', 'errorType', 'value', 'name'],
 	onDisabledClick: ['name']
 };
 export const INPUT_FUNCS = {

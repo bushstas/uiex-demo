@@ -264,7 +264,7 @@ export default class Demo extends React.Component {
             }
             this.fire(name);
             if (args) {
-                this.logEvent(name);
+                const obj = {};
                 if (args instanceof Object) {
                     if (args[name] instanceof Array) {
                         for (let i = 0; i < args[name].length; i++) {
@@ -278,14 +278,14 @@ export default class Demo extends React.Component {
                             } else if (i == 3) {
                                 arg = arg4;
                             }
-                            this.logEventArg(i + 1, args[name][i], arg);
+                            obj[`${i}: ${args[name][i]}`] = arg;
                         }
                     }
                 } else  if (typeof args[name] == 'string') {
-                    this.logEventArg(1, args[name], arg1);
+                    obj[args[name]] = arg1;
                 }
                 if (LOG_EVENTS) {
-                    console.log('==================');
+                    this.logEvent(name, obj);
                 }
             }
             if (callbacks instanceof Object && typeof callbacks[name] == 'string' && typeof this[callbacks[name]] == 'function') {
@@ -293,17 +293,9 @@ export default class Demo extends React.Component {
             }
         }
     }
-    logEvent(name) {
-        if (LOG_EVENTS) {
-            console.log('Fired event "' + name + '"');
-        }
-    }
 
-    logEventArg(index, argName, argValue) {
-        if (LOG_EVENTS) {
-            console.log('Argument ' + index + ': ' + argName);
-            console.log(argValue);
-        }
+    logEvent(name, obj) {
+        console.info('Fired %c' + this.constructor.component.name + ' %cevent %c' + name, 'color: Green', '', 'color: DodgerBlue', obj);
     }
 
     renderPreviewNote = () => {

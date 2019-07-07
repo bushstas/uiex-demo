@@ -322,9 +322,17 @@ export default class Preview extends React.Component {
 		} else if (additionalImport instanceof Array) {
 			addImport = wrap(', ') + additionalImport.join(wrap(', '));
 		}
+		const importsCount = (additionalImport instanceof Array ? additionalImport.length : 0) + 1;
 		const frag = withFragment ? wrap(', {') + 'Fragment' + wrap('} ') : ' ';
 		let code = wrap('import', 'keyword') + ' React' + frag + wrap('from', 'keyword') + ' ' + wrapString('react') + wrap(';') + N;
-		code += wrap('import', 'keyword') + wrap(' {') + name + addImport + wrap('} ') + wrap('from', 'keyword') + ' ' + wrapString('uiex/' + name) + wrap(';') + N;
+		if (importsCount < 4) {
+			code += wrap('import', 'keyword') + wrap(' {') + name + addImport + wrap('} ') + wrap('from', 'keyword') + ' ' + wrapString('uiex/' + name) + wrap(';') + N;
+		} else {
+			code += wrap('import', 'keyword') + wrap(' {') + N;
+			code += "\t" + name + wrap(',') + N + "\t" + additionalImport.join(wrap(",\n\t")) + N;
+			code += wrap('}') + ' ' + wrap('from', 'keyword') + ' ' + wrapString('uiex/' + name) + wrap(';') + N;;
+		}
+		
 		if (imports || addToImport.length > 0) {
 			if (typeof imports == 'string') {
 				imports = [imports];
@@ -430,7 +438,7 @@ export default class Preview extends React.Component {
 		}
 
 		// render
-		renderCode += tabulation.render(wrap('render', 'function') + wrap('() {'), true);
+		renderCode += tabulation.render(wrap('render', 'name') + wrap('() {'), true);
 		tabulation.add();
 		if (!uncontrolled && stateProps instanceof Array && stateProps.length > 0) {
 			renderCode += tabulation.render(wrap('const', 'keyword2') + wrap(' {') + stateProps.join(', ') + wrap('} = ') + wrap('this', 'args') + wrap('.') + 'state' + wrap(';'), true);

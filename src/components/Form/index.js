@@ -1,6 +1,6 @@
 import React from 'react';
 import Demo from '../../Demo';
-import {Form, change, reset, clear, fixate, alter, set, replace} from 'uiex/Form';
+import {Form, change, reset, clear, fixate, alter, set, replace, isChanged} from 'uiex/Form';
 import {FormControl} from 'uiex/FormControl';
 import {FormControlGroup} from 'uiex/FormControlGroup';
 import {FormSection} from 'uiex/FormSection';
@@ -10,8 +10,6 @@ import {ButtonGroup} from 'uiex/ButtonGroup';
 import {InputNumber} from 'uiex/InputNumber';
 import {Checkbox} from 'uiex/Checkbox';
 import {FormButtons} from 'uiex/FormButtons';
-import {JsonPreview} from 'uiex/JsonPreview';
-import {DataProvider, createStore, resetChangeStore, setStore, saveStore, loadStore} from 'uiex/DataProvider';
 import {getSetState, previewRenderer, wrap, tabulation, wrapString, stringify} from '../../utils';
 
 const CAPTION_STYLE_OPTIONS = [
@@ -31,6 +29,10 @@ const ITEM_STYLE_OPTIONS = [
 		backgroundColor: '#f1f1f1'
 	},
 	'background-color: #ddd; padding: 20px'
+];
+
+const ERROR_LOC_OPTIONS = [
+	'under', 'above', 'right', 'left', 'top', 'bottom'
 ];
 
 const changeButtonPreviewData = {
@@ -59,6 +61,10 @@ const setButtonPreviewData = {
 
 const replaceButtonPreviewData = {
 	onClick: 'handleReplaceClick'
+};
+
+const checkButtonPreviewData = {
+	onClick: 'handleCheckClick'
 };
 
 const changeData = {
@@ -102,18 +108,16 @@ const replaceData = {
 	}
 };
 
-class FormDataPreview extends React.PureComponent {
-	render() {
-		const {forms} = this.props;
-		return (
-			<JsonPreview data={forms.testform} />
-		);
-	}
-}
-
-
 export default class FormDemo extends Demo {
 	static map = {
+		checkboxes: {
+			validating: {
+				description: 'Show control visual validation'
+			},
+			errorsShown: {
+				description: 'Show control errors'
+			}
+		},
 		inputs: [
 			{
 				name: {
@@ -140,6 +144,26 @@ export default class FormDemo extends Demo {
 				caption: {
 					description: 'Form caption (String | React.Node)',
 					stretched: true
+				},
+				requiredError: {
+					description: 'Template for required error (String | React.Node)',
+					type: 'object',
+					options: [
+						'Please fill out this field',
+						'Field `{name}` should be filled'
+					]
+				},
+				lengthError: {
+					description: 'Template for value minimal length error (String | React.Node)',
+					type: 'object',
+					options: [
+						'Field `{name}` should be minimal {length} symbols',
+						'This field has minimal length {length} symbols'
+					]
+				},
+				placeError: {
+					description: 'Error render location (String)',
+					options: ERROR_LOC_OPTIONS
 				},
 				captionStyle: {
 					description: 'Style of the form caption (Object | String)',
@@ -170,8 +194,8 @@ export default class FormDemo extends Demo {
 		captionStyle: 'font-weight:bold;color:#aaa;'
 	};
 	static excluded = ['vertical', 'block', 'valign'];
-	static handlers = ['onChange', 'onReset', 'onClear', 'onDataChange'];
-	static additionalHandlers = ['onChangeClick', 'onAlterClick', 'onResetClick', 'onClearClick', 'onFixateClick', 'onSetClick', 'onReplaceClick'];
+	static handlers = ['onChange', 'onReset', 'onClear', 'onDataChange', 'onSubmit', 'onSubmitFail', 'onChangeValidity'];
+	static additionalHandlers = ['onChangeClick', 'onAlterClick', 'onResetClick', 'onClearClick', 'onFixateClick', 'onSetClick', 'onReplaceClick', 'onCheckClick'];
 	static stateProps = ['data', 'isDataChanged'];
 	static funcs = {
 		onChange: getSetState('data'),
@@ -180,6 +204,12 @@ export default class FormDemo extends Demo {
 		},
 		onClear: () => {
 			return tabulation.renderWith(wrap('// optional, no need to setState here', 'comment'), 2);
+		},
+		onSubmitFail: () => {
+			return tabulation.renderWith(wrap('// here you can set validating property as true', 'comment'), 2);
+		},
+		onChangeValidity: () => {
+			return tabulation.renderWith(wrap('// here you can change validating property', 'comment'), 2);
 		},
 		onChangeClick: (data) => {
 			tabulation.set(2);
@@ -217,12 +247,21 @@ export default class FormDemo extends Demo {
 		onDataChange: () => {
 			const code = tabulation.renderWith(getSetState('isDataChanged'), 2);
 			return tabulation.renderWith(wrap('// indicates that data was altered compared with initial data\n', 'comment'), 2) + code;
+		},
+		onCheckClick: (data) => {
+			tabulation.set(2);
+			const str = tabulation.render(wrap('alert', 'function') + wrap('(') + wrap('isChanged', 'function') + wrap('(') + wrapString(data.name, 1) + wrap('));'));
+			tabulation.reset();
+			return str;
 		}
 	};
 	static args = {
 		onChange: ['data', 'fieldName', 'value'],
 		onReset: ['data'],
-		onDataChange: ['isDataChanged', 'changedFields']
+		onDataChange: ['isDataChanged', 'changedFields'],
+		onSubmit: ['data'],
+		onChangeValidity: ['isFormValid', 'invalidFields'],
+		onSubmitFail: ['invalidFields']
 	};
 	static changeState = {
 		onChange: 'data',
@@ -232,26 +271,8 @@ export default class FormDemo extends Demo {
 	static componentName = 'Form';
 	static component = Form;
 	static imports = ['FormControlGroup', 'FormControl', 'Input', 'InputNumber', 'Button', 'ButtonGroup'];
-	static additionalImport = ['change', 'alter', 'reset', 'clear', 'fixate', 'set', 'replace'];
+	static additionalImport = ['change', 'alter', 'reset', 'clear', 'fixate', 'set', 'replace', 'isChanged'];
 	static withFragment = true
-
-	constructor(props) {
-		super(props);
-		createStore('lalala', {'new': 222, 'thing': true});
-
-		setTimeout(() => {
-			setStore('lalala', {aaa: 3, bbb: 34, fff: 4});
-			saveStore('lalala', 'fuck');
-
-			setTimeout(() => {
-				resetChangeStore('lalala', {new: '1', appeared: '!!!!'});
-				setTimeout(() => {
-					loadStore('lalala', 'fuck');
-				}, 5000);
-
-			}, 5000);
-		}, 12000);
-	}
 
 	handleChangeClick = () => {
 		change(this.state.data.name, changeData);
@@ -281,9 +302,13 @@ export default class FormDemo extends Demo {
 		replace(this.state.data.name, replaceData);		
 	}
 
+	handleCheckClick = () => {
+		alert(isChanged(this.state.data.name));
+	}
+
 	renderContentBefore() {
 		return (
-			<ButtonGroup buttonWidth="80">
+			<ButtonGroup>
 				<Button
 					title="Changes form data with a given object. This action will cause dataChange event"
 					previewData={changeButtonPreviewData}
@@ -333,19 +358,14 @@ export default class FormDemo extends Demo {
 				>
 					Replace
 				</Button>
+				<Button
+					title="Check if the form was changed compared with initial state"
+					previewData={checkButtonPreviewData}
+					onClick={this.handleCheckClick}
+				>
+					Changed?
+				</Button>
 			</ButtonGroup>
-		);
-	}
-
-	renderContentAfter() {
-		return (
-			<DataProvider
-				formName={['testform', 'mapper']}
-				storeName="lalala"
-				component={FormDataPreview}
-			>
-				FormDataPreview
-			</DataProvider>
 		);
 	}
 
@@ -353,17 +373,26 @@ export default class FormDemo extends Demo {
 		return [
 			<FormControlGroup key="1">
 				<FormControl caption="Name">
-					<Input name="name" />
+					<Input
+						name="name"
+						required
+					/>
 				</FormControl>
 				<FormControl caption="Age">
 					<InputNumber
 						name="age"
 						maxValue="120"
 						positive
+						pattern="^\d0$"
 					/>
 				</FormControl>
 				<FormControl caption="Gender">
-					<Input name="gender" />
+					<Input
+						name="gender"
+						minLength="10"
+						maxLength="10"
+						required
+					/>
 				</FormControl>
 			</FormControlGroup>,
 			

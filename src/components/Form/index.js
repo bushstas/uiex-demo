@@ -161,9 +161,23 @@ export default class FormDemo extends Demo {
 						'This field has minimal length {length} symbols'
 					]
 				},
+				patternError: {
+					description: 'Template for pattern mismatch error (String | React.Node)',
+					type: 'object',
+					options: [
+						'Field value mismatches the pattern',
+						'A value of the field `{name}` mismatches the given pattern'
+					]
+				},
 				placeError: {
 					description: 'Error render location (String)',
 					options: ERROR_LOC_OPTIONS
+				},
+				errorZIndex: {
+					description: 'Z-index of error popup (Number | Numeric String)',
+					type: 'number',
+					maxValue: 99999,
+					positive: true
 				},
 				captionStyle: {
 					description: 'Style of the form caption (Object | String)',
@@ -273,6 +287,15 @@ export default class FormDemo extends Demo {
 	static imports = ['FormControlGroup', 'FormControl', 'Input', 'InputNumber', 'Button', 'ButtonGroup'];
 	static additionalImport = ['change', 'alter', 'reset', 'clear', 'fixate', 'set', 'replace', 'isChanged'];
 	static withFragment = true
+
+	validateCountry = (value, name) => {
+		return !/[A-Z][a-z]+/.test(value) ? (
+			<div>
+				<div>Country sucks</div>
+				<div>Country is shit</div>
+			</div>
+		) : null;
+	}
 
 	handleChangeClick = () => {
 		change(this.state.data.name, changeData);
@@ -402,7 +425,10 @@ export default class FormDemo extends Demo {
 				caption="Address"
 			>
 				<FormControlGroup columns="2">
-					<FormControl caption="Country">
+					<FormControl
+						caption="Country"
+						validate={this.validateCountry}
+					>
 						<Input name="country" />
 					</FormControl>
 					<FormControl caption="City">

@@ -112,10 +112,10 @@ export default class FormDemo extends Demo {
 	static map = {
 		checkboxes: {
 			validating: {
-				description: 'Show control visual validation'
+				description: 'Shows control visual validation'
 			},
 			errorsShown: {
-				description: 'Show control errors'
+				description: 'Shows control errors. Validating property should be turned on'
 			}
 		},
 		inputs: [
@@ -125,16 +125,30 @@ export default class FormDemo extends Demo {
 					readOnly: true
 				},
 				columns: {
-					description: 'Quantity of cells in a row (Number)',
+					description: 'Quantity of cells in a row. Requires using FormContolGroups (Number)',
 					type: 'number',
 					maxValue: 10,
 					positive: true
 				},
 				cellSize: {
-					description: 'Cell default size (Number)',
+					description: 'Cell default size. Requires using FormContolGroups (Number)',
 					maxValue: 10,
 					type: 'number',
 					positive: true
+				},
+				rowMargin: {
+					description: 'Form rows vertical margin. Requires using FormContolGroups (Number)',
+					maxValue: 50,
+					type: 'number',
+					positive: true
+				},
+				initialData: {
+					description: 'Form initial data for reset action. If not passed (undefined) data will be used instead (Object)',					
+					type: 'object',
+					options: [
+						{name: 'Lenny', age: 23, gender: 'male'},
+						{name: 'Alice', age: 28, gender: 'female'}
+					]
 				},
 				data: {
 					description: 'Form data (Object)',					
@@ -169,15 +183,25 @@ export default class FormDemo extends Demo {
 						'A value of the field `{name}` mismatches the given pattern'
 					]
 				},
-				placeError: {
+				errorPosition: {
 					description: 'Error render location (String)',
 					options: ERROR_LOC_OPTIONS
 				},
 				errorZIndex: {
-					description: 'Z-index of error popup (Number | Numeric String)',
+					description: 'Z-index of error popups (Number | Numeric String)',
 					type: 'number',
 					maxValue: 99999,
 					positive: true
+				},
+				errorBgColor: {
+					description: 'Background color of form error popups (String)',
+					type: 'color',
+					uncontrolled: true
+				},
+				errorTextColor: {
+					description: 'Text color of form errors (String)',
+					type: 'color',
+					uncontrolled: true
 				},
 				captionStyle: {
 					description: 'Style of the form caption (Object | String)',

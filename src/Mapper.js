@@ -220,7 +220,8 @@ export default class Mapper extends React.Component {
 			readOnly,
 			valueWithMeasure,
 			customFilter,
-			onChangeMeasure
+			onChangeMeasure,
+			uncontrolled
 		} = item;
 
 		if (extra && !this.state.extraPropsShown) {
@@ -236,7 +237,8 @@ export default class Mapper extends React.Component {
 			defaultValue,
 			clearable: true,
 			readOnly,
-			customFilter
+			customFilter,
+			uncontrolled
 		};
 		switch (item.type) {
 			case 'array':

@@ -37,7 +37,7 @@ import TextBlockDemo from './components/TextBlock';
 import HintDemo from './components/Hint';
 import FormDemo from './components/Form';
 import TouchableDemo from './components/Touchable';
-import GalleryDemo from './components/Gallery';
+import ImageGalleryDemo from './components/ImageGallery';
 
 export const MAP = {
 	App: AppDemo,
@@ -55,8 +55,8 @@ export const MAP = {
 	Delimiter: DelimiterDemo,
 	Draggable: DraggableDemo,
 	Form: FormDemo,
-	Gallery: GalleryDemo,
 	Hint: HintDemo,
+	ImageGallery: ImageGalleryDemo,
 	Input: InputDemo,
 	InputArray: InputArrayDemo,
 	InputColor: InputColorDemo,

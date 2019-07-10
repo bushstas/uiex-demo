@@ -416,7 +416,7 @@ export default class FormDemo extends Demo {
 		);
 	}
 
-	renderContent() {	
+	renderContent() {
 		return [
 			<FormControlGroup key="1">
 				<FormControl caption="Name">

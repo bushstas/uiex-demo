@@ -139,6 +139,24 @@ export const getSetState = (name, value = null) => {
 			names.push(wrap(item, cn));
 		}
 		str += names.join(wrap(', '));
+	} else if (name instanceof Object) {
+		const keys = Object.keys(name);
+		const isMultiline = keys.length > 1;
+		if (isMultiline) {
+			str += "\n\t\t\t";
+		}
+		const names = [];
+		for (let k in name) {
+			if (name[k] === `$${k}`) {
+				names.push(k);
+			} else {
+				names.push(wrap(k, cn) + wrap(': ') + stringify(name[k]));
+			}
+		}
+		str += names.join(wrap(isMultiline ? ",\n\t\t\t" : ', '));
+		if (isMultiline) {
+			str += "\n\t\t";
+		}
 	}
 	str += wrap('});');
 	return  str;

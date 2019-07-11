@@ -79,7 +79,11 @@ export default class SelectDemo extends Demo {
 
 	renderPreviewNote = () => {
 		return (
-			<Checkbox checked={this.state.transform} onChange={this.handleCheckboxChange}>
+			<Checkbox
+				value={this.state.transform}
+				onChange={this.handleCheckboxChange}
+				title="Changes Demo Code"
+			>
 				Transform options into children
 			</Checkbox>
 		) 

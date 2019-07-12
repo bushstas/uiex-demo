@@ -88,6 +88,7 @@ export default class Demo extends React.Component {
             args,
             funcs,
             stateProps,
+            additionalStateProps,
             consts,
             previewProps,
             additionalImport,
@@ -109,6 +110,8 @@ export default class Demo extends React.Component {
 				args={args}
 				funcs={funcs}
 				stateProps={stateProps}
+                additionalStateProps={additionalStateProps}
+                renderAdditionalCode={this.renderAdditionalCode}
                 consts={consts}
                 contentRenderer={this.renderPreviewContent}
                 additionalImport={additionalImport}
@@ -117,6 +120,7 @@ export default class Demo extends React.Component {
                 contentBeforeRenderer={this.renderPreviewCodeBefore}
                 contentAfterRenderer={this.renderPreviewCodeAfter}
                 isPropAvailable={this.isPropAvailable}
+                isConstAvailable={this.isConstAvailable}
                 renderPreviewConst={this.renderPreviewConst}
                 renderMethods={this.renderMethods}
                 imports={imports}
@@ -216,6 +220,10 @@ export default class Demo extends React.Component {
     renderPreviewCodeAfter() {
 		return null;
     }
+
+    renderAdditionalCode() {
+        return null;
+    }
     
     handleRerender = () => {
         const key = this.state.key + 1;
@@ -304,6 +312,10 @@ export default class Demo extends React.Component {
 
     isPropAvailable = () => {
         return true;
+    }
+
+    isConstAvailable = () => {
+        return false;   
     }
 
     renderPreviewConst = () => {

@@ -259,10 +259,13 @@ export default class Preview extends React.Component {
 			args,
 			funcs,
 			stateProps,
+			additionalStateProps,
 			consts,
 			contentRenderer,
+			renderAdditionalCode,
 			additionalImport,
 			isPropAvailable,
+			isConstAvailable,
 			renderPreviewConst,
 			wrapper,
 			contentBeforeRenderer,
@@ -358,7 +361,7 @@ export default class Preview extends React.Component {
 		if (consts instanceof Array) {
 			constList = [];
 			for (let c of consts) {
-				if (!isPropAvailable(c)) {
+				if (!isPropAvailable(c) && !isConstAvailable(c)) {
 					continue;
 				}
 				if (data[c] != null) {
@@ -437,11 +440,24 @@ export default class Preview extends React.Component {
 			code += tabulation.render(wrap('}'), 1);
 		}
 
+		// additional code
+		const additionalCode = renderAdditionalCode();
+		if (additionalCode) {
+			renderCode += N + additionalCode + N + N;
+		}
+
 		// render
 		renderCode += tabulation.render(wrap('render', 'name') + wrap('() {'), true);
 		tabulation.add();
+		let propsFromState = [];
 		if (!uncontrolled && stateProps instanceof Array && stateProps.length > 0) {
-			renderCode += tabulation.render(wrap('const', 'keyword2') + wrap(' {') + stateProps.join(', ') + wrap('} = ') + wrap('this', 'args') + wrap('.') + 'state' + wrap(';'), true);
+			propsFromState = [...stateProps];
+		}
+		if (additionalStateProps instanceof Array) {
+			propsFromState = [...propsFromState, ...additionalStateProps];
+		}
+		if (propsFromState.length > 0) {
+			renderCode += tabulation.render(wrap('const', 'keyword2') + wrap(' {') + propsFromState.join(', ') + wrap('} = ') + wrap('this', 'args') + wrap('.') + 'state' + wrap(';'), true);
 		}
 		if (commentBeforeRenderReturn) {
 			renderCode += tabulation.render(wrap('// ' + commentBeforeRenderReturn, 'comment'), true);	
@@ -579,7 +595,7 @@ export default class Preview extends React.Component {
 			if (typeof contentAfterRenderer == 'function') {
 				const contentAfter = contentAfterRenderer();
 				if (contentAfter) {
-					renderCode += contentAfter + N;
+					renderCode += N + contentAfter + N;
 				}
 			}
 			tabulation.reduce();

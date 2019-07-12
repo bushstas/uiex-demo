@@ -5,7 +5,7 @@ import {Image} from 'uiex/Image';
 import {ImageViewer} from 'uiex/ImageViewer';
 import {Checkbox} from 'uiex/Checkbox';
 import {BACKGROUND_SIZES, BACKGROUND_REPEATS, GALLERY_BEHAVIORS} from 'uiex/consts';
-import {previewRenderer, getSetState} from '../../utils';
+import {previewRenderer, getSetState, wrap, tabulation} from '../../utils';
 
 const IMAGES = [
 	'1105309/e9fc6247-18b8-4a08-be63-b49d5956bf91/s1200',
@@ -33,6 +33,10 @@ const IMAGES = [
 	'69339/de65576e-a926-4b7f-a533-b7a819de963c/s1200',
 	'245485/7038e246-4e5a-4f5f-909b-74830e6669f1/s1200'
 ];
+
+const imageViewerPreviewData = {
+	images: 'IMAGES'
+};
 
 export default class ImageGalleryDemo extends Demo {
 	static map = {
@@ -198,6 +202,10 @@ export default class ImageGalleryDemo extends Demo {
 	static excluded = ['vertical', 'valign', 'align', 'block', 'disabled', 'uncontrolled'];
 	static imports = ['Image', 'ImageViewer'];
 	static handlers = ['onView'];
+	static additionalStateProps = ['isViewerOpen', 'imageIndex'];
+	static callbacks = {
+		onView: 'handleView'
+	};
 	static args = {
 		onView: ['imageIndex', 'imageSrc']
 	};
@@ -205,17 +213,11 @@ export default class ImageGalleryDemo extends Demo {
 		onView: getSetState({isViewerOpen: true, imageIndex: '$imageIndex'})
 	};
 	static componentName = 'ImageGallery';
-	static component = ImageGallery
+	static component = ImageGallery;
+	static withFragment = true
 
 	handleCheckboxChange = (transform) => {
 		this.setState({transform});
-	}
-
-	renderContent() {
-		return [
-			<Image src="34158/e8985381-201c-434e-9551-a762516d8683/s1200" key="111"/>,
-			<Image src="199965/2011eab1-3a11-4da7-adab-d24e7a01a313/s1200" key="222"/>
-		]
 	}
 
 	renderPreviewNote = () => {
@@ -230,19 +232,55 @@ export default class ImageGalleryDemo extends Demo {
 		) 
 	}
 
-	renderImages() {
-		const {images} = this.state.data;
-		return images.map(i => (
-			<Image src={i} />
-		));
-	}
-
 	renderPreviewContent = () => {
 		if (!this.state.transform) {
 			return '';
 		}
-		return previewRenderer.render(this.renderImages());
+		let code = tabulation.render(wrap('{') + wrap('this', 'args') + wrap('.') + 'renderImages' + wrap('()}'));
+
+		return code;;
 	}
+
+	renderContentAfter() {
+		const {images, source} = this.state.data;
+		const {imageIndex} = this.state;
+		return (
+			<ImageViewer
+				source={source}
+				images={images}
+				initialImageIndex={imageIndex}
+				isOpen={this.state.isViewerOpen}
+				onClose={this.handleViewerClose}
+				width="1000"
+				height="500"
+			/>
+		);
+	}
+
+	renderPreviewCodeAfter = () => {
+		return previewRenderer.render(this.renderContentAfter(), null, {
+			source: 'SOURCE',
+			images: 'IMAGES',
+			initialImageIndex: 'imageIndex',
+			isOpen: 'isViewerOpen',
+			onClose: wrap('this', 'args') + wrap('.') + 'handleViewerClose'
+		});
+	}
+
+	renderAdditionalCode = () => {
+		if (this.state.transform) {
+        	let code = tabulation.render(wrap('renderImages', 'name') + wrap(' = () ') + wrap('=>', 'keyword2') + wrap(' {'), 1);
+        	tabulation.add();
+        	code += tabulation.render(wrap('return', 'keyword') + ' IMAGES' + wrap('.') + wrap('map', 'keyword2') + wrap('('), 1);
+        	tabulation.add();
+
+        	tabulation.reduce();
+        	code += tabulation.render(wrap(');'), 1);
+        	tabulation.reduce();
+        	code += tabulation.render(wrap('}'));
+        	return code;
+        }
+    }
 
 	isPropAvailable = (name) => {
 		if (name == 'images' && this.state.transform) {
@@ -250,4 +288,20 @@ export default class ImageGalleryDemo extends Demo {
 		}
 		return true;
 	}
+
+	isConstAvailable = () => {
+        return true;
+    }
+	
+	getPreviewWrap = () => {
+        return 'Fragment';
+    }
+
+    handleView = (imageIndex) => {
+    	this.setState({isViewerOpen: true, imageIndex});
+    }
+
+    handleViewerClose = () => {
+    	this.setState({isViewerOpen: false});
+    }
 }

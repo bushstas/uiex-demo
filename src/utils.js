@@ -226,6 +226,9 @@ class PreviewRenderer {
 	}
 
 	render(content, excluded = [], withConsts = false) {
+		if (!(excluded instanceof Array)) {
+			excluded = [];
+		}
 		this.excluded = excluded;
 		this.withConsts = withConsts;
 		this.consts = [];
@@ -291,8 +294,15 @@ class PreviewRenderer {
 		const {previewData, children} = props;
 		for (let k in props) {
 			if (k !== 'previewData' && k !== 'children') {
-				if (props[k] != null && this.excluded.indexOf(k) == -1) {
+				const isInConsts = this.withConsts instanceof Object && this.withConsts[k];
+				const isProp = props[k] != null || isInConsts;				
+				if (isProp && this.excluded.indexOf(k) == -1) {					
 					let line = wrap(k, 'key');
+					if (isInConsts) {
+						line += wrap('=') + wrap('{') + this.withConsts[k] + wrap('}');
+						strProps.push(line);
+						continue;
+					}
 					if (typeof props[k] == 'boolean') {
 						strProps.push(line);
 						continue;
@@ -316,7 +326,7 @@ class PreviewRenderer {
 							this.consts.push(wrap('const ', 'keyword2') + constName + wrap(' = ') + value + wrap(';'));
 							line += wrap('{') + constName + wrap('}');
 						} else {
-							line += stringify(props[k], true, true, !this.withConsts);;
+							line += stringify(props[k], true, true, !this.withConsts);
 						}
 					}
 					strProps.push(line);

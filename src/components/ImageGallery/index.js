@@ -8,30 +8,13 @@ import {BACKGROUND_SIZES, BACKGROUND_REPEATS, GALLERY_BEHAVIORS} from 'uiex/cons
 import {previewRenderer, getSetState, wrap, tabulation} from '../../utils';
 
 const IMAGES = [
-	'1105309/e9fc6247-18b8-4a08-be63-b49d5956bf91/s1200',
-	'936467/64b9d9a1-f06b-4920-9294-438d789c11a0/s1200',
-	'69339/de65576e-a926-4b7f-a533-b7a819de963c/s1200',
-	'245485/7038e246-4e5a-4f5f-909b-74830e6669f1/s1200',
-	'1105309/e9fc6247-18b8-4a08-be63-b49d5956bf91/s1200',
-	'936467/64b9d9a1-f06b-4920-9294-438d789c11a0/s1200',
-	'69339/de65576e-a926-4b7f-a533-b7a819de963c/s1200',
-	'245485/7038e246-4e5a-4f5f-909b-74830e6669f1/s1200',
-	'1105309/e9fc6247-18b8-4a08-be63-b49d5956bf91/s1200',
-	'936467/64b9d9a1-f06b-4920-9294-438d789c11a0/s1200',
-	'69339/de65576e-a926-4b7f-a533-b7a819de963c/s1200',
-	'245485/7038e246-4e5a-4f5f-909b-74830e6669f1/s1200',
-	'1105309/e9fc6247-18b8-4a08-be63-b49d5956bf91/s1200',
-	'936467/64b9d9a1-f06b-4920-9294-438d789c11a0/s1200',
-	'69339/de65576e-a926-4b7f-a533-b7a819de963c/s1200',
-	'245485/7038e246-4e5a-4f5f-909b-74830e6669f1/s1200',
-	'1105309/e9fc6247-18b8-4a08-be63-b49d5956bf91/s1200',
-	'936467/64b9d9a1-f06b-4920-9294-438d789c11a0/s1200',
-	'69339/de65576e-a926-4b7f-a533-b7a819de963c/s1200',
-	'245485/7038e246-4e5a-4f5f-909b-74830e6669f1/s1200',
-	'1105309/e9fc6247-18b8-4a08-be63-b49d5956bf91/s1200',
-	'936467/64b9d9a1-f06b-4920-9294-438d789c11a0/s1200',
-	'69339/de65576e-a926-4b7f-a533-b7a819de963c/s1200',
-	'245485/7038e246-4e5a-4f5f-909b-74830e6669f1/s1200'
+	'/112/112347.jpg',
+	'https://images2.alphacoders.com/698/698207.jpg',
+	'https://images8.alphacoders.com/389/389941.jpg',
+	'https://img2.fonwall.ru/o/zc/architecture-autumn-buildings-dock.jpeg',
+	'https://images5.alphacoders.com/581/581191.jpg',
+	'https://images6.alphacoders.com/509/509076.jpg',
+	'https://images.alphacoders.com/568/568856.jpg'	
 ];
 
 const imageViewerPreviewData = {
@@ -195,7 +178,7 @@ export default class ImageGalleryDemo extends Demo {
 		borderWidth: 12,
 		borderColor: '#FFF',
 		borderOpacity: 3,
-		source: 'https://avatars.mds.yandex.net/get-pdb',
+		source: 'https://images3.alphacoders.com/',
 		images: IMAGES
 	};
 	static consts = ['source', 'images'];
@@ -248,11 +231,10 @@ export default class ImageGalleryDemo extends Demo {
 			<ImageViewer
 				source={source}
 				images={images}
-				initialImageIndex={imageIndex}
+				imageIndex={imageIndex}
 				isOpen={this.state.isViewerOpen}
+				onChange={this.handleViewerChange}
 				onClose={this.handleViewerClose}
-				width="1000"
-				height="500"
 			/>
 		);
 	}
@@ -261,7 +243,7 @@ export default class ImageGalleryDemo extends Demo {
 		return previewRenderer.render(this.renderContentAfter(), null, {
 			source: 'SOURCE',
 			images: 'IMAGES',
-			initialImageIndex: 'imageIndex',
+			imageIndex: 'imageIndex',
 			isOpen: 'isViewerOpen',
 			onClose: wrap('this', 'args') + wrap('.') + 'handleViewerClose'
 		});
@@ -299,6 +281,10 @@ export default class ImageGalleryDemo extends Demo {
 
     handleView = (imageIndex) => {
     	this.setState({isViewerOpen: true, imageIndex});
+    }
+
+    handleViewerChange = (imageIndex) => {
+    	this.setState({imageIndex});
     }
 
     handleViewerClose = () => {

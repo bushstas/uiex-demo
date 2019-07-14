@@ -9,40 +9,34 @@ export default class ModalDemo extends Demo {
 	static map = {
 		checkboxes: {
 			isOpen: {
-				type: 'boolean',
 				description: 'Open/Close status flag'
 			},
 			draggable: {
-				type: 'boolean',
 				description: 'Draggable flag'
 			},
 			dragWithinWindow: {
-				type: 'boolean',
 				description: 'Will have drag limits within the window'
 			},
 			withoutMask: {
-				type: 'boolean',
 				description: 'The mask will no be rendered if it\'s true'
 			},
 			noMaskClose: {
-				type: 'boolean',
 				description: 'Clicks on the mask will not cause the modal closing'
 			},
 			unclosable: {
-				type: 'boolean',
 				description: 'Usual ways to close the modal will not work'
 			},
 			expandable: {
-				type: 'boolean',
 				description: 'The modal will have expand control to get full window'
 			},
 			expanded: {
-				type: 'boolean',
 				description: 'Full window flag'
 			},
 			withoutPortal: {
-				type: 'boolean',
 				description: 'The modal will be rendered in the real parent without using a portal'
+			},
+			withoutPadding: {
+				description: 'Main modal container without paddings'
 			}
 		},
 		inputs: [

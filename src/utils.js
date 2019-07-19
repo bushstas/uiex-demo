@@ -113,6 +113,60 @@ const stringifyArray = (arr, nowrap = false) => {
 	return code;
 }
 
+const getFuncArgs = (args) => {
+	if (!(args instanceof Array)) {
+		args = [args];
+	}
+	return args.map(a => a ? wrap(a, 'args') : '').join(wrap(', '));
+};
+
+export const renderer = {
+	method: (name, args, renderContent, singleLine = false) => {
+		args = getFuncArgs(args);
+		let code = tabulation.render(wrap(name, 'name') + wrap(` = (${args}) `) + wrap('=>', 'keyword2') + wrap(' {'), 1);
+		tabulation.add();
+		if (singleLine) {
+			code += tabulation.render(renderContent(), 1);
+		} else {
+			code += renderContent();
+		}
+		tabulation.reduce();
+		code += tabulation.render(wrap('}'), 2);
+		return code;
+	},
+
+	return: (renderContent, element = false, withNewLine = false) => {
+		if (element) {
+			let code = tabulation.render(wrap('return', 'keyword') + wrap(' ('), 1);
+			tabulation.add();
+			code += tabulation.render(renderContent());
+			tabulation.reduce();
+			code += tabulation.render(wrap(');'), withNewLine ? 1 : 0);
+			return code;
+		}
+		return tabulation.render(wrap('return', 'keyword')) + ' ' + renderContent() + (withNewLine ? "\n" : '');
+	},
+
+	map: (name, renderContent, withNewLine = false) => {
+		let code = name + wrap('.') + wrap('map', 'keyword2') + wrap('(');
+		code += renderContent();
+		code += tabulation.render(wrap(');'), withNewLine ? 1 : 0);
+		return code;
+	},
+
+	func: (args) => {
+		const single = args instanceof Array ? args.length == 1 : true;
+		args = getFuncArgs(args);
+		const empty = !args;
+		let code = (!single || empty ? wrap('(') : '') + args + (!single || empty ? wrap(')') : '') +
+			wrap(' =>', 'keyword2') + wrap(' {');
+		tabulation.add();
+		tabulation.reduce();
+		code += tabulation.render(wrap('}'));
+		return code;
+	}
+}
+
 export const wrap = (text, className = 'symbol', tagName = 'span') => {
 	return `<${tagName} class="${className}">${text}</${tagName}>`;
 }

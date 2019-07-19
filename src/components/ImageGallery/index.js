@@ -5,7 +5,7 @@ import {Image} from 'uiex/Image';
 import {ImageViewer} from 'uiex/ImageViewer';
 import {Checkbox} from 'uiex/Checkbox';
 import {BACKGROUND_SIZES, BACKGROUND_REPEATS, GALLERY_BEHAVIORS} from 'uiex/consts';
-import {previewRenderer, getSetState, wrap, tabulation} from '../../utils';
+import {previewRenderer, getSetState, wrap, tabulation, renderer} from '../../utils';
 
 const IMAGES = [
 	'/112/112347.jpg',
@@ -220,8 +220,7 @@ export default class ImageGalleryDemo extends Demo {
 			return '';
 		}
 		let code = tabulation.render(wrap('{') + wrap('this', 'args') + wrap('.') + 'renderImages' + wrap('()}'));
-
-		return code;;
+		return code;
 	}
 
 	renderContentAfter() {
@@ -235,6 +234,8 @@ export default class ImageGalleryDemo extends Demo {
 				isOpen={this.state.isViewerOpen}
 				onChange={this.handleViewerChange}
 				onClose={this.handleViewerClose}
+				animated
+				looping
 			/>
 		);
 	}
@@ -245,23 +246,30 @@ export default class ImageGalleryDemo extends Demo {
 			images: 'IMAGES',
 			imageIndex: 'imageIndex',
 			isOpen: 'isViewerOpen',
+			onChange: wrap('this', 'args') + wrap('.') + 'handleViewerChange', 
 			onClose: wrap('this', 'args') + wrap('.') + 'handleViewerClose'
 		});
 	}
 
 	renderAdditionalCode = () => {
+		let code = renderer.method('handleViewerChage', 'imageIndex', () => {
+			return getSetState('imageIndex');
+		}, true);
+		code += renderer.method('handleViewerClose', null, () => {
+			return getSetState({isViewerOpen: false});
+		}, true);
 		if (this.state.transform) {
-        	let code = tabulation.render(wrap('renderImages', 'name') + wrap(' = () ') + wrap('=>', 'keyword2') + wrap(' {'), 1);
-        	tabulation.add();
-        	code += tabulation.render(wrap('return', 'keyword') + ' IMAGES' + wrap('.') + wrap('map', 'keyword2') + wrap('('), 1);
-        	tabulation.add();
-
-        	tabulation.reduce();
-        	code += tabulation.render(wrap(');'), 1);
-        	tabulation.reduce();
-        	code += tabulation.render(wrap('}'));
-        	return code;
+			code += renderer.method('renderImages', null, () => (
+			   	renderer.return(() => renderer.map('IMAGES', () => renderer.func('src')), false, true)
+			));
         }
+        return code;
+    }
+
+    renderImage = () => {
+    	return (
+    		<Image src="src"/>
+    	);
     }
 
 	isPropAvailable = (name) => {

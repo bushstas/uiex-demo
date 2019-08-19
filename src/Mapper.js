@@ -346,16 +346,11 @@ export default class Mapper extends React.Component {
 				name={name}
 				value={this.props.data[name]}
 				readOnly={item.readOnly}
-				title={item.description + ' (Boolean)'}
-				onChange={this.handleCheckboxChange}
+				title={item.description + ' (Boolean)'}				
 			>
 				{name}
 			</Checkbox>
 		)
-	}
-
-	handleCheckboxChange = (value, name) => {
-		change('mapper', {[name]: value});
 	}
 
 	handleChange = (data) => {

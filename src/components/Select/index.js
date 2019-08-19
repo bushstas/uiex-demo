@@ -28,8 +28,13 @@ export default class SelectDemo extends Demo {
 		width: 300,
 		placeholder: 'Choose an option',
 		options: SELECT_OPTIONS_ARRAY,
-		value: {value: 'blue', title: 'blue'},
-		optionAsValue: true
+		value: [
+			{value: 'blue', title: 'blue'},
+			{value: 'red', title: 'red'},
+			'black'
+		],
+		optionAsValue: true,
+		multiple: true
 	};
 	static componentName = 'Select';
 	static component = Select;

@@ -26,6 +26,9 @@ const OPTION_STYLE_OPTIONS = [
 export default class SelectMapper extends DemoMapper {
 	static map = {
 		checkboxes: {
+			optionAsValue: {
+				description: 'Change handler gets the whole option as value'
+			},
 			optionsShown: {
 				description: 'Options are constantly shown'
 			},
@@ -43,7 +46,7 @@ export default class SelectMapper extends DemoMapper {
 					example: 'email'
 				},
 				value: {
-					description: 'Select value (String | Number)',
+					description: 'Select value (String | Number | Array | Object)',
 					example: 'Some value'
 				},
 				placeholder: {

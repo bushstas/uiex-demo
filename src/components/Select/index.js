@@ -13,7 +13,7 @@ export default class SelectDemo extends Demo {
 	static args = {
 		onChange: ['value', 'name'],
 		onSelect: ['value', 'name'],
-		onSelectOption: ['index', 'option', 'name'],
+		onSelectOption: ['option', 'index', 'name'],
 		onFocus: ['value', 'name'],
 		onBlur: ['value', 'name'],
 		onDisabledClick: ['name'],
@@ -24,10 +24,12 @@ export default class SelectDemo extends Demo {
 	static funcs = {
 		onChange: getSetState('value')
 	};
-	static data = {
+	static data = {		
 		width: 300,
 		placeholder: 'Choose an option',
-		options: SELECT_OPTIONS_ARRAY
+		options: SELECT_OPTIONS_ARRAY,
+		value: {value: 'blue', title: 'blue'},
+		optionAsValue: true
 	};
 	static componentName = 'Select';
 	static component = Select;
@@ -128,13 +130,13 @@ export default class SelectDemo extends Demo {
 					if (option[k] === true) {
 						content += tabulation.render(wrap(k, 'key'), true);
 					} else {
-						content += tabulation.render(wrap(k, 'key') + wrap('=') + stringify(option[k], true), true);
+						content += tabulation.render(wrap(k, 'key') + wrap('=') + stringify(option[k], true, true), true);
 					}
 				}
 				tabulation.reduce();
 				content += tabulation.render(wrap('&gt;'), true);
 			} else {
-				content += tabulation.render(wrap('&lt;') + wrap('SelectOption ', 'keyword2') + wrap('value', 'key') + wrap('=') + stringify(option.value, true) + wrap('&gt;'), true);
+				content += tabulation.render(wrap('&lt;') + wrap('SelectOption ', 'keyword2') + wrap('value', 'key') + wrap('=') + stringify(option.value, true, true) + wrap('&gt;'), true);
 			}
 			tabulation.add();
 			content += tabulation.render(option.title, true);

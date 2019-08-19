@@ -10,6 +10,7 @@ import {ButtonGroup} from 'uiex/ButtonGroup';
 import {InputNumber} from 'uiex/InputNumber';
 import {Checkbox} from 'uiex/Checkbox';
 import {FormButtons} from 'uiex/FormButtons';
+import {Select, SelectOption} from 'uiex/Select';
 import {getSetState, previewRenderer, wrap, tabulation, wrapString, stringify} from '../../utils';
 
 const CAPTION_STYLE_OPTIONS = [
@@ -434,12 +435,17 @@ export default class FormDemo extends Demo {
 					/>
 				</FormControl>
 				<FormControl caption="Gender">
-					<Input
+					<Select
 						name="gender"
-						minLength="10"
-						maxLength="10"
-						required
-					/>
+						optionAsValue
+					>
+						<SelectOption value="m">
+							Male
+						</SelectOption>
+						<SelectOption value="f">
+							Female
+						</SelectOption>
+					</Select>
 				</FormControl>
 			</FormControlGroup>,
 			

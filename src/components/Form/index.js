@@ -439,10 +439,10 @@ export default class FormDemo extends Demo {
 						name="gender"
 						optionAsValue
 					>
-						<SelectOption value="m">
+						<SelectOption value={1}>
 							Male
 						</SelectOption>
-						<SelectOption value="f">
+						<SelectOption value={2}>
 							Female
 						</SelectOption>
 					</Select>

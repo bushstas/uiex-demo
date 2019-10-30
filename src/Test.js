@@ -21,7 +21,7 @@ export default class Test extends React.Component {
 		super(props);
 		this.state = {
 			data: {
-				check: true,
+				check: ['check1'],
 				name: 'Stas',
 				options: arr
 			}
@@ -31,6 +31,10 @@ export default class Test extends React.Component {
 	handleChange = (data) => {
 		console.log(data)
 		this.setState({data});
+	}
+
+	handleDataChange = (a) => {
+		console.log(a)
 	}
 
 	handleClick = () => {
@@ -49,6 +53,7 @@ export default class Test extends React.Component {
 					name="aaa"
 					data={this.state.data}
 					onChange={this.handleChange}
+					onDataChange={this.handleDataChange}
 					columns={4}
 				>
 					<FormControlGroup cellSize={2}>

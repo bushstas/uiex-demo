@@ -38,10 +38,12 @@ import HintDemo from './components/Hint';
 import FormDemo from './components/Form';
 import TouchableDemo from './components/Touchable';
 import ImageGalleryDemo from './components/ImageGallery';
+import AsyncLoaderDemo from './components/AsyncLoader';
 
 export const MAP = {
 	App: AppDemo,
 	Arrow: ArrowDemo,
+	AsyncLoader: AsyncLoaderDemo,
 	AutoComplete: AutoCompleteDemo,
 	Box: BoxDemo,
 	BoxSection: BoxSectionDemo,

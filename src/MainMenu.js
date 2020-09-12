@@ -1,5 +1,6 @@
 import React from 'react';
 import {ScrollContainer} from 'uiex/ScrollContainer';
+import {SideMenu} from 'uiex/SideMenu';
 import {Button} from 'uiex/Button';
 import {AppLink} from 'uiex/AppLink';
 import {MAP} from './map';
@@ -12,7 +13,7 @@ export default class MainMenu extends React.Component {
 
 	render() {
 		return (
-			<ScrollContainer 
+			<SideMenu
 				className="main-menu"
 				sliderWidth="5"
 				trackWidth="1"
@@ -22,8 +23,9 @@ export default class MainMenu extends React.Component {
 				scrollbarRadius="5"
 				overflowMaskColor="#FFF"
 				overflowMaskHeight="20"
-				hiddenScrollbar
 				onWheel={this.handleWheel}
+				hiddenScrollbar
+				scrollable
 			>
 				{Object.keys(MAP).map(item => {
 					return (
@@ -38,7 +40,7 @@ export default class MainMenu extends React.Component {
 						</AppLink>
 					)
 				})}
-			</ScrollContainer>
+			</SideMenu>
 		)
 	}
 

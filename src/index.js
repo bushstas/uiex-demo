@@ -13,6 +13,6 @@ const loc = window.location.toString();
 if (/\/appdemo\.html$/.test(loc.split('#')[0])) {
     render(<AppDemo />, document.getElementById('root'));
 } else {
-    // render(<App />, document.getElementById('root'));
-    render(<Test />, document.getElementById('root'));
+    render(<App />, document.getElementById('root'));
+    // render(<Test />, document.getElementById('root'));
 }

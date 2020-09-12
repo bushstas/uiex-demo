@@ -67,10 +67,6 @@ pre {
 	align-items: center;
 }
 .main-menu {
-	position: fixed;
-	left: 0;
-	top: 0;
-	bottom: 0;
 	width: 265px;
 	box-sizing: border-box;
 	padding: 20px 0 20px 20px;
@@ -97,7 +93,7 @@ pre {
 	}
 }
 .main-content {
-	padding: 30px 30px 30px 320px;
+	padding: 30px;
 }
 .mapper {
 	margin-bottom: 12px;

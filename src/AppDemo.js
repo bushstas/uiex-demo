@@ -60,19 +60,19 @@ export default class AppDemo extends React.Component {
 			<div className="app-demo-pages">
 				<AppPage
 					name="about"
-					content="This is the About page"
+					component={() => "This is the About page"}
 				/>
 				<AppPage
 					name="catalog"
-					content="This is the Catalog page"
+					component={() => "This is the Catalog page"}
 				/>
 				<AppPage
 					name="prices"
-					content="This is the Prices page"
+					component={() => "This is the Prices page"}
 				/>
 				<AppPage
 					name="contacts"
-					content="This is the Contacts page"
+					component={() => "This is the Contacts page"}
 				/>
 			</div>
 		)

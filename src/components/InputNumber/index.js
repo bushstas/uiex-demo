@@ -88,9 +88,7 @@ export default class InputNumberDemo extends Demo {
 		...INPUT_FUNCS,
 		onChangeMeasure: getSetState('measure')
 	};
-	static previewProps = {
-		unclosable: true
-	};
+	static unclosable = true;
 	static consts = ['measures'];
 	static componentName = 'InputNumber';
 	static component = InputNumber;

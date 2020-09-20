@@ -61,9 +61,7 @@ export default class InputPhoneDemo extends Demo {
 		onChange: getSetState('value'),
 		onChangeValidity: getSetState('valid')
 	};
-	static previewProps = {
-		unclosable: true
-	};
+	static unclosable = true;
 	static componentName = 'InputPhone';
 	static component = InputPhone;
 	static changeState = {

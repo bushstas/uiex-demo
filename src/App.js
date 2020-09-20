@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 // import MainMenu from './MainMenu';
+
 import {App as MainApp} from 'uiex/App';
 import {AppPage} from 'uiex/AppPage';
-import {SideMenu} from 'uiex/SideMenu';
 import {MAP} from './map';
 import {getSources} from './platform';
 import './style.scss';
@@ -17,7 +17,13 @@ const Page404 = (props) => {
 	return 'Page not found';
 };
 
-export default class App extends React.Component {
+export default class App extends React.PureComponent {
+	constructor(props) {
+		super(props);
+		this.sideMenu = this.renderMainMenu();
+		this.pages = this.renderPages();
+	}
+
 	renderMainMenu() {
 		const Platform = getSources();
 		return (
@@ -27,29 +33,26 @@ export default class App extends React.Component {
 		);
 	}
 
-	renderContent() {
-		return Object.keys(MAP).map(item => {
-			return (
-				<AppPage
-					key={item}
-					name={item}
-					path={item}
-					component={MAP[item]}
-					indexPage={item == INDEX_PAGE}
-				/>
-			)
+	renderPagesFromMap() {
+		return Object.values(MAP).map(items => {
+			return Object.keys(items).map(item => {
+				return (
+					<AppPage
+						key={item}
+						name={item}
+						path={item}
+						component={items[item]}
+						indexPage={item == INDEX_PAGE}
+					/>
+				);
+			});
 		});
 	}
 
-	render() {
+	renderPages() {
 		return (
-			<MainApp
-				className="main-content"
-				hashRouting
-				sideMenu={this.renderMainMenu()}
-				sideMenuWidth={265}
-			>
-				{this.renderContent()}
+			<Fragment>
+				{this.renderPagesFromMap()}
 				<AppPage
 					name="item"
 					path="item/$id"
@@ -62,6 +65,19 @@ export default class App extends React.Component {
 					component={Page404}
 					notFoundPage
 				/>
+			</Fragment>
+		);
+	}
+
+	render() {
+		return (
+			<MainApp
+				className="main-content"
+				hashRouting={false}
+				sideMenu={this.sideMenu}
+				sideMenuWidth={265}
+			>
+				{this.pages}
 			</MainApp>
 		)
 	}

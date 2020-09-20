@@ -5,6 +5,35 @@ import Preview from './Preview';
 
 const LOG_EVENTS = 1;
 
+// componentName - Имя компонента Component
+// component - Сам компонент
+// info - Тектовое описание сверху
+
+// map - мапа полей {checkboxes: {...}, inouts: [...]}
+// data - данные формы (начальные пропсы компоннта) {name: ''}
+// excluded - исключенные поля маппера UIEXComponent ['name']
+// args - аргументы обработчиков событий {onClick: ['name', ...]}
+// handlers - список обработчиков событий компонента ['onClick']
+// additionalHandlers - список доп. обработчиков событий (не компонента) ['onSomeButtonClick']
+// stateProps - Список пропсов берущихся из стейта ['name', ...]
+// funcs - Контент обработчиков событий для превью {onChange: getSetState(['value']), onSome: () => code}
+// consts - Список пропсов которые берутся из констант ['name']
+// changeState - Список аргументов обработчика события которое нужно прокинуть в стейт {onChange: 'value'}
+// callbacks - Реальные обработчки события в компоненте Demo {onChange: 'handleChange'}
+// componentMapperProps - Доп. пропсы прокидывающиеся в маппер UIEXComponent {some: true}
+// mapperProps - Доп. пропсы прокидывающиеся в маппер компонента {some: true}
+// additionalStateProps - доп. поля стейта которые нужно извлечь из него для других компонентов в рендере ['some']
+
+// customEvents - Доп. события которые нужно выести в отдельных тегах {Wheel: 'You can also wheel to...'}
+// customState - Дополнительные параметры стейта для Demo {some: true}
+// imports - Доп. импорт компонентов (из других файлов) для превью ['Some']
+// additionalImport - Доп. импорт компонентов (из одного файла с компонентом демо) для превью ['Some']
+// withoutComponentMapper - признак того что нет маппера UIEXComponent
+// unclosable - Признак того что компонент не имеет закрывающегося тега (контента)
+// withFragment - Признак того что компонент нужно обернуть во фрагмент
+
+// propsToRender - Пропсы прокидываемые в компонент которые нужно рендерить вида some={this.renderSome()} ['some'] ??????????
+
 export default class Demo extends React.Component {
     constructor(props) {
         super(props);
@@ -90,14 +119,14 @@ export default class Demo extends React.Component {
             stateProps,
             additionalStateProps,
             consts,
-            previewProps,
             additionalImport,
             imports,
             componentRef,
             commentBeforeRenderReturn,
             withoutComponentMapper,
             propsToRender,
-            withFragment
+            withFragment,
+            unclosable
         } = this.constructor;
         return (
             <Preview
@@ -132,7 +161,7 @@ export default class Demo extends React.Component {
                 withoutComponentMapper={withoutComponentMapper}
                 onRerender={this.handleRerender}
                 withFragment={withFragment}
-                {...previewProps}
+                unclosable={unclosable}
 			>
                 {this.renderPreviewContentBefore()}
                 {this.renderInternal()}

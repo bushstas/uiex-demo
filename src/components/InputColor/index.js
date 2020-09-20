@@ -62,9 +62,7 @@ export default class InputColorDemo extends Demo {
 		...INPUT_FUNCS,
 		onShowPicker: getSetState('pickerShown')
 	};
-	static previewProps = {
-		unclosable: true
-	};
+	static unclosable = true;
 	static consts = ['measures', 'presetColors'];
 	static componentName = 'InputColor';
 	static component = InputColor;

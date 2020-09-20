@@ -41,45 +41,85 @@ import ImageGalleryDemo from './components/ImageGallery';
 import AsyncLoaderDemo from './components/AsyncLoader';
 
 export const MAP = {
-	App: AppDemo,
-	Arrow: ArrowDemo,
-	AsyncLoader: AsyncLoaderDemo,
-	AutoComplete: AutoCompleteDemo,
-	Box: BoxDemo,
-	BoxSection: BoxSectionDemo,
-	Button: ButtonDemo,
-	ButtonGroup: ButtonGroupDemo,
-	Checkbox: CheckboxDemo,
-	CheckboxGroup: CheckboxGroupDemo,
-	CellGroup: CellGroupDemo,
-	ColorPicker: ColorPickerDemo,
-	Colors: ColorsDemo,
-	Delimiter: DelimiterDemo,
-	Draggable: DraggableDemo,
-	Form: FormDemo,
-	Hint: HintDemo,
-	ImageGallery: ImageGalleryDemo,
-	Input: InputDemo,
-	InputArray: InputArrayDemo,
-	InputColor: InputColorDemo,
-	InputDate: InputDateDemo,
-	InputNumber: InputNumberDemo,
-	InputPhone: InputPhoneDemo,
-	InputRegexp: InputRegexpDemo,
-	Label: LabelDemo,
-	Loader:LoaderDemo,
-	Modal: ModalDemo,
-	RateForm: RateFormDemo,
-	Renderer: RendererDemo,
-	ScrollContainer: ScrollContainerDemo,
-	SearchForm: SearchFormDemo,
-	Select: SelectDemo,
-	SidePanel: SidePanelDemo,
-	SliderScale: SliderScaleDemo,
-	Tab: TabDemo,
-	Tabs: TabsDemo,
-	TextBlock: TextBlockDemo,
-	TimeScale: TimeScaleDemo,
-	Tooltip: TooltipDemo,
-	Touchable: TouchableDemo
+	App: {
+		App: AppDemo,
+		AppPage: AppDemo,
+		AppLink: AppDemo
+	},
+	Button: {
+		Button: ButtonDemo,
+		ButtonGroup: ButtonGroupDemo,
+		Tab: TabDemo,
+		Tabs: TabsDemo
+	},
+	Form: {
+		Form: FormDemo,
+		FormControl: FormDemo,
+		FormControlGroup: FormDemo,
+		FormSection: FormDemo
+	},
+	Box: {
+		Box: BoxDemo,
+		BoxSection: BoxSectionDemo,
+		BoxSectionGroup: BoxSectionDemo
+	},
+	Input: {
+		Input: InputDemo,
+		InputArray: InputArrayDemo,
+		InputColor: InputColorDemo,
+		InputDate: InputDateDemo,
+		InputNumber: InputNumberDemo,
+		InputPhone: InputPhoneDemo,
+		InputRegexp: InputRegexpDemo
+	},
+	Select: {
+		AutoComplete: AutoCompleteDemo,
+		Select: SelectDemo
+	},
+	Checkbox: {
+		Checkbox: CheckboxDemo,
+		CheckboxGroup: CheckboxGroupDemo,
+		Radio: CheckboxDemo,
+		RadioGroup: CheckboxGroupDemo
+	},
+	Text: {
+		TextBlock: TextBlockDemo,
+		Label: LabelDemo,
+		Hint: HintDemo,
+		Tooltip: TooltipDemo
+	},
+	Panel: {
+		Modal: ModalDemo,
+		SidePanel: SidePanelDemo
+	},
+	Interactive: {
+		ScrollContainer: ScrollContainerDemo,
+		Draggable: DraggableDemo,
+		Touchable: TouchableDemo,
+		SliderScale: SliderScaleDemo,
+		TimeScale: TimeScaleDemo
+	},
+	Grid: {
+		CellGroup: CellGroupDemo
+	},
+	Color: {
+		ColorPicker: ColorPickerDemo,
+		Colors: ColorsDemo
+	},
+	Decor: {
+		Arrow: ArrowDemo,
+		Delimiter: DelimiterDemo,
+		Loader:LoaderDemo
+	},
+	Image: {
+		ImageGallery: ImageGalleryDemo
+	},
+	Forms: {
+		RateForm: RateFormDemo,
+		SearchForm: SearchFormDemo,
+	},
+	Helper: {		
+		AsyncLoader: AsyncLoaderDemo,
+		Renderer: RendererDemo
+	}
 };

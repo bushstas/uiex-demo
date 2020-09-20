@@ -34,9 +34,7 @@ export default class InputRegexpDemo extends Demo {
 		onChange: getSetState('value'),
 		onChangeValidity: getSetState('valid')
 	};
-	static previewProps = {
-		unclosable: true
-	};
+	static unclosable = true;
 	static componentName = 'InputRegexp';
 	static component = InputRegexp;
 	static changeState = {

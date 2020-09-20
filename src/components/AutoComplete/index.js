@@ -62,7 +62,7 @@ export default class AutoCompleteDemo extends Demo {
 	};
 	static callbacks = {
 		onSelectOption: 'handleOptionSelect'
-	}
+	};
 
 	static customState = {
 		transform: false,

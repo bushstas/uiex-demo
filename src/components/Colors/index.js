@@ -67,11 +67,9 @@ export default class ColorsDemo extends Demo {
 		colorHeight: 24,
 		colors: COLORS,
 		margin: 5
-	}
-	static previewProps = {
-		unclosable: true
-	}
+	};
+	static unclosable = true;
 	static changeState = {
 		onSelect: 'value'
-	}
+	};
 }

@@ -116,9 +116,7 @@ export default class InputDateDemo extends Demo {
 		...INPUT_FUNCS,
 		onShowPicker: getSetState('pickerShown')
 	};
-	static previewProps = {
-		unclosable: true
-	};
+	static unclosable = true;
 	static componentName = 'InputDate';
 	static component = InputDate;
 	static changeState = {

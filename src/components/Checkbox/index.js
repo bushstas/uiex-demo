@@ -134,7 +134,7 @@ export default class CheckboxDemo extends Demo {
 	static component = Checkbox;
 	static changeState = {
 		onChange: 'value'
-	};
+	}
 
 	renderPreviewNote = () => {
 		return (

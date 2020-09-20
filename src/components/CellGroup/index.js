@@ -343,9 +343,7 @@ export default class CellGroupDemo extends Demo {
 		columns: 14,
 		withExtraProps: true
 	};
-	static previewProps = {
-		additionalImport: 'Cell'
-	}
+	static additionalImport = ['Cell'];
 	static componentName = 'CellGroup';
 	static component = CellGroup;
 	static customState = {

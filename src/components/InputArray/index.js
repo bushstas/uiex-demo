@@ -113,9 +113,7 @@ export default class InputArrayDemo extends Demo {
 	static consts = ['value', 'allowedTypes', 'exceptTypes', 'autoCompleteOptions'];
 	static componentName = 'InputArray';
 	static component = InputArray;
-	static previewProps = {
-		unclosable: true
-	};
+	static unclosable = true;
 	static changeState = {
 		onChange: 'value'
 	};

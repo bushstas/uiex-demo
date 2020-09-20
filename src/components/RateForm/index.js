@@ -90,7 +90,7 @@ export default class RateFormDemo extends Demo {
 	static args = {
 		onChange: ['value'],
 		onSubmit: ['value']
-	}
+	};
 	static changeState = {
 		onChange: 'value'
 	};

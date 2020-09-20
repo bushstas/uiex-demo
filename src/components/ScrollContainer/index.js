@@ -164,10 +164,25 @@ export default class ScrollContainerDemo extends Demo {
 		}
 	};
 	static funcs = {
-		onWheel: getSetState(['scrollTop', 'scrollTopPercent'])
+		onWheel: getSetState(['scrollTop', 'scrollTopPercent']),
+		onButtonClick: () => {
+			tabulation.set(2);
+			let code = tabulation.render(wrap('// optional', 'comment'), true);
+			code += tabulation.render(wrap('// duration from 1 to 8', 'comment'), true);
+			code += tabulation.render(wrap('const', 'keyword2') + ' transitionOptions ' + wrap('= {'), true);
+			tabulation.add();
+			code += tabulation.render(wrap('duration', 'key') + wrap(': ') + wrap('5', 'number') + wrap(','), true);
+			code += tabulation.render(wrap('effect', 'key') + wrap(': ') + wrap('"ease-in-out"', 'string'), true);
+			tabulation.reduce();
+			code += tabulation.render(wrap('};'), true);
+			code += tabulation.render(wrap('this', 'args') + wrap('.') + 'refs' + wrap('.') + 'scrollContainer' + wrap('.') + wrap('scrollIntoView', 'function') + wrap('(') + wrap('"#element"', 'string') + wrap(' + ') + 'value' + wrap(', ') + 'transitionOptions' + wrap(');'));
+			tabulation.reset();
+			return code;
+		}
 	};
 	static excluded = ['valign', 'vertical', 'block'];
 	static handlers = ['onWheel', 'onDisabledWheel'];
+	static additionalHandlers = ['onButtonClick'];
 	static componentName = 'ScrollContainer';
 	static component = ScrollContainer;
 	static imports = ['ButtonGroup', 'Button'];
@@ -243,23 +258,5 @@ export default class ScrollContainerDemo extends Demo {
 			<br/>
 		];
 		return previewRenderer.render(content, ['className']);
-	}
-
-	renderMethods = () => {
-		let code = "\n\n";
-		code += tabulation.render(wrap('handleButtonClick', 'function') + wrap(' = (') + wrap('value', 'args') + wrap(') ') + wrap('=>', 'keyword2') + wrap(' {'), true);
-		tabulation.add();
-		code += tabulation.render(wrap('// optional', 'comment'), true);
-		code += tabulation.render(wrap('// duration from 1 to 8', 'comment'), true);
-		code += tabulation.render(wrap('const', 'keyword2') + ' transitionOptions ' + wrap('= {'), true);
-		tabulation.add();
-		code += tabulation.render(wrap('duration', 'key') + wrap(': ') + wrap('5', 'number') + wrap(','), true);
-		code += tabulation.render(wrap('effect', 'key') + wrap(': ') + wrap('"ease-in-out"', 'string'), true);
-		tabulation.reduce();
-		code += tabulation.render(wrap('};'), true);
-		code += tabulation.render(wrap('this', 'args') + wrap('.') + 'refs' + wrap('.') + 'scrollContainer' + wrap('.') + wrap('scrollIntoView', 'function') + wrap('(') + wrap('"#element"', 'string') + wrap(' + ') + 'value' + wrap(', ') + 'transitionOptions' + wrap(');'), true);
-		tabulation.reduce();
-		code += tabulation.render(wrap('}'));
-		return code;
 	}
 }

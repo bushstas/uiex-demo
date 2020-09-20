@@ -38,9 +38,7 @@ export default class InputDemo extends Demo {
 		width: 300,
 		placeholder: 'Input a value'
 	};
-	static previewProps = {
-		unclosable: true
-	};
+	static unclosable = true;
 	static componentName = 'Input';
 	static component = Input;
 	static changeState = INPUT_CHANGE_STATE;

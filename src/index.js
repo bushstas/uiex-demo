@@ -1,6 +1,6 @@
 import React from 'react';
 import {render} from 'react-dom';
-import App from './App';
+import {UIEXApp} from './App';
 import Test from './Test';
 import AppDemo from './AppDemo';
 import {Loader} from 'uiex/Loader';
@@ -13,6 +13,6 @@ const loc = window.location.toString();
 if (/\/appdemo\.html$/.test(loc.split('#')[0])) {
     render(<AppDemo />, document.getElementById('root'));
 } else {
-    render(<App />, document.getElementById('root'));
+    render(<UIEXApp />, document.getElementById('root'));
     // render(<Test />, document.getElementById('root'));
 }

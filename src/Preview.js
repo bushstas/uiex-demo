@@ -168,26 +168,26 @@ export default class Preview extends React.Component {
 			defaultProps = {
 				width: 100,
 				height: 100,
-				className: 'arrow'
+				className: 'custom-class-name'
 			},
 			defaultStyle = {
 				color: 'black',
-				fontSize: 16
+				fontSize: '16px'
 			},
 			defaultStyles = {
 				main: {
 					color: 'black',
-					fontSize: 16
+					fontSize: '16px'
 				}
 			},
 			theme = {
-				color: 'black',
-				fontSize: 16
+				color: 'green',
+				backgroundColor: 'yellow'
 			},
 			themes = {
 				main: {
-					color: 'black',
-					fontSize: 16
+					color: 'green',
+					backgroundColor: 'yellow'
 				}
 			} 
 		} = this.props;
@@ -210,9 +210,15 @@ export default class Preview extends React.Component {
 		tabulation.add();
 		code += tabulation.render('setDefaultProps' + wrap(', '), true);
 		code += tabulation.render('setDefaultStyle' + wrap(', '), true);
-		code += tabulation.render('setDefaultStyles' + wrap(', '), true);
-		code += tabulation.render('addTheme' + wrap(', '), true);
-		code += tabulation.render('addThemes', true);
+		if (hasStyleNames) {
+			code += tabulation.render('setDefaultStyles' + wrap(', '), true);
+		}		
+		if (hasStyleNames) {
+			code += tabulation.render('addTheme' + wrap(', '), true);
+			code += tabulation.render('addThemes', true);
+		} else {
+			code += tabulation.render('addTheme', true);
+		}
 		tabulation.reduce();
 		code += tabulation.render(wrap('} ') + wrap('from', 'keyword') + ' ' + wrapString('uiex') + wrap(';'), true);
 		code += tabulation.render(wrap('import', 'keyword') + wrap(' {') + name + wrap('} ') + wrap('from', 'keyword') + ' ' + wrapString('uiex/' + name) + wrap(';'), 2);

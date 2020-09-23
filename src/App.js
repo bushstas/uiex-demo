@@ -7,14 +7,12 @@ import {MAP} from './map';
 import {getSources} from './platform';
 import './style.scss';
 
-const INDEX_PAGE = 'Button';
-
-const Item = (props) => {
-	return 'Item ' + props.params.id;
-};
-
 const Page404 = (props) => {
 	return 'Page not found';
+};
+
+const Home = (props) => {
+	return 'Home page';
 };
 
 export default class App extends React.PureComponent {
@@ -33,8 +31,8 @@ export default class App extends React.PureComponent {
 		);
 	}
 
-	renderPagesFromMap() {
-		return Object.values(MAP).map(items => {
+	renderPages() {
+		const pages = Object.values(MAP).map(items => {
 			return Object.keys(items).map(item => {
 				return (
 					<AppPage
@@ -42,31 +40,26 @@ export default class App extends React.PureComponent {
 						name={item}
 						path={item}
 						component={items[item]}
-						indexPage={item == INDEX_PAGE}
 					/>
 				);
 			});
 		});
-	}
-
-	renderPages() {
-		return (
-			<Fragment>
-				{this.renderPagesFromMap()}
-				<AppPage
-					name="item"
-					path="item/$id"
-					component={Item}
-					exactPath
-				/>
-				<AppPage
-					name="404"
-					path="404"
-					component={Page404}
-					notFoundPage
-				/>
-			</Fragment>
-		);
+		pages.push(
+			<AppPage
+				key="homePage"
+				name="home"
+				path="/"
+				component={Home}
+				indexPage
+			/>,
+			<AppPage
+				key="404page"
+				name="404page"
+				component={Page404}
+				notFoundPage
+			/>
+		)
+		return pages;
 	}
 
 	render() {

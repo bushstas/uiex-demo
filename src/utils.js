@@ -347,7 +347,7 @@ class PreviewRenderer {
 		let strProps = [];
 		const {previewData, children} = props;
 		for (let k in props) {
-			if (k !== 'previewData' && k !== 'children') {
+			if (k !== 'previewData' && k !== 'children' && !/TextValue$/.test(k)) {
 				const isInConsts = this.withConsts instanceof Object && this.withConsts[k];
 				const isProp = props[k] != null || isInConsts;				
 				if (isProp && this.excluded.indexOf(k) == -1) {					
@@ -363,7 +363,9 @@ class PreviewRenderer {
 					}
 					line += wrap('=');
 					if (typeof props[k] == 'function') {
-						if (previewData instanceof Object && previewData[k]) {
+						if (props[`${k}TextValue`]) {
+							line += wrap('{') + props[`${k}TextValue`] + wrap('}');
+						} else if (previewData instanceof Object && previewData[k]) {
 							line += wrap('{') + wrap('this', 'args') + wrap('.') + previewData[k] + wrap('}');
 						} else {
 							line += wrap('{() ') + wrap('=>', 'keyword2') + wrap(' {}}}');
@@ -402,7 +404,7 @@ class PreviewRenderer {
 		if (strProps.length > 1) {
 			this.code += tabulation.render(wrap((!children ? '/' : '') + '&gt;'), true);
 		} else {
-			this.code += (isComponent && !children ? ' ' : '') + wrap((!children ? '/' : '') + '&gt;') + "\n";
+			this.code += (!children ? ' ' : '') + wrap((!children ? '/' : '') + '&gt;') + "\n";
 		}
 		if (children) {
 			tabulation.add();

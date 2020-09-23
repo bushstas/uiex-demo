@@ -4,6 +4,7 @@ import {Renderer} from 'uiex/Renderer';
 import {AppPage} from 'uiex/AppPage';
 import {AppLink} from 'uiex/AppLink';
 import {previewRenderer} from '../../utils';
+import {getMenu, getContent} from '../../AppDemo';
 
 class NotFound extends React.Component {
 	render() {
@@ -59,103 +60,40 @@ export default class AppDemo extends Demo {
 		indexPageName: 'home'
 	};
 	static excluded = ['vertical', 'block', 'valign', 'disabled', 'hidden', 'uncontrolled', 'skipped', 'width', 'height', 'float', 'align', 'theme', 'style'];
-	static handlers = ['onChangePage'];
+	static handlers = ['onInitPage', 'onChangePage', 'onPageNotFound'];
 	static stateProps = [];
 	static funcs = {
 		
 	};
 	static args = {
-		onChangePage: ['pageNameOrIndex', 'params']
+		onInitPage: ['pageNameOrIndex', 'path', 'params'],
+		onChangePage: ['pageNameOrIndex', 'path', 'params'],
+		onPageNotFound: ['pageName', 'path']
 	};
 	static componentName = 'App';
 	static component = App;
 	static info = 'App is a container for pages (routes), gives you a routing system';
 
-	constructor(props) {
-		super(props);
-		this.state.objs = [
-			{type: 'a', props: {href: 'https://mail.ru'}, children: 'мыло', handlers: {onClick: 'onLinkClick'}},
-			{type: 'Button', props: {value: 'aaa'}, children: 'Click me', handlers: {onClick: 'onButtonClick'}}
-		];
+    componentDidMount() {
+		window.onChangeDemoPage = (page, path, params) => {
+			this.fire('onChangePage', page, path, params);
+		}
+		window.onDemoPageNotFound = (page, path) => {
+			this.fire('onPageNotFound', page, path);
+		}
+		this.fire('onInitPage');
 	}
 
-	renderContent() {
-		return 1111111111;
-	}
-
-	handleButtonClick = (value, sourceObject) => {
-		sourceObject.children = 'Fuck it';
-		this.setState({objs: [...this.state.objs]});
-	}
-
-	handleLinkClick = () => {
-		alert('clicked on link')
+	componentWillUnmount() {
+		window.onChangeDemoPage = undefined;
+		window.onDemoPageNotFound = undefined;
 	}
 
 	renderPreviewContent = () => {
 		const content = [
-			<div key="0">
-				<AppLink page="home">
-					Home
-				</AppLink>
-				<AppLink page="catalog">
-					Catalog
-				</AppLink>
-				<AppLink path="catalog/item">
-					Catalog Item
-				</AppLink>
-				<AppLink page="contacts">
-					Contacts
-				</AppLink>
-				<AppLink page="catalog_item" params={{id: 3}}>
-					Item
-				</AppLink>
-				<AppLink page="fuck">
-					Fuck
-				</AppLink>
-				<AppLink path="/contacts">
-					Fuck
-				</AppLink>
-				<AppLink path="catalog/item/$id/" params={{id: 444}}>
-					item #33
-				</AppLink>
-			</div>,
-			<AppPage
-				key="1"
-				name="home"
-				content="home"
-				path="/"
-			/>,
-			<AppPage
-				key="2"
-				name="catalog"
-				content="catalog"
-				path="/catalog"
-				exactPath
-			/>,
-			<AppPage
-				key="3"
-				name="contacts"
-				content="contacts"
-				path="contacts/"
-			/>,
-			<AppPage
-				key="4"
-				name="catalog_item"
-				content="catalog item"
-				path="catalog/item/$id"
-			/>,
-			<AppPage
-				key="6"
-				name="catalog_item_info"
-				content="catalog item info"
-				path="catalog/item/$id/info"
-			/>,
-			<AppPage
-				key="5"
-				component={NotFound}
-				notFoundPage
-			/>
+			getMenu(),
+			<br />,
+			getContent()
 		];
 		return previewRenderer.render(content);
 	}

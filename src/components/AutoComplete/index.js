@@ -2,9 +2,9 @@ import React from 'react';
 import Demo from '../../Demo';
 import SelectOptionMapper from '../SelectOptionMapper';
 import SelectMapper from '../SelectMapper';
-import {AutoComplete} from 'uiex/AutoComplete';
+import {AutoComplete, AutoCompleteOption} from 'uiex/AutoComplete';
 import {Checkbox} from 'uiex/Checkbox';
-import {stringify, getSetState, wrap} from '../../utils';
+import {stringify, getSetState, wrap, previewRenderer} from '../../utils';
 import {SELECT_OPTIONS_PROMISE_INSTANCE, PROMISE_OPTIONS, FUNCTION_OPTIONS, PROMISE_TEXT_HTML, FUNCTION_TEXT_HTML} from '../../consts';
 
 const SELECT_EXCLUDED = ['multiple', 'empty'];
@@ -105,7 +105,7 @@ export default class AutoCompleteDemo extends Demo {
 
 	renderPreviewNote = () => {
 		return (
-			<Checkbox checked={this.state.transform} onChange={this.handleCheckboxChange}>
+			<Checkbox value={this.state.transform} onChange={this.handleCheckboxChange}>
 				Transform options into children
 			</Checkbox>
 		) 
@@ -132,37 +132,19 @@ export default class AutoCompleteDemo extends Demo {
 			}
 			options = properOptions;
 		}
-		const T = "\t";
-		const TAB = T + T + T + T;
-		const TAB2 = TAB + T;
-		const N = "\n";		
-		let content = '';
-		for (let i = 0; i < options.length; i++) {
-			let option = options[i];
+		const items = options.map((item) => {
+			let option = item;
 			if (typeof option == 'string') {
 				option = {value: option, title: option};
 			}
-			const keys = Object.keys(option);
-			if (keys.length - 1 > 1) {
-				content += TAB + wrap('&lt;') + wrap('AutoCompleteOption', 'keyword2') + N;
-				for (let k in option) {
-					if (k == 'title') {
-						continue;
-					}
-					if (option[k] === true) {
-						content += TAB2 + wrap(k, 'key') + N;
-					} else {
-						content += TAB2 + wrap(k, 'key') + wrap('=') + stringify(option[k], true) + N;
-					}
-				}
-				content += TAB + wrap('&gt;') + N;
-			} else {
-				content += TAB + wrap('&lt;') + wrap('AutoCompleteOption ', 'keyword2') + wrap('value', 'key') + wrap('=') + stringify(option.value, true) + wrap('&gt;') + N;
-			}
-			content += TAB2 + option.title + N;
-			content += TAB + wrap('&lt;/') + wrap('AutoCompleteOption', 'keyword2') + wrap('&gt;') + (i < options.length - 1 ? N : '');
-		}
-		return content;
+			const {title, ...rest} = option;
+			return (
+				<AutoCompleteOption {...rest}>
+					{title}
+				</AutoCompleteOption>
+			);
+		});
+		return previewRenderer.render(items);
 	}
 
 	isPropAvailable = (name) => {

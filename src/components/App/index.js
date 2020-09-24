@@ -15,7 +15,7 @@ class NotFound extends React.Component {
 function App() {
 	return (
 		<iframe
-			src="appdemo.html"
+			src="/"
 			width="100%"
 			height="500"
 			frameBorder="no"

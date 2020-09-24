@@ -9,8 +9,8 @@ import {addThemes, setDefaultStyles, setDefaultProps} from 'uiex';
 // addThemes(Loader, 'colored', {mask: 'background-color: red'});
 // setDefaultProps(Loader, {theme: 'colored'});
 // setDefaultStyles(Loader, {mask: 'border: 10px solid #000'});
-const loc = window.location.toString();
-if (/\/appdemo\.html$/.test(loc.split('#')[0])) {
+
+if (window.top !== window) {
     render(<AppDemo />, document.getElementById('root'));
 } else {
     render(<App />, document.getElementById('root'));

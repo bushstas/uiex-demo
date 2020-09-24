@@ -13,6 +13,15 @@ export default class TextBlockDemo extends Demo {
 			italic: {
 				description: ''
 			},
+			underlined: {
+				description: ''
+			},
+			smaller: {
+				description: ''
+			},
+			larger: {
+				description: ''
+			},
 			justify: {
 				description: ''
 			},

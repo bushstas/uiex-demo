@@ -4,6 +4,7 @@ import {AppPage} from 'uiex/AppPage';
 import {AppLink} from 'uiex/AppLink';
 import {ButtonGroup} from 'uiex/ButtonGroup';
 import {Input} from 'uiex/Input';
+import {TextBlock} from 'uiex/TextBlock';
 import {MAP} from './map';
 
 import './style.scss';

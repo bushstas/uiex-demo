@@ -55,6 +55,7 @@ export default class App extends React.PureComponent {
 			<AppPage
 				key="404page"
 				name="404page"
+				path="404"
 				component={Page404}
 				notFoundPage
 			/>

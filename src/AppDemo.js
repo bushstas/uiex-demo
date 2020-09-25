@@ -6,7 +6,7 @@ import {ButtonGroup} from 'uiex/ButtonGroup';
 import {Input} from 'uiex/Input';
 import {TextBlock} from 'uiex/TextBlock';
 import {MAP} from './map';
-
+import {DATA} from './components/App';
 import './style.scss';
 
 const INDEX_PAGE = 'ScrollContainer';
@@ -33,6 +33,26 @@ export const getMenu = () => (
 			Catalog
 		</AppLink>
 		<AppLink
+			path="catalog/1"
+			isButton
+		>
+			Catalog Item
+		</AppLink>
+		<AppLink
+			page="catalogItem"
+			params={{id: 3}}
+			isButton
+		>
+			Catalog Item
+		</AppLink>
+		<AppLink
+			page="catalogItem"
+			params={{id: 4}}
+			isButton
+		>
+			Catalog Item
+		</AppLink>
+		<AppLink
 			page="prices"
 			isButton
 		>
@@ -45,14 +65,19 @@ export const getMenu = () => (
 			Contacts
 		</AppLink>
 		<AppLink
-			page="notExisted"
+			path="nopath"
 			isButton
 		>
-			Not existed
+			Not existed path
+		</AppLink>
+		<AppLink
+			page="nopage"
+			isButton
+		>
+			Not existed page
 		</AppLink>
 	</ButtonGroup>
 );
-
 
 export const getContent = () => [
 	<AppPage
@@ -75,6 +100,14 @@ export const getContent = () => [
 		path="catalog"
 		component={() => "This is the Catalog page"}
 		componentTextValue="CatalogPage"
+		exactPath
+	/>,
+	<AppPage
+		key="catalogItem"
+		name="catalogItem"
+		path="catalog/$id"
+		component={() => "This is the Catalog item page"}
+		componentTextValue="CatalogItemPage"
 	/>,
 	<AppPage
 		key="prices"
@@ -89,35 +122,75 @@ export const getContent = () => [
 		path="contacts"
 		component={() => "This is the Contacts page"}
 		componentTextValue="ContactsPage"
-	/>,
-	<AppPage
-		key="404"
-		component={() => "Page not found"}
-		componentTextValue="NotFoundPage"
-		notFoundPage
 	/>
 ];
 
 
 export default class AppDemo extends React.Component {
 	state = {
-		path: `${SITE}`
+		path: `${SITE}`,
+		data: {...DATA}
 	};
 
-	handleChangePage = (page, path, params) => {
-		this.setState({
-			path: `${SITE}${path ? `/${path}` : ''}`
-		});
-		const {onChangeDemoPage} = window.top;
-		if (onChangeDemoPage) {
-			onChangeDemoPage(page, path, params);
+	componentDidMount() {
+		window.onChangeData = (data) => {
+			this.setState({data});
+		};
+	}
+
+	componentWillUnmount() {
+		window.onChangeData = null;
+	}
+
+	handleInitPage = (page) => {
+		const {onInitDemoPage} = window.top;
+		if (onInitDemoPage) {
+			onInitDemoPage(page);
 		}
 	}
 
-	handlePageNotFound = (page, path) => {
+	handleChangePage = (page) => {
+		const {onChangeDemoPage} = window.top;
+		if (onChangeDemoPage) {
+			onChangeDemoPage(page);
+		}
+	}
+
+	handlePageNotFound = (page) => {
 		const {onDemoPageNotFound} = window.top;
 		if (onDemoPageNotFound) {
-			onDemoPageNotFound(page, path);
+			onDemoPageNotFound(page);
+		}
+	}
+
+	handlePushState = (path) => {
+		const {pathname, hash} = window.frames.location;
+		const properPath = pathname === '/' ? '' : pathname;
+		this.setState({
+			path: `${SITE}${properPath ? `${properPath}` : ''}${hash ? `/${hash}` : ''}`
+		});
+		const {onDemoPushState} = window.top;
+		if (onDemoPushState) {
+			onDemoPushState(path);
+		}
+	}
+
+	handleReplaceState = (path) => {
+		const {pathname, hash} = window.frames.location;
+		const properPath = pathname === '/' ? '' : pathname;
+		this.setState({
+			path: `${SITE}${properPath ? `${properPath}` : ''}${hash ? `/${hash}` : ''}`
+		});
+		const {onDemoReplaceState} = window.top;
+		if (onDemoReplaceState) {
+			onDemoReplaceState(path);
+		}
+	}
+
+	handleReturnHome = (page) => {
+		const {onDemoReturnHome} = window.top;
+		if (onDemoReturnHome) {
+			onDemoReturnHome(page);
 		}
 	}
 
@@ -146,16 +219,18 @@ export default class AppDemo extends React.Component {
 	render() {
 		return (
 			<div className="app-demo">
+				{this.renderLocation()}
+				{getMenu()}
+				<br />
 				<App
-					indexPageName="home"
+					{...this.state.data}
+					onInitPage={this.handleInitPage}
 					onChangePage={this.handleChangePage}
 					onPageNotFound={this.handlePageNotFound}
-					hashRouting
-					hashPaths
+					onPushState={this.handlePushState}
+					onReplaceState={this.handleReplaceState}
+					onReturnHome={this.handleReturnHome}
 				>
-					{this.renderLocation()}
-					{getMenu()}
-					<br />
 					{getContent()}
 				</App>
 			</div>

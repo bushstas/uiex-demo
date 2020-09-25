@@ -197,7 +197,6 @@ export default class Demo extends React.Component {
         return (
             <Component 
                 key={this.state.key}
-                ref="component"
                 {...this.state.data}
                 {...props}
             >

@@ -50,14 +50,6 @@ export default class App extends React.PureComponent {
 				name="home"
 				path="/"
 				component={Home}
-				indexPage
-			/>,
-			<AppPage
-				key="404page"
-				name="404page"
-				path="404"
-				component={Page404}
-				notFoundPage
 			/>
 		)
 		return pages;
@@ -67,9 +59,10 @@ export default class App extends React.PureComponent {
 		return (
 			<MainApp
 				className="main-content"
-				hashRouting={false}
+				notFoundPage={Page404}
 				sideMenu={this.sideMenu}
 				sideMenuWidth={265}
+				hashRouting
 			>
 				{this.pages}
 			</MainApp>

@@ -48,7 +48,7 @@ const MAP = {
 				defaultValue: 'New tab',
 				maxLength: 20
 			},
-			activeColor: {
+			activeColorPreset: {
 				description: 'Color of an active tab buttons',
 				options: COLORS
 			}

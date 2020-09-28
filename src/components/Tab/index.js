@@ -12,7 +12,7 @@ export default class TabDemo extends Demo {
 		]
 	};
 	static data = {
-		color: 'black'
+		colorPreset: 'black'
 	};
 	static excluded = ['vertical', 'block', 'valign', 'height'];
 	static handlers = [];

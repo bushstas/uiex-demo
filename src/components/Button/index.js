@@ -23,8 +23,8 @@ export default class ButtonDemo extends Demo {
 				target: {
 					description: 'Target property for a link button (String)'
 				},
-				color: {
-					description: 'Color of tab buttons',
+				colorPreset: {
+					description: 'Color preset of tab buttons',
 					options: COLORS
 				}
 			}

@@ -64,6 +64,7 @@ export default class AppDemo extends Demo {
 	};
 	static componentName = 'App';
 	static component = App;
+	static additionalImport = ['goBack', 'goForward', 'goToPage', 'goToPath'];
 	static info = 'App is a container for pages (routes), gives you a routing system';
 
     componentDidMount() {

@@ -31,7 +31,7 @@ export default class ButtonGroupMapper extends DemoMapper {
 			{
 				buttonWidth: {
 					type: 'number',
-					description: 'Width of tab buttons',
+					description: 'Width of buttons',
 					example: '120',
 					maxValue: 1000,
 					measure: 'px',
@@ -40,7 +40,7 @@ export default class ButtonGroupMapper extends DemoMapper {
 				},
 				buttonHeight: {
 					type: 'number',
-					description: 'Height of tab buttons',
+					description: 'Height of buttons',
 					example: '50',
 					maxValue: 200,
 					measure: 'px',
@@ -48,7 +48,7 @@ export default class ButtonGroupMapper extends DemoMapper {
 				},
 				iconSize: {
 					type: 'number',
-					description: 'Height of tab buttons',
+					description: 'Height of buttons',
 					example: '20',
 					maxValue: 80,
 					positive: true
@@ -60,11 +60,11 @@ export default class ButtonGroupMapper extends DemoMapper {
 			},
 			{
 				view: {
-					description: 'Width of tab buttons',
+					description: 'Width of buttons',
 					options: viewOptions
 				},
-				buttonColor: {
-					description: 'Color of tab buttons',
+				buttonColorPreset: {
+					description: 'Color preset of buttons',
 					options: COLORS
 				},
 				iconType: {

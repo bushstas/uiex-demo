@@ -1,8 +1,9 @@
-import React from 'react';
-import {App, navigateToPath} from 'uiex/App';
+import React, {Fragment} from 'react';
+import {App, navigateToPath, goBack} from 'uiex/App';
 import {AppPage} from 'uiex/AppPage';
 import {AppLink} from 'uiex/AppLink';
 import {ButtonGroup} from 'uiex/ButtonGroup';
+import {Button} from 'uiex/Button';
 import {Input} from 'uiex/Input';
 import {TextBlock} from 'uiex/TextBlock';
 import {MAP} from './map';
@@ -13,70 +14,79 @@ const INDEX_PAGE = 'ScrollContainer';
 const SITE = 'site.com';
 
 export const getMenu = () => (
-	<ButtonGroup className="app-demo-menu">
-		<AppLink
-			page="home"
-			isButton
-		>
-			Home
-		</AppLink>
-		<AppLink
-			page="about"
-			isButton
-		>
-			About
-		</AppLink>
-		<AppLink
-			page="catalog"
-			isButton
-		>
-			Catalog
-		</AppLink>
-		<AppLink
-			path="catalog/1"
-			isButton
-		>
-			Catalog Item
-		</AppLink>
-		<AppLink
-			page="catalogItem"
-			params={{id: 3}}
-			isButton
-		>
-			Catalog Item
-		</AppLink>
-		<AppLink
-			path="catalog/$id"
-			params={{id: 4}}
-			isButton
-		>
-			Catalog Item
-		</AppLink>
-		<AppLink
-			page="prices"
-			isButton
-		>
-			Prices
-		</AppLink>
-		<AppLink
-			page="contacts"
-			isButton
-		>
-			Contacts
-		</AppLink>
-		<AppLink
-			path="nopath"
-			isButton
-		>
-			Not existed path
-		</AppLink>
-		<AppLink
-			page="nopage"
-			isButton
-		>
-			Not existed page
-		</AppLink>
-	</ButtonGroup>
+	<Fragment>
+		<ButtonGroup className="app-demo-menu">
+			<Button
+				onClick={goBack}
+				onClickTextValue="goBack"
+			>
+				goBack
+			</Button>
+		</ButtonGroup>
+		<ButtonGroup className="app-demo-menu">
+			<AppLink
+				page="home"
+				isButton
+			>
+				Home
+			</AppLink>
+			<AppLink
+				page="about"
+			>
+				About
+			</AppLink>
+			<AppLink
+				page="catalog"
+				isButton
+			>
+				Catalog
+			</AppLink>
+			<AppLink
+				path="catalog/1"
+				isButton
+			>
+				Catalog Item
+			</AppLink>
+			<AppLink
+				page="catalogItem"
+				params={{id: 3}}
+				isButton
+			>
+				Catalog Item
+			</AppLink>
+			<AppLink
+				path="catalog/$id"
+				params={{id: 4}}
+				isButton
+			>
+				Catalog Item
+			</AppLink>
+			<AppLink
+				page="prices"
+				isButton
+			>
+				Prices
+			</AppLink>
+			<AppLink
+				page="contacts"
+				isButton
+			>
+				Contacts
+			</AppLink>
+			<AppLink
+				path="nopath"
+				isButton
+			>
+				Not existed path
+			</AppLink>
+			<AppLink
+				page="nopage"
+				isButton
+			>
+				Not existed page
+			</AppLink>
+		</ButtonGroup>
+	</Fragment>
 );
 
 export const getContent = () => [

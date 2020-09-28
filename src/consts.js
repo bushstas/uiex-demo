@@ -34,14 +34,14 @@ const jsonPreviewInfoFunction = (
 export const FUNCTION_OPTIONS = ['formed', 'with', 'function'];
 
 const jsonPreviewFunction = () => {
-	return FUNCTION_OPTIONS;
+	return ['formed', 'with', 'function'];
 };
 
 export const SELECT_OPTIONS_OBJECT = {green: 'Green color', brown: 'Brown color', yellow: 'Yellow color', blue: 'Blue color', red: 'Red color', black: 'Black color', white: 'White color'};
 export const SELECT_OPTIONS_OBJECTS_ARRAY = [{title: 'Yellow', value: 'yellow', icon: 'face', withBottomDelimiter: true, single: true}, {title: 'Green', value: 'green', icon: 'grade'}, {title: 'Pink', value: 'pink', icon: 'explore'}, {title: 'Purple', value: 'purple', icon: 'favorite'}, {title: 'Brown', value: 'brown', icon: 'train', withTopDelimiter: true, single: true}];
 export const SELECT_OPTIONS_ARRAY = ['black', 'blue', 'orange', 'red'];
 export const SELECT_OPTIONS_PROMISE = {jsonPreviewInfo: jsonPreviewInfoPromise, value: SELECT_OPTIONS_PROMISE_INSTANCE};
-export const SELECT_OPTIONS_FUNCTION = {jsonPreviewInfo: jsonPreviewInfoFunction, value: jsonPreviewFunction};
+export const SELECT_OPTIONS_FUNCTION = jsonPreviewFunction;
 
 
 export const INPUT_COMPONENT_EXCLUDED = ['vertical', 'valign', 'children'];

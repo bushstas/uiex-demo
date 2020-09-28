@@ -6,11 +6,7 @@ import {AppLink} from 'uiex/AppLink';
 import {previewRenderer} from '../../utils';
 import {getMenu, getContent} from '../../AppDemo';
 
-class NotFound extends React.PureComponent {
-	render() {
-		return <div>Page is not found</div>
-	}
-}
+const NotFound = () => <div>Page is not found</div>;
 
 export const DATA = {
 	hashRouting: false,
@@ -43,7 +39,8 @@ export default class AppDemo extends Demo {
 			{
 				notFoundPage: {
 					description: 'The component that represents 404 page (Function)',
-					example: 'home'
+					type: 'object',
+					options: [NotFound]
 				},
 				loader: {
 					description: 'The component that represents loader when loading property is true (Function)',

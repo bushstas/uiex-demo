@@ -46,7 +46,7 @@ export const getMenu = () => (
 			Catalog Item
 		</AppLink>
 		<AppLink
-			page="catalogItem"
+			path="catalog/$id"
 			params={{id: 4}}
 			isButton
 		>

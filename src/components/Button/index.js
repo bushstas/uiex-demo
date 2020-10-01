@@ -24,8 +24,12 @@ export default class ButtonDemo extends Demo {
 					description: 'Target property for a link button (String)'
 				},
 				colorPreset: {
-					description: 'Color preset of tab buttons',
+					description: 'Color preset of tab buttons (String)',
 					options: COLORS
+				},
+				color: {
+					description: 'Color of tab buttons (prevails over colorPreset) (String)',
+					type: 'color'
 				}
 			}
 		]
